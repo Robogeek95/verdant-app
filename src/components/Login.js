@@ -1,38 +1,40 @@
-import React, {useState, useEffect} from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col, Card, Form } from 'react-bootstrap'
-import { LinkContainer, Link } from 'react-router-bootstrap'
-import Logo from './images/logo.PNG'
-import loginBarner from './images/login-barner.png'
-import eye from './images/eye.png'
-import googleIcon from './images/google-icon.png'
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Row, Col, Card, Form,
+} from 'react-bootstrap';
+import { LinkContainer, Link } from 'react-router-bootstrap';
+import Logo from './images/logo.PNG';
+import loginBarner from './images/login-barner.png';
+import eye from './images/eye.png';
+import googleIcon from './images/google-icon.png';
 
-import Message from './products/groceries/Message'
-import Loader from './products/groceries/Loader'
-import { login } from '../actions/userActions' 
+import Message from './products/groceries/Message';
+import Loader from './products/groceries/Loader';
+import { login } from '../actions/userActions';
 
-const Login = ({location, history}) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+const Login = ({ location, history }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const redirect = location.search ? location.search.split('=')[1] : '/'
+  const redirect = location.search ? location.search.split('=')[1] : '/';
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const userLogin = useSelector(state => state.userLogin)
-  const { loading, error, userInfo } = userLogin
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
 
   useEffect(() => {
-    if(userInfo) {
+    if (userInfo) {
       // history.pushState(redirect)
-      history.push('/products/groceries')
+      history.push('/products/groceries');
     }
-  }, [history, userInfo, redirect])
+  }, [history, userInfo, redirect]);
 
   const submitHandler = (e) => {
-    e.preventDefault()
-    dispatch(login(email, password))
-  }
+    e.preventDefault();
+    dispatch(login(email, password));
+  };
 
   return (
     <div>
@@ -63,7 +65,7 @@ const Login = ({location, history}) => {
                 <img src={eye} alt="eye" className="eye" />
               </div>
               <div className="form-group">
-                <input className="checkbox" type="checkbox" id="checkbox"  />
+                <input className="checkbox" type="checkbox" id="checkbox" />
                 <label htmlFor="checkbox" id="checkbox-label">Remember Me</label>
                 <a href="#">Forgot Password?</a>
               </div>
@@ -73,29 +75,30 @@ const Login = ({location, history}) => {
               </div>
 
               <div className="or-container">
-                <div className="left-line"></div>
+                <div className="left-line" />
                 <span>or</span>
-                <div className="right-line"></div>
-              </div>     
+                <div className="right-line" />
+              </div>
             </form>
 
-            <div className="mt-5"></div>
-              <div className="mt-5"></div>
-              
-              <button type="button" className="btn btn-outline-primary btn-lg btn-block">
-                <div>  
-                  <img src={googleIcon} alt="Google Icon" className="mr-1 img-fluid" />
-                  Google
-                </div>
-              </button>
+            <div className="mt-5" />
+            <div className="mt-5" />
 
-              <p className="no-account text-center">Don't have an account? 
-                {/* <LinkContainer to={redirect ? `/register?redirect=${redirect}` : "/signup"}>  */}
-                <LinkContainer to="/signup"> 
-                  <a>Create an account</a>
-                </LinkContainer>
-                {/* <a href="#">Create an account</a> */}
-              </p>
+            <button type="button" className="btn btn-outline-primary btn-lg btn-block">
+              <div>
+                <img src={googleIcon} alt="Google Icon" className="mr-1 img-fluid" />
+                Google
+              </div>
+            </button>
+
+            <p className="no-account text-center">
+              Don't have an account?
+              {/* <LinkContainer to={redirect ? `/register?redirect=${redirect}` : "/signup"}>  */}
+              <LinkContainer to="/signup">
+                <a>Create an account</a>
+              </LinkContainer>
+              {/* <a href="#">Create an account</a> */}
+            </p>
           </div>
         </div>
         <div className="right">
@@ -107,7 +110,7 @@ const Login = ({location, history}) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

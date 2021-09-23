@@ -1,47 +1,49 @@
-import React, {useState, useEffect} from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col, Card, Form } from 'react-bootstrap'
-import { LinkContainer, Link } from 'react-router-bootstrap'
-import Logo from './images/logo.PNG'
-import signupBarner from './images/signup-barner.png'
-import eye from './images/eye.png'
-import googleIcon from './images/google-icon.png'
-import Message from './products/groceries/Message'
-import Loader from './products/groceries/Loader'
-import { register } from '../actions/userActions'
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Row, Col, Card, Form,
+} from 'react-bootstrap';
+import { LinkContainer, Link } from 'react-router-bootstrap';
+import Logo from './images/logo.PNG';
+import signupBarner from './images/signup-barner.png';
+import eye from './images/eye.png';
+import googleIcon from './images/google-icon.png';
+import Message from './products/groceries/Message';
+import Loader from './products/groceries/Loader';
+import { register } from '../actions/userActions';
 
-const Signup = ({history, location}) => {
-  const [firstname, setFirstName] = useState('')
-  const [lastname, setLastName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [message, setMessage] = useState(null)
+const Signup = ({ history, location }) => {
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState(null);
 
-  const dispatch = useDispatch({history})
+  const dispatch = useDispatch({ history });
 
-  const userRegister = useSelector(state => state.userRegister)
-  const { loading, error, userInfo } = userRegister
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
 
-  const redirect = location.search ? location.search.split('=')[1] : '/'
+  const redirect = location.search ? location.search.split('=')[1] : '/';
 
   useEffect(() => {
-    if(userInfo) {
+    if (userInfo) {
       // history.pushState(redirect)
-      history.push('/products/groceries')
+      history.push('/products/groceries');
     }
-  }, [history, userInfo, redirect])
+  }, [history, userInfo, redirect]);
 
   const submitHandler = (e) => {
-    e.preventDefault()
-    if(password !== confirmPassword){
-      setMessage('Password do not match')
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setMessage('Password do not match');
     } else {
-      dispatch(register(firstname, lastname, email, phone, password))
-      history.push('/')
+      dispatch(register(firstname, lastname, email, phone, password));
+      history.push('/');
     }
-  }
+  };
 
   return (
     <div>
@@ -102,21 +104,22 @@ const Signup = ({history, location}) => {
               </div>
 
               <div className="or-container">
-                <div className="left-line"></div>
+                <div className="left-line" />
                 <span>or</span>
-                <div className="right-line"></div>
+                <div className="right-line" />
               </div>
 
-              <div className="mt-5"></div>
-              
+              <div className="mt-5" />
+
               <button className="btn btn-outline-primary p-3 btn-block">
                 <img src={googleIcon} alt="Google Icon" className="mr-1" />
                 Google
               </button>
 
-              <p className="no-account text-center">Already have account? 
+              <p className="no-account text-center">
+                Already have account?
                 {/* <LinkContainer to={redirect ? `/login?redirect=${redirect}` : "/login"}>  */}
-                <LinkContainer to="/login"> 
+                <LinkContainer to="/login">
                   <a>Login</a>
                 </LinkContainer>
                 {/* <a href="#">Create an account</a> */}
@@ -127,7 +130,7 @@ const Signup = ({history, location}) => {
 
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;

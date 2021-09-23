@@ -1,12 +1,11 @@
 import { Row, Col } from 'react-bootstrap';
-import { Cart4, ChevronRight, CurrencyDollar, Eye, Lock } from 'react-bootstrap-icons';
-import { Clock } from 'react-bootstrap-icons';
-import ImageHome from '../../images/homepage-multi-icons.png'
+import {
+  Cart4, ChevronRight, CurrencyDollar, Eye, Lock, 
+, Clock } from 'react-bootstrap-icons';
+import ImageHome from '../../images/homepage-multi-icons.png';
 
-
-const WhoWeAre = () => {
-  return (
-    <>
+const WhoWeAre = () => (
+  <>
       <Row className="pb-4">
         <Col sm={12} md={12} lg={12}>
           <h5 className="ourProduct">Remittance Problems</h5>
@@ -18,7 +17,7 @@ const WhoWeAre = () => {
             <div className="col-md-6">
               <div className=" card card-outline-primary mb-4 mt-2">
                 <div className="remittanc-icon">
-                  <Clock size={40} className="text-primary bg-white rounded-circle"/>
+                  <Clock size={40} className="text-primary bg-white rounded-circle" />
                 </div>
                 <h5 className="text-primary text-center py-4 mt-2">Speed</h5>
                 <div className="bg-primary card-body">
@@ -27,10 +26,10 @@ const WhoWeAre = () => {
               </div>
             </div>
             <div className="col-md-6">
-                <div className="items card mb-4 mt-2">
-                <div className="remittanc-icon">
+              <div className="items card mb-4 mt-2">
+                  <div className="remittanc-icon">
                   <CurrencyDollar size={40} className="text-primary bg-white rounded-circle remittanc-icon" />
-                  </div>
+                </div>
                   <h5 className="text-primary text-center py-4">Cost</h5>
                   <div className="bg-primary card-body">
                     <p className="text-white text-center">Fees and FXcan cost up to 14%</p>
@@ -38,10 +37,10 @@ const WhoWeAre = () => {
                 </div>
             </div>
             <div className="col-md-6">
-                <div className="items card mb-4 mt-2">
+              <div className="items card mb-4 mt-2">
                   <div className="remittanc-icon">
-                  <Cart4 size={40} className="text-primary remittanc-icon" />
-                  
+                    <Cart4 size={40} className="text-primary remittanc-icon" />
+
                   </div>
                   <h5 className="text-primary text-center py-4">Convenience</h5>
                   <div className="bg-primary card-body">
@@ -50,9 +49,9 @@ const WhoWeAre = () => {
                 </div>
             </div>
             <div className="col-md-6">
-                <div className="items card mb-4 mt-2">
+              <div className="items card mb-4 mt-2">
                   <div className="remittanc-icon">
-                  <Lock size={40} className="text-primary bg-white rounded-circle remittanc-icon" />
+                    <Lock size={40} className="text-primary bg-white rounded-circle remittanc-icon" />
                   </div>
                   <h5 className="text-primary text-center py-4">Safety</h5>
                   <div className="bg-primary card-body">
@@ -61,9 +60,9 @@ const WhoWeAre = () => {
                 </div>
             </div>
             <div className="col-md-6">
-                <div className="items card mb-4 mt-2">
+              <div className="items card mb-4 mt-2">
                   <div className="remittanc-icon">
-                  <Eye size={40} className="text-primary bg-white rounded-circle remittanc-icon" />
+                    <Eye size={40} className="text-primary bg-white rounded-circle remittanc-icon" />
                   </div>
                   <h5 className="text-primary text-center py-4">Transparency</h5>
                   <div className="bg-primary card-body">
@@ -80,18 +79,16 @@ const WhoWeAre = () => {
             </h5>
             <p className="product-text">
               Despite these problems, Traditional Remittance continues to
-              be utilized by the underbanked and unbanked population due 
+              be utilized by the underbanked and unbanked population due
               to familiarity and lack of viable alternatives.
             </p>
             <div className="text-center">
-                <img src={ImageHome} alt="Multi-icons-home img-fluid"  />
+              <img src={ImageHome} alt="Multi-icons-home img-fluid" />
             </div>
           </div>
         </Col>
-      </Row> 
+      </Row>
     </>
-  )
-}
+);
 
-
-export default WhoWeAre
+export default WhoWeAre;
