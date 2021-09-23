@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  Row, Col, Image, Form, 
-, Card } from 'react-bootstrap';
+import { Row, Col, Image, Form, Card } from 'react-bootstrap';
 import { ChevronRight } from 'react-bootstrap-icons';
 import Banner from '../../images/bill-image/bill-crypto.png';
 import Destv from '../../images/bill-image/dstv.png';

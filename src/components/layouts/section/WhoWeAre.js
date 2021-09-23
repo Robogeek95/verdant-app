@@ -1,7 +1,5 @@
 import { Row, Col } from 'react-bootstrap';
-import {
-  Cart4, ChevronRight, CurrencyDollar, Eye, Lock, 
-, Clock } from 'react-bootstrap-icons';
+import { Cart4, ChevronRight, CurrencyDollar, Eye, Lock, Clock } from 'react-bootstrap-icons';
 import ImageHome from '../../images/homepage-multi-icons.png';
 
 const WhoWeAre = () => (
