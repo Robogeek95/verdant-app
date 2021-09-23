@@ -18,15 +18,21 @@ const LatestProducts = () => {
     dispatch(listProducts());
   }, [dispatch]);
 
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <Message variant="danger">{error}</Message>;
+  }
+
   return (
     <div>
-      {loading ? <Loader /> : error ? <Message variant="danger">{error}</Message> : (
-        <OwlCarousel className="owl-theme" loop margin={10} responsiveClass responsive={0} items={3} nav>
-          {products.map((product) => (
-            <GroceryProduct product={product} key={product.id} />
-          ))}
-        </OwlCarousel>
-      )}
+      <OwlCarousel className="owl-theme" loop margin={10} responsiveClass responsive={0} items={3} nav>
+        {products.map((product) => (
+          <GroceryProduct product={product} key={product.id} />
+        ))}
+      </OwlCarousel>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { Heart, TrashFill } from 'react-bootstrap-icons';
 import Message from './Message';
 import { addToCart, removeFromCart } from '../../../actions/cartAtions';
+import PropTypes from 'prop-types';
 
 const Cart = ({ match, location, history }) => {
   const productId = match.params.id;
@@ -184,3 +185,9 @@ const Cart = ({ match, location, history }) => {
 };
 
 export default Cart;
+
+Cart.propTypes = {
+  match: PropTypes.element,
+  location: PropTypes.object,
+  history: PropTypes.object
+};

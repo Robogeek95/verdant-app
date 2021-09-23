@@ -41,6 +41,7 @@
     "react/prop-types": "warn",
     "import/prefer-default-export": "off",
     "no-param-reassign": "off",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "jsx-a11y": "off"
   }
 }
