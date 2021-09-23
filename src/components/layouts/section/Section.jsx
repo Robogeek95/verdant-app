@@ -12,7 +12,7 @@ const Section = () => (
       <WhoWeAre />
     </Container>
 
-    <div className="py-3">
+    <div className="py-5">
       <HowWeSolve />
     </div>
 
