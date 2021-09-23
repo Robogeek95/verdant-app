@@ -4,32 +4,33 @@ import HowWeSolve from './HowWeSolve';
 import WhoWeAre from './WhoWeAre';
 import HowItWorks from './HowItWorks';
 import LatestProducts from './LatestProducts';
+import { Container } from 'react-bootstrap';
 
 const Section = () => (
   <>
-    <div className="py-3">
+    <Container className="py-3">
       <WhoWeAre />
-    </div>
+    </Container>
 
     <div className="py-3">
       <HowWeSolve />
     </div>
 
-    <div className="py-3">
+    <Container className="py-3">
       <OurProduct />
-    </div>
+    </Container>
 
     {/* <div className="py-2">
         <OurSolution items={items} />
       </div> */}
 
-    <div className="py-5">
+    <Container className="py-5">
       <HowItWorks />
-    </div>
+    </Container>
 
-    <div className="py-5">
+    <Container className="py-5">
       <LatestProducts />
-    </div>
+    </Container>
   </>
 );
 
