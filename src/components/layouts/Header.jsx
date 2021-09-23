@@ -19,7 +19,7 @@ const Header = () => {
     dispatch(logout());
   };
 
-  const [setProductCategories] = useState([]);
+  const [, setProductCategories] = useState([]);
 
   useEffect(() => {
     const fetchProductsCategories = async () => {
