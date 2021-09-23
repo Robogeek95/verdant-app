@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -11,22 +14,19 @@ import { getUserDetails, updateUserP } from '../actions/userActions';
 // import { userUpdateProfile } from '../actions/userActions'
 // import { userUpdateProfile } from '../actions/userActions'
 
-import cartSideIcon from './images/cart-side-icon.png';
-import heartIcon from './images/heart-icon.png';
-
 const Profile = ({ history, location }) => {
   const [firstname, setFirstName] = useState('');
   const [lastname, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [password] = useState('');
+  const [confirmPassword] = useState('');
   const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
 
   const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, user } = userDetails;
+  const { loading, user } = userDetails;
   // console.log(user)
 
   // Check if the user is logged in. If so bring in the user info

@@ -16,9 +16,7 @@ import Loader from './Loader';
 import Message from './Message';
 import { listProducts } from '../../../actions/productActions';
 
-const Groceries = ({ match, location, history }) => {
-  const [qty, setQty] = useState(0);
-
+const Groceries = () => {
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productList);
@@ -71,8 +69,8 @@ const Groceries = ({ match, location, history }) => {
                         {cat.sub_categories.map((subCat) => (
 
                           <Link to={`/products/groceries/${cat.ref}/${subCat.ref}`} className="text-decoration-none text-dark">
-                          {subCat.name}
-                        </Link>
+                            {subCat.name}
+                          </Link>
                         ))}
                       </Nav>
                     </div>
@@ -87,7 +85,7 @@ const Groceries = ({ match, location, history }) => {
                   <Nav defaultActiveKey="/" className="flex-column footer-nav">
                     <Nav.Link href="/home" className="text-dark">
                       <div className="d-flex">
-                        <img src={image3} alt="New Item Image" className="img-fluid" />
+                        <img src={image3} alt="New Item" className="img-fluid" />
                         <div className="my-auto ml-2">
                           <span className="text-dark" style={{ fontSize: '16px', fontWeight: '500' }}>Tuber of Yam</span>
                           <p className="text-dark" style={{ fontSize: '16px', fontWeight: '400' }}>N 1,000</p>
@@ -96,7 +94,7 @@ const Groceries = ({ match, location, history }) => {
                     </Nav.Link>
                     <Nav.Link href="/home" className="text-dark">
                       <div className="d-flex">
-                        <img src={image4} alt="New Item Image" className="img-fluid" />
+                        <img src={image4} alt="New Item" className="img-fluid" />
                         <div className="my-auto ml-2">
                           <span className="text-dark" style={{ fontSize: '16px', fontWeight: '500' }}>Beans per derica</span>
                           <p className="text-dark" style={{ fontSize: '16px', fontWeight: '400' }}>N 1,000</p>
@@ -105,7 +103,7 @@ const Groceries = ({ match, location, history }) => {
                     </Nav.Link>
                     <Nav.Link href="/home" className="text-dark">
                       <div className="d-flex">
-                        <img src={image5} alt="New Item Image" className="img-fluid" />
+                        <img src={image5} alt="New Item" className="img-fluid" />
                         <div className="my-auto ml-2">
                           <span className="text-dark" style={{ fontSize: '16px', fontWeight: '500' }}>Rice, Pasta, Noodles </span>
                           <p className="text-dark" style={{ fontSize: '16px', fontWeight: '400' }}>N 1,000</p>
@@ -132,7 +130,7 @@ const Groceries = ({ match, location, history }) => {
                   <Col md={6} sm={12}>
                     <div className="pt-4 mx-4 d-flex align-items-center justify-content-center">
                       <span style={{ fontSize: '14px', fontWeight: '400', marginRight: '10px' }}>Sort By:</span>
-                      <DropdownButton id="dropdown-basic-button" title="New Products" className="ms-4 sorted-btn" id="sorted-btn" style={{ fontSize: '12px', fontWeight: '400', backgroundColor: '#C4C4C436' }}>
+                      <DropdownButton id="dropdown-basic-button" title="New Products" className="ms-4 sorted-btn" style={{ fontSize: '12px', fontWeight: '400', backgroundColor: '#C4C4C436' }}>
                         <Dropdown.Item href="#" className="text-dark navlink" style={{ fontSize: '12px', fontWeight: '500' }}>New Products</Dropdown.Item>
                         <Dropdown.Item href="#" className="text-dark navlink" style={{ fontSize: '12px', fontWeight: '400' }}>Price - Low to High</Dropdown.Item>
                         <Dropdown.Item href="#" className="text-dark navlink" style={{ fontSize: '12px', fontWeight: '400' }}>Price - High to Low</Dropdown.Item>

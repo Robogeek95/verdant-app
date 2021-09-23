@@ -1,4 +1,7 @@
+import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
+
 import Header from './components/layouts/Header';
 import Footer from './components/layouts/Footer';
 import Slider from './components/layouts/Slider';
@@ -7,13 +10,11 @@ import BillPayments from './components/products/billsPayment/BillPayments';
 import Groceries from './components/products/groceries/Groceries';
 import GroceryDetail from './components/products/groceries/GroceryDetail';
 import Cart from './components/products/groceries/Cart';
-import { Container } from 'react-bootstrap';
 import CryptoPayment from './components/products/billsPayment/CryptoPayment';
 import InvoiceUpload from './components/products/invoiceUpload/InvoiceUpload';
 import Checkout from './components/products/checkout/Checkout';
 import Section from './components/layouts/section/Section';
 import About from './components/layouts/About';
-import React from 'react';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import FAQ from './components/FAQ';

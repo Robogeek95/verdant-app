@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import underline from './images/underline.png';
 import contactImg1 from './images/contact-img1.png';
@@ -53,14 +54,14 @@ const Contact = () => (
         }}
         >
           <div className="pl-3">
-            <img src={contactImg1} alt="Contact US photo 1" />
+            <img src={contactImg1} alt="Contact US 1" />
           </div>
           <div>
             <div style={{ marginLeft: '-30px' }}>
-              <img src={contactImg2} alt="Contact US photo 2" />
+              <img src={contactImg2} alt="Contact US 2" />
             </div>
             <div style={{ marginLeft: '-60px' }}>
-              <img src={contactImg3} alt="Contact US photo 3" />
+              <img src={contactImg3} alt="Contact US 3" />
             </div>
           </div>
         </div>

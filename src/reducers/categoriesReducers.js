@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { CATEGORIES_FAIL, CATEGORIES_REQUEST, CATEGORIES_SUCCESS } from '../constants/categoriesContant';
 
 export const categoriesReducer = (state = { categoryItems: [] }, action) => {

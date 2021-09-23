@@ -3,6 +3,11 @@ import {
   Col, Container, Row, Nav,
 } from 'react-bootstrap';
 
+const typrography = {
+  borderRadius: '5px',
+  boxShadow: '0px 10px 30px rgba(116, 167, 249, 0.21)',
+};
+
 const Footer = () => (
   <footer className="py-5 footer">
     <Container>
@@ -80,10 +85,5 @@ const Footer = () => (
     </Container>
   </footer>
 );
-
-const typrography = {
-  borderRadius: '5px',
-  boxShadow: '0px 10px 30px rgba(116, 167, 249, 0.21)',
-};
 
 export default Footer;

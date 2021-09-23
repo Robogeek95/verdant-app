@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+/* eslint-disable react/prop-types */
+import React from 'react';
 import { Card } from 'react-bootstrap';
 import { Heart } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
-import image1 from '../../images/groceries-image/item1.png';
-import { addToCart } from '../../../actions/cartAtions';
 
 const GroceryProduct = ({ product }) => (
   <>

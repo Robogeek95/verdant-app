@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Row, Col, Card, Form, Button,
@@ -19,7 +19,7 @@ const Cart = ({ match, location, history }) => {
   const { cartItems } = cart;
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+  const { userInfo } = userLogin;
 
   useEffect(() => {
     if (productId) {
@@ -43,7 +43,7 @@ const Cart = ({ match, location, history }) => {
     <div className="py-5">
       <Row className="py-4">
         <Col sm={12} md={12} lg={12} className="py-3">
-          <h6 style={{ fontSize: '18px', fontWeight: '500', fontWeight: '26.44' }}>Shopping Cart</h6>
+          <h6 style={{ fontSize: '18px', fontWeight: '26.44' }}>Shopping Cart</h6>
         </Col>
       </Row>
 
@@ -77,7 +77,7 @@ const Cart = ({ match, location, history }) => {
                 <Row className="bg-white py-4" key={item.product}>
                   <Col md={6} className="py-4">
                     <div className="d-flex justify-space-between">
-                      <img src={item.image} alt="Cart Item Image" style={{ height: '300px', width: '300px' }} className="img-fluid" />
+                      <img src={item.image} alt="Cart Item" style={{ height: '300px', width: '300px' }} className="img-fluid" />
                       <div className="ml-4">
                         <p style={{ fontSize: '18px', fontWeight: '500' }} className="pt-5">{item.name}</p>
                       </div>
@@ -86,9 +86,10 @@ const Cart = ({ match, location, history }) => {
                   <Col md={3} as="div" className="my-auto">
                     <div>
                       <div className="inc-wrapper mb-4 flex-fill">
-                        <button className="minus-btn" onClick={() => dispatch(addToCart(item.product, item.qty > 1 ? item.qty-- : 1))}>&#8722;</button>
+                        {/* <button className="minus-btn" onClick={() => dispatch(addToCart(item.product, item.qty > 1 ? item.qty-- : 1))}>&#8722;</button> */}
+                        <button className="minus-btn">&#8722;</button>
                         <span className="item-number">{item.qty}</span>
-                        <button className="plus-btn" type="button" onClick={() => dispatch(addToCart(item.product, item.qty++))}>&#43;</button>
+                        <button className="plus-btn" type="button" onClick={() => dispatch(addToCart(item.product, item.qty + 1))}>&#43;</button>
                       </div>
                     </div>
                   </Col>

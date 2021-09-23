@@ -2,12 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Card } from 'react-bootstrap';
 import {
-  ChevronRight, User, Heart, Cart, CartFill,
+  ChevronRight, Heart, CartFill,
 } from 'react-bootstrap-icons';
 import userNoFillIcon from './images/user-nofill-icom.png';
 import noOrders from './images/no-orders.png';
-import cartSideIcon from './images/cart-side-icon.png';
-import heartIcon from './images/heart-icon.png';
 
 const Orders = () => (
   <div>

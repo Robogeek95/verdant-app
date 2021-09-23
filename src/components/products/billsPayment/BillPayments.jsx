@@ -1,6 +1,6 @@
 import React from 'react';
 import CardPayment from './CardPayment';
-import CryptoPayment from './CryptoPayment';
+// import CryptoPayment from './CryptoPayment';
 
 const BillPayments = () => (
   <>

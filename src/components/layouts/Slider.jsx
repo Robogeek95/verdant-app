@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Image1 from '../images/slider-img1.png';
 import Image2 from '../images/slider-img2.png';
@@ -19,14 +20,14 @@ const Slider = () => (
                 <h3 className="carousel-text">
                   Why Send Cash,
                   When you can send
-                    {' '}
+                  {' '}
                   <br />
                   {' '}
                   <span className="text-primary">Goods & Services</span>
                   <div className="line" />
                   <div className="py-5">
-                      <Link to="/" className="btn btn-primary p-2">Get Started</Link>
-                    </div>
+                    <Link to="/" className="btn btn-primary p-2">Get Started</Link>
+                  </div>
                 </h3>
 
               </div>
@@ -40,20 +41,20 @@ const Slider = () => (
               <div className="col-md-6">
                 <h3 className="carousel-text">
                   75% of cash from
-                    {' '}
+                  {' '}
                   <br />
                   {' '}
                   remittance is spent
-                    {' '}
+                  {' '}
                   <br />
                   {' '}
                   in
-                    {' '}
+                  {' '}
                   <span className="text-primary">4 categories</span>
                   <div className="line" />
                   <div className="py-5">
-                      <Link to="/" className="btn btn-primary p-2">Get Started</Link>
-                    </div>
+                    <Link to="/" className="btn btn-primary p-2">Get Started</Link>
+                  </div>
                 </h3>
               </div>
               <div className="col-md-6 d-none d-md-block">
@@ -65,16 +66,16 @@ const Slider = () => (
             <div className="row">
               <div className="col-md-6">
                 <h3 className="carousel-text">
-                  We accept all forms 
-{' '}
+                  We accept all forms
+                  {' '}
                   <br />
                   {' '}
                   of
-                    <span className="text-primary"> Cryptocurrency</span>
+                  <span className="text-primary"> Cryptocurrency</span>
                   <div className="line-crypto" />
                   <div className="py-5">
-                      <Link to="/" className="btn btn-primary p-2">Get Started</Link>
-                    </div>
+                    <Link to="/" className="btn btn-primary p-2">Get Started</Link>
+                  </div>
                 </h3>
               </div>
               <div className="col-md-6 d-none d-md-block">

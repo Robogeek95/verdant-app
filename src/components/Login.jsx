@@ -1,9 +1,12 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Row, Col, Card, Form,
+  Row,
 } from 'react-bootstrap';
-import { LinkContainer, Link } from 'react-router-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import Logo from './images/logo.PNG';
 import loginBarner from './images/login-barner.png';
 import eye from './images/eye.png';
@@ -67,7 +70,7 @@ const Login = ({ location, history }) => {
               <div className="form-group">
                 <input className="checkbox" type="checkbox" id="checkbox" />
                 <label htmlFor="checkbox" id="checkbox-label">Remember Me</label>
-                <a href="#">Forgot Password?</a>
+                <p>Forgot Password?</p>
               </div>
               <div className="mb-5">
                 <input className="btn btn-primary btn-block btn-lg" type="submit" value="Login" />
@@ -92,7 +95,7 @@ const Login = ({ location, history }) => {
             </button>
 
             <p className="no-account text-center">
-              Don't have an account?
+              Don&apos;t have an account?
               {/* <LinkContainer to={redirect ? `/register?redirect=${redirect}` : "/signup"}>  */}
               <LinkContainer to="/signup">
                 <a>Create an account</a>

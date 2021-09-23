@@ -91,21 +91,21 @@ const InvoiceUpload = () => (
               <Form.Group className="mb-3 mr-2 formControl" controlId="formBasicEmail">
                 <Form.Label style={{ fontSize: '18px', fontWeight: '400' }}>
                   Surname
-                    <span className="text-danger">*</span>
+                  <span className="text-danger">*</span>
                 </Form.Label>
                 <Form.Control type="text" placeholder="Enter Surname" />
               </Form.Group>
               <Form.Group className="mb-3 mr-2 formControl" controlId="formBasicEmail">
                 <Form.Label style={{ fontSize: '18px', fontWeight: '400' }}>
                   Surname
-                    <span className="text-danger">*</span>
+                  <span className="text-danger">*</span>
                 </Form.Label>
                 <Form.Control type="text" placeholder="Enter Surname" />
               </Form.Group>
               <Form.Group className="mb-3 formControl" controlId="formBasicEmail">
                 <Form.Label style={{ fontSize: '18px', fontWeight: '400' }}>
                   Surname
-                    <span className="text-danger">*</span>
+                  <span className="text-danger">*</span>
                 </Form.Label>
                 <Form.Control type="text" placeholder="Enter Surname" />
               </Form.Group>

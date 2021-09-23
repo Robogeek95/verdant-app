@@ -1,7 +1,33 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { Plus, Dash } from 'react-bootstrap-icons';
-import PropTypes from 'prop-types';
+
+const wraper = {
+  fontFamily: 'Heebo',
+  fontStyle: 'normal',
+  fontWeight: ' 500',
+  fontSize: '30px',
+  lineHeight: '173.5%',
+  color: '#3785F7',
+};
+
+const title = {
+  fontFamily: 'Heebo',
+  fontStyle: 'normal',
+  fontWeight: ' 500',
+  fontSize: '20px',
+  lineHeight: '173.5%',
+  color: '#3785F7',
+};
+
+const page = {
+  fontFamily: 'Heebo',
+  fontStyle: 'normal',
+  fontWeight: '400',
+  fontSize: '16px',
+  lineHeight: '134.5%',
+};
 
 const OurSolution = ({ items }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -15,7 +41,7 @@ const OurSolution = ({ items }) => {
 
     return (
       <div key={item.id} className="card card-body">
-        <div className={`title ${active}`} onClick={() => onTitleClick(index)} className="card-title" style={{ cursor: 'pointer' }}>
+        <div aria-hidden="true" className={`title ${active} card-title`} onClick={() => onTitleClick(index)} style={{ cursor: 'pointer' }}>
           <h6 style={title}>
             {item.title}
             <span className="float-right">
@@ -64,35 +90,4 @@ const OurSolution = ({ items }) => {
   );
 };
 
-const wraper = {
-  fontFamily: 'Heebo',
-  fontStyle: 'normal',
-  fontWeight: ' 500',
-  fontSize: '30px',
-  lineHeight: '173.5%',
-  color: '#3785F7',
-};
-
-const title = {
-  fontFamily: 'Heebo',
-  fontStyle: 'normal',
-  fontWeight: ' 500',
-  fontSize: '20px',
-  lineHeight: '173.5%',
-  color: '#3785F7',
-};
-
-const page = {
-  fontFamily: 'Heebo',
-  fontStyle: 'normal',
-  fontWeight: '400',
-  fontSize: '16px',
-  lineHeight: '134.5%',
-};
-
-OurSolution.propTypes = {
-  page: PropTypes.object.isRequired,
-  title: PropTypes.object.isRequired,
-  wraper: PropTypes.object.isRequired,
-};
 export default OurSolution;

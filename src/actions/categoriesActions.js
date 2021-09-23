@@ -6,7 +6,6 @@ export const getCategories = () => async (dispatch) => {
     dispatch({ type: CATEGORIES_REQUEST });
 
     const { data } = await axios.get('https://verdant-store.herokuapp.com/product/categories');
-    console.log(data.categories);
 
     dispatch({
       type: CATEGORIES_SUCCESS,

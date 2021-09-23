@@ -32,3 +32,5 @@ export const cartReducer = (state = { cartItems: [], shippingAddress: {} }, acti
       return state;
   }
 };
+
+export default cartReducer;

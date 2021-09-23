@@ -1,9 +1,12 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Row, Col, Card, Form,
+  Row,
 } from 'react-bootstrap';
-import { LinkContainer, Link } from 'react-router-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import Logo from './images/logo.PNG';
 import signupBarner from './images/signup-barner.png';
 import eye from './images/eye.png';
@@ -24,7 +27,7 @@ const Signup = ({ history, location }) => {
   const dispatch = useDispatch({ history });
 
   const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
+  const { loading, userInfo } = userRegister;
 
   const redirect = location.search ? location.search.split('=')[1] : '/';
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Row, Card } from 'react-bootstrap';
 import {
-  ChevronRight, Facebook, Twitter, Linkedin, Cursor, Heart,
+  ChevronRight, Facebook, Twitter, Linkedin, Cursor,
 } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import { listProductDetails } from '../../../actions/productActions';
@@ -13,7 +13,7 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 import LatestProducts from '../../layouts/section/LatestProducts';
 
 const GroceryDetail = ({ history, match }) => {
-  let [qty, setQty] = useState(1);
+  const [setQty, qty] = useState(1);
 
   const dispatch = useDispatch();
 
@@ -79,9 +79,9 @@ const GroceryDetail = ({ history, match }) => {
                             <span style={{ fontSize: '18px', fontWeight: '400' }}>Quantity</span>
                           </div>
                           <div className="inc-wrapper mb-4 flex-fill">
-                            <button type="button" className="minus-btn" onClick={() => setQty(qty > 1 ? qty-- : 1)}>&#8722;</button>
+                            <button type="button" className="minus-btn" onClick={() => setQty(qty > 1 ? qty + 1 : 1)}>&#8722;</button>
                             <span className="item-number">{qty}</span>
-                            <button type="button" className="plus-btn" onClick={() => setQty(qty++)}>&#43;</button>
+                            <button type="button" className="plus-btn" onClick={() => setQty(qty + 1)}>&#43;</button>
                           </div>
                         </div>
                         <div style={{ width: '300px' }}>

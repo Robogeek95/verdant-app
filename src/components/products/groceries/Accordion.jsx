@@ -5,6 +5,7 @@ const Accordion = ({ title, children }) => {
   return (
     <div className="accordion-wrapper">
       <div
+        aria-hidden="true"
         className={`accordion-title ${isOpen ? 'open' : ''}`}
         onClick={() => setOpen(!isOpen)}
       >

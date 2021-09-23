@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Card, Col, Row, Form, Image,
 } from 'react-bootstrap';
-import { Archive, Heart, Record2 } from 'react-bootstrap-icons';
 import Crypto from '../../images/bill-image/cryto.png';
 import CardMaster from '../../images/bill-image/card-master.png';
-import CardCheckout from './CardCheckout';
 import CryptoCheckout from './CryptoCheckout';
 import { cartShippingAddress } from '../../../actions/cartAtions';
 
-const Checkout = ({ history }) => {
+const Checkout = () => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress, cartItems } = cart;
 
@@ -20,16 +18,15 @@ const Checkout = ({ history }) => {
   const [receiversCity, setReceiversCity] = useState(shippingAddress.setReceiversCity);
   const [receiversState, setReceiversState] = useState(shippingAddress.setReceiversState);
   const [deliveryMethod, setDeliveryMethod] = useState(shippingAddress.deliveryMethod);
-  const [paymentMethod, setPaymentMethod] = useState(shippingAddress.paymentMethod);
+  const [paymentMethod] = useState(shippingAddress.paymentMethod);
 
-  const [cardNumber, setCardNumber] = useState();
-  const [cardExpiry, setCardExpiry] = useState();
-  const [cardCVC, setCardCVC] = useState();
-  const [country, setCountry] = useState(shippingAddress.country);
+  const [, setCardNumber] = useState();
+  const [, setCardExpiry] = useState();
+  const [, setCardCVC] = useState();
+  const [country] = useState(shippingAddress.country);
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
-  const [exchangeRate, setExchangeRate] = useState(shippingAddress.exchangeRate);
-  const [crypto, setCrypto] = useState(shippingAddress.crypto);
-
+  const [exchangeRate] = useState(shippingAddress.exchangeRate);
+  const [crypto] = useState(shippingAddress.crypto);
   const dispatch = useDispatch();
 
   const submitHandler = (e) => {
