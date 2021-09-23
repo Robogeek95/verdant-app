@@ -31,6 +31,11 @@ const OurProduct = () => (
               {' '}
               Medical (Clinic & Pharmacy)
             </li>
+            <li className="product-text">
+              <span className="text-danger">*</span>
+              {' '}
+              Invoice Settlement (School fees, house rents, hospital bills)
+            </li>
           </ul>
         </div>
         <div style={overlay}>
@@ -48,24 +53,25 @@ const OurProduct = () => (
       </Col>
       <Col sm={12} md={6} lg={6} className="mx-auto">
         <div className="grid-item">
+        <Link to="/products/billPayment">
+            <div className="item3" style={items}>
+              <h6 style={itemText}>Bill Payment <br /> (Utilities & Telecom)</h6>
+            </div>
+          </Link>
           <Link to="/products/groceries">
             <div className="item1" style={items}>
-              <h6 style={itemText}>Groceries</h6>
+              <h6 style={itemText}>Household <br /> (Groceries, Fuel, Clothing)</h6>
             </div>
           </Link>
           <Link to="/products/groceries">
             <div className="item2" style={items}>
-              <h6 style={itemText}>Medical</h6>
+              <h6 style={itemText}>Medical <br /> (Clinic & Pharmacy)</h6>
             </div>
           </Link>
-          <Link to="/products/billPayment">
-            <div className="item3" style={items}>
-              <h6 style={itemText}>Bill Payment</h6>
-            </div>
-          </Link>
+          
           <Link to="/products/invoiceUpload">
             <div className="item4" style={items}>
-              <h6 style={itemText}>Invoice Upload</h6>
+              <h6 style={itemText}>Invoice Settlement <br />  (School fees, house rents, hospital bills)</h6>
             </div>
           </Link>
         </div>

@@ -81,7 +81,7 @@ const WhoWeAre = () => (
               to familiarity and lack of viable alternatives.
             </p>
             <div className="text-center">
-              <img src={ImageHome} alt="Multi-icons-home img-fluid" />
+              <img src="./images/western-union.png" alt="Multi-icons-home img-fluid" width="897px" height="864px" className="img-fluid" />
             </div>
           </div>
         </Col>
