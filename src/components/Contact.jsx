@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import underline from './images/underline.png';
 import contactImg1 from './images/contact-img1.png';

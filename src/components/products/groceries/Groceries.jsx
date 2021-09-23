@@ -61,14 +61,14 @@ const Groceries = () => {
             <Card className="mb-5">
               <Accordion title="Category" style={{ fontSize: '20px', fontWeight: '500' }}>
                 <Card.Body>
-                  {productCategories.map((cat) => (
+                  {productCategories.map((cat, index) => (
 
-                    <div>
+                    <div key={`cat-${index}`}>
                       <Nav defaultActiveKey="/" className="flex-column footer-nav">
 
-                        {cat.sub_categories.map((subCat) => (
+                        {cat.sub_categories.map((subCat,index) => (
 
-                          <Link to={`/products/groceries/${cat.ref}/${subCat.ref}`} className="text-decoration-none text-dark">
+                          <Link key={`cat-${index}`} to={`/products/groceries/${cat.ref}/${subCat.ref}`} className="text-decoration-none text-dark">
                             {subCat.name}
                           </Link>
                         ))}
