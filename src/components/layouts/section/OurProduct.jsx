@@ -45,22 +45,22 @@ const OurProduct = () => (
           </p>
           <p className="product-text">75% of all cash received from remittance is spent in 4 categories:</p>
           <ul>
-            <li className="product-text">
+            <li className="product-text text-muted">
               <span className="text-danger">*</span>
               {' '}
               Bill Payment (Utilities & Telecom)
             </li>
-            <li className="product-text">
+            <li className="product-text text-muted">
               <span className="text-danger">*</span>
               {' '}
-              Household (Groceries, Fuel, Clothing)
+              Household (Groceries & Clothing)
             </li>
-            <li className="product-text">
+            <li className="product-text text-muted">
               <span className="text-danger">*</span>
               {' '}
               Medical (Clinic & Pharmacy)
             </li>
-            <li className="product-text">
+            <li className="product-text text-muted">
               <span className="text-danger">*</span>
               {' '}
               Invoice Settlement (School fees, house rents, hospital bills)
@@ -98,7 +98,7 @@ const OurProduct = () => (
                 Household
                 <br />
                 {' '}
-                (Groceries, Fuel, Clothing)
+                (Groceries & Clothing)
               </h6>
             </div>
           </Link>

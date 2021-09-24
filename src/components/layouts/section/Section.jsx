@@ -8,7 +8,7 @@ import { Container } from 'react-bootstrap';
 
 const Section = () => (
   <>
-    <Container className="py-3">
+    <Container className="py-3" id="whoWeAre">
       <WhoWeAre />
     </Container>
 
