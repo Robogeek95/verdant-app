@@ -18,7 +18,7 @@ const HowWeSolve = () => (
       <hr
         style={{
           borderWidth: "7px",
-          width: "390px",
+          maxWidth: "390px",
           borderColor: "#3446aa3d",
           // borderColor: "linear-gradient(to left, #71B280, #134E5E)",
         }}
@@ -33,7 +33,7 @@ const HowWeSolve = () => (
       </p>
     </div>
 
-    <div className="p-5 text-white" style={{ backgroundColor: "#3785f7" }}>
+    <div className="p-3 p-md-5 text-white" style={{ backgroundColor: "#3785f7" }}>
       <Row className="container mx-auto">
         <Col sm={12} md={6} lg={6}>
           <div>
@@ -69,8 +69,8 @@ const HowWeSolve = () => (
       </Row>
     </div>
 
-    <div className="row py-5 container mx-auto align-items-center">
-      <div className="col">
+    <div className="row pt-5 container mx-auto align-items-center">
+      <div className="col-12 col-md-6">
         <div className="row">
           <div className="col-4">
             <img src="./images/convenant uni.jpeg" className="img-fluid" />
@@ -85,7 +85,7 @@ const HowWeSolve = () => (
           </div>
         </div>
       </div>
-      <div className="col">
+      <div className="col-12 col-md-6 mt-4 mt-md-0">
         <p className="h5 font-weight-normal">
           Our local prepaid Visa & Mastercard product distribution agreement
           will allow discretionary spending options for the remaining 5%.
