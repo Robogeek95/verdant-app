@@ -22,6 +22,8 @@ import Profile from "./components/Profile";
 import Orders from "./components/Orders";
 import SavedItems from "./components/SavedItems";
 
+import 'react-toastify/dist/ReactToastify.css';
+
 const App = () => (
   <Router>
     <Header />
