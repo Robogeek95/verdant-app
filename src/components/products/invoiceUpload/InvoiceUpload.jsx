@@ -6,7 +6,7 @@ import { ChevronRight } from 'react-bootstrap-icons';
 import Banner from '../../images/bill-image/invoicUpload-banner.png';
 
 const InvoiceUpload = () => (
-  <div>
+  <div className="container py-4">
     <Row>
       <Col sm={12} md={12} lg={12} className="py-3">
         <h6 style={{ fontSize: '18px', fontWeight: '400' }}>

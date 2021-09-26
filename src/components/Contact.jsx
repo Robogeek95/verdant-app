@@ -5,7 +5,7 @@ import contactImg2 from './images/contact-img2.png';
 import contactImg3 from './images/contact-img3.png';
 
 const Contact = () => (
-  <div className="py-5">
+  <div className="py-5 container">
     <div className="container-login">
       <div className="left">
         <div className="login-form">

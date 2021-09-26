@@ -37,7 +37,7 @@ const Checkout = () => {
   };
 
   return (
-    <section className="py-5">
+    <section className="container py-5">
       <Row className="py-3">
         <Col sm={12} md={12} lg={12}>
           <h5 style={{ fontSize: '18px', fontWeight: '500' }}>CHECKOUT</h5>

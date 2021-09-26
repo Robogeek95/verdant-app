@@ -4,7 +4,7 @@ import { ChevronRight } from 'react-bootstrap-icons';
 import faqImg from './images/FAQ-barner.png';
 
 const FAQ = () => (
-  <div className="py-4">
+  <div className="py-4 container">
     <Row>
       <Col sm={12} md={12} lg={12} className="py-3">
         <h6 style={{ fontSize: '16px', fontWeight: '400' }}>

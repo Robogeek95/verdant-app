@@ -15,7 +15,7 @@ import CardMaster from '../../images/bill-image/card-master.png';
 // import CardPayment from './CardPayment';
 
 const CardPayment = () => (
-  <div className="py-4">
+  <div className="container py-4">
     <Row>
       <Col sm={12} md={12} lg={12} className="py-3">
         <h6 style={{ fontSize: '18px', fontWeight: '400' }}>

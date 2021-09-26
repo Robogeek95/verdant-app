@@ -41,7 +41,7 @@ const Cart = ({ match, location, history }) => {
   };
 
   return (
-    <div className="py-5">
+    <div className="py-5 container">
       <Row className="py-4">
         <Col sm={12} md={12} lg={12} className="py-3">
           <h6 style={{ fontSize: '18px', fontWeight: '26.44' }}>Shopping Cart</h6>
