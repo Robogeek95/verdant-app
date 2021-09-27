@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Col, Row, DropdownButton, Dropdown, Card, Nav } from "react-bootstrap";
 import { ChevronRight } from "react-bootstrap-icons";
 import axios from "../../../utilities/axios";
-import { Link } from "react-router-dom";
 import image2 from "../../images/groceries-image/grocery-banner.png";
 // import image3 from "../../images/groceries-image/item3.png";
 import Accordion from "./Accordion";
@@ -26,6 +25,8 @@ const Groceries = () => {
   });
 
   const [newProducts, setNewProducts] = useState([]);
+
+  const [category, setCategory] = useState({ name: "all categories", ref: "" });
 
   // fetch categories
   useEffect(() => {
@@ -54,8 +55,12 @@ const Groceries = () => {
       });
   }, []);
 
-  // fetch products
+  // fetch all products
   useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  function fetchProducts() {
     setProducts({ ...products, loading: true });
     axios
       .get("/product/catalog")
@@ -69,9 +74,30 @@ const Groceries = () => {
         setProducts({ ...products, loading: false, error: message });
         toast(message);
       });
-  }, []);
+  }
 
-  console.log(products);
+  // fetch products by category
+  useEffect(() => {
+    if (category.ref) {
+      setProducts({ ...products, loading: true });
+      axios
+        .get(`/product/catalog/category/${category.ref}`)
+        .then((res) => {
+          setProducts({
+            ...products,
+            data: res.data?.products,
+            loading: false,
+          });
+        })
+        .catch((error) => {
+          handleApiError(error);
+          let message = formatApiError(error);
+
+          setProducts({ ...products, loading: false, error: message });
+          toast(message);
+        });
+    }
+  }, [category]);
 
   // set new products
   useEffect(() => {
@@ -122,24 +148,41 @@ const Groceries = () => {
                       <Loader />
                     </div>
                   ) : (
-                    productCategories.data.map((cat) => (
-                      <div key={cat.ref}>
-                        <Nav
-                          defaultActiveKey="/"
-                          className="flex-column footer-nav"
-                        >
-                          {cat.sub_categories.map((subCat) => (
-                            <Link
-                              key={subCat.ref}
-                              to={`/products/groceries/${cat.ref}/${subCat.ref}`}
-                              className="text-decoration-none text-dark"
+                    <>
+                      <button
+                        onClick={() => {
+                          setCategory({
+                            ...category,
+                            name: "all categories",
+                          });
+                          fetchProducts();
+                        }}
+                        className="btn text-dark text-left mb-2"
+                      >
+                        All
+                      </button>
+                      {productCategories.data.map((cat) => (
+                        <div key={cat.ref}>
+                          <Nav
+                            defaultActiveKey="/"
+                            className="flex-column footer-nav"
+                          >
+                            <button
+                              onClick={() =>
+                                setCategory({
+                                  ...category,
+                                  ref: cat.ref,
+                                  name: cat.category,
+                                })
+                              }
+                              className="btn text-dark text-left mb-2"
                             >
-                              {subCat.name}
-                            </Link>
-                          ))}
-                        </Nav>
-                      </div>
-                    ))
+                              {cat.category}
+                            </button>
+                          </Nav>
+                        </div>
+                      ))}
+                    </>
                   )}
                 </Card.Body>
               </Accordion>
@@ -200,9 +243,13 @@ const Groceries = () => {
                     <div className="pt-4 mx-4">
                       <h5
                         className="text-dark grocery-header-text"
-                        style={{ fontSize: "18px", fontWeight: "500" }}
+                        style={{
+                          fontSize: "18px",
+                          fontWeight: "500",
+                          textTransform: "capitalize",
+                        }}
                       >
-                        Beverage and Cereals
+                        {category.name}
                       </h5>
                     </div>
                   </Col>
@@ -258,6 +305,13 @@ const Groceries = () => {
                 {products.loading ? (
                   <div className="py-5">
                     <Loader />
+                  </div>
+                ) : !products.data.length >= 1 ? (
+                  <div className="p-5 text-center">
+                    <p className="h4">
+                      No products found{" "}
+                      {category && `for ${category.name} category`}
+                    </p>
                   </div>
                 ) : (
                   <Row>
