@@ -13,6 +13,8 @@ import {
   userUpdateProfileReducer,
 } from "./reducers/userReducers";
 import { categoriesReducer } from "./reducers/categoriesReducers";
+// import axios from "./utilities/axios";
+// import handleApiError from "./utilities/handleApiError";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -37,8 +39,20 @@ const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
   ? JSON.parse(localStorage.getItem("shippingAddress"))
   : {};
 
+// const getCartItemsFromDB = async () =>
+//   await axios
+//     .get("/product/cart")
+//     .then((res) => {
+//       console.log(res.data);
+//       return res.data?.products || [];
+//     })
+//     .catch((error) => handleApiError(error));
+
 const initialState = {
   cart: {
+    // cartItems: userInfoFromStorage
+    //   ? getCartItemsFromDB()
+    //   : cartItemsFromStorage,
     cartItems: cartItemsFromStorage,
     shippingAddress: shippingAddressFromStorage,
     total: 0,

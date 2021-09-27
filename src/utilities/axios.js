@@ -2,7 +2,7 @@ import axios from "axios";
 import { base_api_url } from "./config";
 
 const token =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODEwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTU5MTkxOTI5MywiZXhwIjoxNjI3OTE5MjkzLCJuYmYiOjE1OTE5MTkyOTMsImp0aSI6InRmdjZWbGh2U2J2TVlSVjMiLCJzdWIiOjMsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJpZCI6M30.6jD56H0ZcFRVHIqla5KZv_soGbxSM4Y1GW14Rl4VNWU";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMmQyYTdmMjVhZjk2ZTEzMGNlZDZkOCIsImVtYWlsIjoidGVlQGdtYWlsLmNvbSIsImV4cCI6MTYzMjI4MTgwOSwiaWF0IjoxNjMxNjc3MDA5fQ.Nw-uo7xq0Vx-fCIHNYx6NHcFUTShygXPIHKr1DI_80Q";
 
 const instance = axios.create({
   baseURL: base_api_url,

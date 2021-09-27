@@ -19,9 +19,8 @@ import LatestProducts from "../../layouts/section/LatestProducts";
 import PropTypes from "prop-types";
 import { addToCart, removeFromCart } from "../../../actions/cartActions";
 
-const GroceryDetail = ({ history, match, cart, addToCart, removeFromCart }) => {
+const GroceryDetail = ({ history, match }) => {
   const [setQty, qty] = useState(1);
-  console.log(cart, addToCart, removeFromCart);
 
   const dispatch = useDispatch();
 

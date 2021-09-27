@@ -10,7 +10,7 @@ import {
   updateCartItemQty,
 } from "../../../actions/cartActions";
 import PropTypes from "prop-types";
-// import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 const Cart = ({
   match,
@@ -41,12 +41,14 @@ const Cart = ({
     updateCartItemQty({ ref, type });
   }
 
-  function handleRemoveItem(ref) {
-    removeFromCart({ ref });
+  function handleRemoveItem(item) {
+    toast(`Removed ${item.name} from cart`);
+    removeFromCart({ ref: item.ref });
   }
 
   return (
     <div className="py-5 container">
+      <ToastContainer />
       <Row className="py-4">
         <Col sm={12} md={12} lg={12} className="py-3">
           <h6 style={{ fontSize: "18px", fontWeight: "26.44" }}>
@@ -176,7 +178,7 @@ const Cart = ({
                         MOVE TO SAVED ITEMS
                       </span>
                       <Button
-                        onClick={() => handleRemoveItem(item.ref)}
+                        onClick={() => handleRemoveItem(item)}
                         type="button"
                         variant="light"
                       >
@@ -334,4 +336,5 @@ Cart.propTypes = {
   history: PropTypes.object,
   cart: PropTypes.object,
   updateCartItemQty: PropTypes.object,
+  removeFromCart: PropTypes.object,
 };
