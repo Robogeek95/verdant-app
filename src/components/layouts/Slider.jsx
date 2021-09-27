@@ -30,7 +30,7 @@ const Slider = () => (
                   <div className="line" />
                   <div className="py-5">
                     <Link
-                      to="/#whoWeAre"
+                      to="/about"
                       smooth
                       className="btn btn-primary p-2"
                     >
@@ -53,7 +53,7 @@ const Slider = () => (
                   <div className="line" />
                   <div className="py-5">
                     <Link
-                      to="/#whoWeAre"
+                      to="/#OurProduct"
                       smooth
                       className="btn btn-primary p-2"
                     >
