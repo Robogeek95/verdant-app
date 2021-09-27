@@ -1,50 +1,46 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from "react";
+import { connect, useSelector } from "react-redux";
+import { Row, Col, Card, Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Heart, TrashFill } from "react-bootstrap-icons";
+import Message from "./Message";
 import {
-  Row, Col, Card, Form, Button,
-} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { Heart, TrashFill } from 'react-bootstrap-icons';
-import Message from './Message';
-import { addToCart, removeFromCart } from '../../../actions/cartAtions';
-import PropTypes from 'prop-types';
+  addToCart,
+  removeFromCart,
+  updateCartItemQty,
+} from "../../../actions/cartActions";
+import PropTypes from "prop-types";
 
-const Cart = ({ match, location, history }) => {
+const Cart = ({ match, location, history, cart, updateCartItemQty }) => {
   const productId = match.params.id;
+  console.log(cart);
 
-  const qty = location.search ? Number(location.search.split('=')[1]) : 1;
+  const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
-  const dispatch = useDispatch();
-
-  const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  useEffect(() => {
-    if (productId) {
-      dispatch(addToCart(productId, qty));
-    }
-  }, [dispatch, productId, qty]);
-
-  const removeFromcartHandler = (id) => {
-    dispatch(removeFromCart(id));
-  };
-
   const checkoutHandler = () => {
     if (!userInfo) {
-      history.push('/login?redirect=shipping');
+      history.push("/login?redirect=shipping");
     } else {
       history.push(`/products/checkout?shipping/${productId}/${qty}`);
     }
   };
 
+  function handleIncrement(ref, type) {
+    updateCartItemQty({ ref, type });
+  }
+
   return (
     <div className="py-5 container">
       <Row className="py-4">
         <Col sm={12} md={12} lg={12} className="py-3">
-          <h6 style={{ fontSize: '18px', fontWeight: '26.44' }}>Shopping Cart</h6>
+          <h6 style={{ fontSize: "18px", fontWeight: "26.44" }}>
+            Shopping Cart
+          </h6>
         </Col>
       </Row>
 
@@ -52,13 +48,37 @@ const Cart = ({ match, location, history }) => {
         <Col md={8}>
           <Row>
             <Col md={6} className="cart-items-header">
-              <p style={{ fontSize: '20px', fontWeight: '500', paddingTop: '15px' }}>Product</p>
+              <p
+                style={{
+                  fontSize: "20px",
+                  fontWeight: "500",
+                  paddingTop: "15px",
+                }}
+              >
+                Product
+              </p>
             </Col>
             <Col md={3} className="cart-items-header">
-              <p style={{ fontSize: '20px', fontWeight: '500', paddingTop: '15px' }}>Quantity</p>
+              <p
+                style={{
+                  fontSize: "20px",
+                  fontWeight: "500",
+                  paddingTop: "15px",
+                }}
+              >
+                Quantity
+              </p>
             </Col>
             <Col md={3} className="cart-items-header">
-              <p style={{ fontSize: '20px', fontWeight: '500', paddingTop: '15px' }}>Price</p>
+              <p
+                style={{
+                  fontSize: "20px",
+                  fontWeight: "500",
+                  paddingTop: "15px",
+                }}
+              >
+                Price
+              </p>
             </Col>
           </Row>
 
@@ -74,13 +94,22 @@ const Cart = ({ match, location, history }) => {
           ) : (
             <div>
               {cartItems.map((item) => (
-
                 <Row className="bg-white py-4" key={item.product}>
                   <Col md={6} className="py-4">
                     <div className="d-flex justify-space-between">
-                      <img src={item.image} alt="Cart Item" style={{ height: '300px', width: '300px' }} className="img-fluid" />
+                      <img
+                        src={item.image}
+                        alt="Cart Item"
+                        style={{ height: "300px", width: "300px" }}
+                        className="img-fluid"
+                      />
                       <div className="ml-4">
-                        <p style={{ fontSize: '18px', fontWeight: '500' }} className="pt-5">{item.name}</p>
+                        <p
+                          style={{ fontSize: "18px", fontWeight: "500" }}
+                          className="pt-5"
+                        >
+                          {item.name}
+                        </p>
                       </div>
                     </div>
                   </Col>
@@ -88,17 +117,27 @@ const Cart = ({ match, location, history }) => {
                     <div>
                       <div className="inc-wrapper mb-4 flex-fill">
                         {/* <button className="minus-btn" onClick={() => dispatch(addToCart(item.product, item.qty > 1 ? item.qty-- : 1))}>&#8722;</button> */}
-                        <button className="minus-btn">&#8722;</button>
+                        <button className="minus-btn"
+                        onClick={() => handleIncrement(item.ref, "decrement")}
+                        >&#8722;</button>
                         <span className="item-number">{item.qty}</span>
-                        <button className="plus-btn" type="button" onClick={() => dispatch(addToCart(item.product, item.qty + 1))}>&#43;</button>
+                        <button
+                          className="plus-btn"
+                          type="button"
+                          onClick={() => handleIncrement(item.ref, "increment")}
+                        >
+                          &#43;
+                        </button>
                       </div>
                     </div>
                   </Col>
                   <Col md={3} as="div" className="my-auto">
                     <div>
-                      <p style={{ fontSize: '18px', fontWeight: '500' }}>
-                        $
-                        {item.price}
+                      <p style={{ fontSize: "18px", fontWeight: "500" }}>
+                      ₦{item.cost}
+                      </p>
+                      <p style={{ fontSize: "18px", fontWeight: "500" }}>
+                      ₦{item.cost * item.qty}
                       </p>
                     </div>
                   </Col>
@@ -106,16 +145,27 @@ const Cart = ({ match, location, history }) => {
                   <Row className="bg-white pb-3 ml-3">
                     <Col md={12}>
                       <Heart className="mr-2 text-warning" size={20} />
-                      <span style={{
-                        fontSize: '12px', fontWeight: '500', lineHeight: '16.14px', marginRight: '15px', color: '#F6C54C', cursor: 'pointer',
-                      }}
+                      <span
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: "500",
+                          lineHeight: "16.14px",
+                          marginRight: "15px",
+                          color: "#F6C54C",
+                          cursor: "pointer",
+                        }}
                       >
                         MOVE TO SAVED ITEMS
                       </span>
-                      <Button type="button" variant="light" onClick={() => removeFromcartHandler(item.product)}>
-                        <span style={{
-                          fontSize: '12px', fontWeight: '500', lineHeight: '16.14px', color: '#F6C54C', cursor: 'pointer',
-                        }}
+                      <Button type="button" variant="light">
+                        <span
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: "500",
+                            lineHeight: "16.14px",
+                            color: "#F6C54C",
+                            cursor: "pointer",
+                          }}
                         >
                           <TrashFill className="mr-2 text-warning" size={20} />
                           REMOVE
@@ -124,52 +174,118 @@ const Cart = ({ match, location, history }) => {
                     </Col>
                   </Row>
                 </Row>
-
               ))}
-
             </div>
-
           )}
-
         </Col>
 
         <Col md={4}>
           <Card>
             <Card.Header className="d-flex card-header justify-content-between bg-white pt-3">
-              <h5 className="text-dark" style={{ fontSize: '20px', fontWeight: '500', lineHeight: '26.9px' }}>YOUR ORDER</h5>
-              <h6 className="text-dark" style={{ fontSize: '20px', fontWeight: '500', lineHeight: '26.9px' }}>
-                (
-                {cartItems.reduce((acc, item) => acc + item.qty, 0)}
-                ) Items
+              <h5
+                className="text-dark"
+                style={{
+                  fontSize: "20px",
+                  fontWeight: "500",
+                  lineHeight: "26.9px",
+                }}
+              >
+                YOUR ORDER
+              </h5>
+              <h6
+                className="text-dark"
+                style={{
+                  fontSize: "20px",
+                  fontWeight: "500",
+                  lineHeight: "26.9px",
+                }}
+              >
+                ({cartItems.reduce((acc, item) => acc + item.qty, 0)}) Items
               </h6>
             </Card.Header>
 
             <Card.Body>
               <div className="d-flex justify-content-between">
-                <Card.Text className="text-dark" style={{ fontSize: '18px', fontWeight: '400', lineHeight: '24.21px' }}>Sub-total</Card.Text>
-                <Card.Subtitle className="text-dark" style={{ fontSize: '18px', fontWeight: '500', lineHeight: '24.21px' }}>
+                <Card.Text
+                  className="text-dark"
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "400",
+                    lineHeight: "24.21px",
+                  }}
+                >
+                  Sub-total
+                </Card.Text>
+                <Card.Subtitle
+                  className="text-dark"
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "500",
+                    lineHeight: "24.21px",
+                  }}
+                >
                   $
-                  {cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
+                  {cartItems
+                    .reduce((acc, item) => acc + item.qty * item.price, 0)
+                    .toFixed(2)}
                 </Card.Subtitle>
               </div>
 
               <div className="d-flex justify-content-between">
-                <Card.Text className="text-dark" style={{ fontSize: '18px', fontWeight: '400', lineHeight: '24.21px' }}>Delivery Fee</Card.Text>
-                <Card.Subtitle className="text-dark" style={{ fontSize: '18px', fontWeight: '500', lineHeight: '24.21px' }}>0.00</Card.Subtitle>
+                <Card.Text
+                  className="text-dark"
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "400",
+                    lineHeight: "24.21px",
+                  }}
+                >
+                  Delivery Fee
+                </Card.Text>
+                <Card.Subtitle
+                  className="text-dark"
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "500",
+                    lineHeight: "24.21px",
+                  }}
+                >
+                  0.00
+                </Card.Subtitle>
               </div>
 
               <div className="d-flex justify-content-between">
-                <Card.Title style={{ fontSize: '18px', fontWeight: '500', lineHeight: '24.21px' }}>TOTAL</Card.Title>
-                <Card.Subtitle style={{ fontSize: '18px', fontWeight: '500', lineHeight: '24.21px' }}>
+                <Card.Title
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "500",
+                    lineHeight: "24.21px",
+                  }}
+                >
+                  TOTAL
+                </Card.Title>
+                <Card.Subtitle
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "500",
+                    lineHeight: "24.21px",
+                  }}
+                >
                   $
-                  {cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
+                  {cartItems
+                    .reduce((acc, item) => acc + item.qty * item.price, 0)
+                    .toFixed(2)}
                 </Card.Subtitle>
               </div>
               <Form>
                 <Row className="mt-4">
                   <Col md={12}>
-                    <div className="mx-auto" style={{ width: '257px' }}>
-                      <button className="btn btn-primary btn-block" disabled={cartItems.length === 0} onClick={checkoutHandler}>
+                    <div className="mx-auto" style={{ width: "257px" }}>
+                      <button
+                        className="btn btn-primary btn-block"
+                        disabled={cartItems.length === 0}
+                        onClick={checkoutHandler}
+                      >
                         Proceed To Checkout
                       </button>
                     </div>
@@ -184,10 +300,22 @@ const Cart = ({ match, location, history }) => {
   );
 };
 
-export default Cart;
+function mapStateToProps(state) {
+  return { cart: state.cart };
+}
+
+const mapDispatchToProps = {
+  addToCart,
+  removeFromCart,
+  updateCartItemQty,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
 
 Cart.propTypes = {
   match: PropTypes.element,
   location: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
+  cart: PropTypes.object,
+  updateCartItemQty: PropTypes.object,
 };

@@ -4,7 +4,7 @@ import { Card } from "react-bootstrap";
 import { Heart } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 
-const GroceryProduct = ({ product }) => (
+const GroceryProduct = ({ product, addToCart }) => (
   <>
     <Card className="bg-white" style={{ borderRadius: "3px" }}>
       <div className="py-3 px-3 bg-white">
@@ -13,11 +13,7 @@ const GroceryProduct = ({ product }) => (
             className="d-flex justify-content-center mx-auto"
             style={{ width: "240px", height: "240px" }}
           >
-            <img
-              src={product.image}
-              className="img-fluid"
-              alt="Grocery Item"
-            />
+            <img src={product.image} className="img-fluid" alt="Grocery Item" />
           </div>
         </Link>
         <div className="card-body">
@@ -50,6 +46,7 @@ const GroceryProduct = ({ product }) => (
             type="button"
             className="btn btn-block btn-outline-primary"
             style={{ fontSize: "14px", fontWeight: "500" }}
+            onClick={() => addToCart(product)}
           >
             Add To Cart
           </button>

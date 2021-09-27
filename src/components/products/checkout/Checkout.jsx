@@ -6,7 +6,7 @@ import {
 import Crypto from '../../images/bill-image/cryto.png';
 import CardMaster from '../../images/bill-image/card-master.png';
 import CryptoCheckout from './CryptoCheckout';
-import { cartShippingAddress } from '../../../actions/cartAtions';
+import { cartShippingAddress } from '../../../actions/cartActions';
 
 const Checkout = () => {
   const cart = useSelector((state) => state.cart);

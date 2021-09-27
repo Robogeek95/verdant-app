@@ -3,23 +3,19 @@ import axios from "../../../utilities/axios";
 import PropTypes from "prop-types";
 import handleApiError from "../../../utilities/handleApiError";
 import GroceryProduct from "./GroceryProduct";
-
 import formatApiError from "../../../utilities/formatAPIError";
-
 import { Col, Row, Card, Nav, DropdownButton, Dropdown } from "react-bootstrap";
 import { ChevronRight } from "react-bootstrap-icons";
 import image2 from "../../images/groceries-image/grocery-banner.png";
-// import image3 from "../../images/groceries-image/item3.png";
 import Accordion from "./Accordion";
-// import GroceryProduct from "./GroceryProduct";
-// import Loader from "./Loader";
-
 import { ToastContainer, toast } from "react-toastify";
-// import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import Loader from "./Loader";
 
-const Groceries = (props) => {
+import { addToCart, removeFromCart } from "../../../actions/cartActions";
+import { connect } from "react-redux";
+
+const Groceries = ({ match, addToCart }) => {
   const [products, setProducts] = useState([]);
   const [, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
@@ -30,7 +26,7 @@ const Groceries = (props) => {
   // const [productsError, setProductsError] = useState("");
 
   const category = "household";
-  const subcategory = props.match.params.category;
+  const subcategory = match.params.category;
 
   // fetch all data
   useEffect(() => {
@@ -84,6 +80,10 @@ const Groceries = (props) => {
       });
   }
 
+  function handleAddToCart(payload) {
+    addToCart(payload);
+  }
+
   // set new products
   useEffect(() => {
     setNewProducts(products.slice(0, 3));
@@ -100,7 +100,11 @@ const Groceries = (props) => {
       <Row>
         {products.map((product) => (
           <Col sm={12} md={4} key={product.id} className="mb-3 mx-auto">
-            <GroceryProduct product={product} key={product.id} />
+            <GroceryProduct
+              product={product}
+              key={product.id}
+              addToCart={handleAddToCart}
+            />
           </Col>
         ))}
       </Row>
@@ -308,7 +312,16 @@ const Groceries = (props) => {
   );
 };
 
-export default Groceries;
+function mapStateToProps(state) {
+  return { cart: state.cart };
+}
+
+const mapDispatchToProps = {
+  addToCart,
+  removeFromCart,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Groceries);
 
 Groceries.propTypes = {
   match: PropTypes.object,

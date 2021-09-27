@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { Col, Row, Card } from "react-bootstrap";
 import {
   ChevronRight,
@@ -15,10 +15,13 @@ import Message from "./Message";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import LatestProducts from "../../layouts/section/LatestProducts";
-import PropTypes from "prop-types";
 
-const GroceryDetail = ({ history, match }) => {
+import PropTypes from "prop-types";
+import { addToCart, removeFromCart } from "../../../actions/cartActions";
+
+const GroceryDetail = ({ history, match, cart, addToCart, removeFromCart }) => {
   const [setQty, qty] = useState(1);
+  console.log(cart, addToCart, removeFromCart);
 
   const dispatch = useDispatch();
 
@@ -34,7 +37,7 @@ const GroceryDetail = ({ history, match }) => {
   };
 
   if (loading) {
-     return <Loader />;
+    return <Loader />;
   }
 
   return (
@@ -202,7 +205,16 @@ const GroceryDetail = ({ history, match }) => {
   );
 };
 
-export default GroceryDetail;
+function mapStateToProps(state) {
+  return { cart: state.cart };
+}
+
+const mapDispatchToProps = {
+  addToCart,
+  removeFromCart,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroceryDetail);
 
 GroceryDetail.propTypes = {
   history: PropTypes.object,
