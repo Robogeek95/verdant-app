@@ -16,7 +16,7 @@ const Section = () => (
       <HowWeSolve />
     </div>
 
-    <Container className="py-3">
+    <Container className="py-3" id="OurProduct">
       <OurProduct />
     </Container>
 
