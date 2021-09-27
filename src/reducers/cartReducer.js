@@ -2,18 +2,28 @@ import {
   CART_ADD_ITEM,
   CART_REMOVE_ITEM,
   CART_SAVE_SHIPPING_ADDRESS,
-  CART_ITEM_UPDATE_QTY
+  CART_ITEM_UPDATE_QTY,
 } from "../constants/cartConstant";
 
 export const cartReducer = (
-  state = { cartItems: [], shippingAddress: {} },
+  state = {
+    cartItems: [],
+    shippingAddress: {},
+    totalQty: 0,
+    subTotal: 0,
+    deliveryFee: 0,
+    total: 0,
+  },
   action
 ) => {
   const item = action.payload;
-  const existItemIndex = state.cartItems.findIndex((x) => x.ref === item.ref);
 
   switch (action.type) {
-    case CART_ADD_ITEM:
+    case CART_ADD_ITEM: {
+      const existItemIndex = state.cartItems.findIndex(
+        (x) => x.ref === item.ref
+      );
+
       if (existItemIndex >= 0) {
         let temp_cart_state = [...state.cartItems];
         let temp_element = { ...temp_cart_state[existItemIndex] };
@@ -21,42 +31,107 @@ export const cartReducer = (
         temp_element.qty = temp_element.qty + 1;
         temp_cart_state[existItemIndex] = temp_element;
 
-        return { ...state, cartItems: temp_cart_state };
+        const totalQty = temp_cart_state.reduce(
+          (acc, item) => acc + item.qty,
+          0
+        );
+
+        const subTotal = temp_cart_state.reduce(
+          (acc, item) => item.qty * item.cost + acc,
+          0
+        );
+
+        const total = subTotal + state.deliveryFee;
+
+        return {
+          ...state,
+          cartItems: temp_cart_state,
+          totalQty,
+          subTotal,
+          total,
+        };
       }
+
+      let temp_cart_state = [...state.cartItems, item];
+
+      const totalQty = temp_cart_state.reduce((acc, item) => acc + item.qty, 0);
+
+      const subTotal = temp_cart_state.reduce(
+        (acc, item) => item.qty * item.cost + acc,
+        0
+      );
+
+      const total = subTotal + state.deliveryFee;
 
       return {
         ...state,
         cartItems: [...state.cartItems, item],
+        totalQty,
+        subTotal,
+        total,
       };
+    }
 
-    case CART_ITEM_UPDATE_QTY:
-      if (item.type === "increment") {
-        if (existItemIndex >= 0) {
-          let temp_cart_state = [...state.cartItems];
-          let temp_element = { ...temp_cart_state[existItemIndex] };
+    case CART_ITEM_UPDATE_QTY: {
+      const existItemIndex = state.cartItems.findIndex(
+        (x) => x.ref === item.ref
+      );
 
+      if (existItemIndex >= 0) {
+        let temp_cart_state = [...state.cartItems];
+        let temp_element = { ...temp_cart_state[existItemIndex] };
+
+        if (item.type === "increment") {
           temp_element.qty = temp_element.qty + 1;
-          temp_cart_state[existItemIndex] = temp_element;
-
-          return { ...state, cartItems: temp_cart_state };
-        }
-      } else if (item.type === "decrement")
-        if (existItemIndex >= 0) {
-          let temp_cart_state = [...state.cartItems];
-          let temp_element = { ...temp_cart_state[existItemIndex] };
-
+        } else {
           temp_element.qty = temp_element.qty > 0 ? temp_element.qty - 1 : 0;
-          temp_cart_state[existItemIndex] = temp_element;
-
-          return { ...state, cartItems: temp_cart_state };
         }
-      return { ...state };
+        temp_cart_state[existItemIndex] = temp_element;
 
-    case CART_REMOVE_ITEM:
+        const totalQty = temp_cart_state.reduce(
+          (acc, item) => acc + item.qty,
+          0
+        );
+
+        const subTotal = temp_cart_state.reduce(
+          (acc, item) => item.qty * item.cost + acc,
+          0
+        );
+
+        const total = subTotal + state.deliveryFee;
+
+        return {
+          ...state,
+          cartItems: temp_cart_state,
+          totalQty,
+          subTotal,
+          total,
+        };
+      }
+      return { ...state };
+    }
+
+    case CART_REMOVE_ITEM: {
+      const temp_cart_state = state.cartItems.filter(
+        (x) => x.ref !== item.ref
+      );
+      const totalQty = temp_cart_state.reduce((acc, item) => acc + item.qty, 0);
+
+      const subTotal = temp_cart_state.reduce(
+        (acc, item) => item.qty * item.cost + acc,
+        0
+      );
+
+      const total = subTotal + state.deliveryFee;
+
       return {
         ...state,
-        cartItems: state.cartItems.filter((x) => x.product !== action.payload),
+        cartItems: temp_cart_state,
+        totalQty,
+        total,
+        subTotal,
       };
+    }
 
     case CART_SAVE_SHIPPING_ADDRESS:
       return {

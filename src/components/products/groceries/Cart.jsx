@@ -10,14 +10,21 @@ import {
   updateCartItemQty,
 } from "../../../actions/cartActions";
 import PropTypes from "prop-types";
+// import { toast } from "react-toastify";
 
-const Cart = ({ match, location, history, cart, updateCartItemQty }) => {
+const Cart = ({
+  match,
+  location,
+  history,
+  cart,
+  updateCartItemQty,
+  removeFromCart,
+}) => {
   const productId = match.params.id;
-  console.log(cart);
 
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
-  const { cartItems } = cart;
+  const { cartItems, subTotal, total, deliveryFee } = cart;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -30,8 +37,12 @@ const Cart = ({ match, location, history, cart, updateCartItemQty }) => {
     }
   };
 
-  function handleIncrement(ref, type) {
+  function handleIncrementItem(ref, type) {
     updateCartItemQty({ ref, type });
+  }
+
+  function handleRemoveItem(ref) {
+    removeFromCart({ ref });
   }
 
   return (
@@ -117,14 +128,21 @@ const Cart = ({ match, location, history, cart, updateCartItemQty }) => {
                     <div>
                       <div className="inc-wrapper mb-4 flex-fill">
                         {/* <button className="minus-btn" onClick={() => dispatch(addToCart(item.product, item.qty > 1 ? item.qty-- : 1))}>&#8722;</button> */}
-                        <button className="minus-btn"
-                        onClick={() => handleIncrement(item.ref, "decrement")}
-                        >&#8722;</button>
+                        <button
+                          className="minus-btn"
+                          onClick={() =>
+                            handleIncrementItem(item.ref, "decrement")
+                          }
+                        >
+                          &#8722;
+                        </button>
                         <span className="item-number">{item.qty}</span>
                         <button
                           className="plus-btn"
                           type="button"
-                          onClick={() => handleIncrement(item.ref, "increment")}
+                          onClick={() =>
+                            handleIncrementItem(item.ref, "increment")
+                          }
                         >
                           &#43;
                         </button>
@@ -134,10 +152,10 @@ const Cart = ({ match, location, history, cart, updateCartItemQty }) => {
                   <Col md={3} as="div" className="my-auto">
                     <div>
                       <p style={{ fontSize: "18px", fontWeight: "500" }}>
-                      ₦{item.cost}
+                        ₦{item.cost}
                       </p>
                       <p style={{ fontSize: "18px", fontWeight: "500" }}>
-                      ₦{item.cost * item.qty}
+                        ₦{item.cost * item.qty}
                       </p>
                     </div>
                   </Col>
@@ -157,7 +175,11 @@ const Cart = ({ match, location, history, cart, updateCartItemQty }) => {
                       >
                         MOVE TO SAVED ITEMS
                       </span>
-                      <Button type="button" variant="light">
+                      <Button
+                        onClick={() => handleRemoveItem(item.ref)}
+                        type="button"
+                        variant="light"
+                      >
                         <span
                           style={{
                             fontSize: "12px",
@@ -200,7 +222,7 @@ const Cart = ({ match, location, history, cart, updateCartItemQty }) => {
                   lineHeight: "26.9px",
                 }}
               >
-                ({cartItems.reduce((acc, item) => acc + item.qty, 0)}) Items
+                {cartItems.length} Item{cartItems.length > 1 && "s"}
               </h6>
             </Card.Header>
 
@@ -224,10 +246,7 @@ const Cart = ({ match, location, history, cart, updateCartItemQty }) => {
                     lineHeight: "24.21px",
                   }}
                 >
-                  $
-                  {cartItems
-                    .reduce((acc, item) => acc + item.qty * item.price, 0)
-                    .toFixed(2)}
+                  ₦{subTotal}
                 </Card.Subtitle>
               </div>
 
@@ -250,7 +269,7 @@ const Cart = ({ match, location, history, cart, updateCartItemQty }) => {
                     lineHeight: "24.21px",
                   }}
                 >
-                  0.00
+                  ₦{deliveryFee}
                 </Card.Subtitle>
               </div>
 
@@ -271,10 +290,7 @@ const Cart = ({ match, location, history, cart, updateCartItemQty }) => {
                     lineHeight: "24.21px",
                   }}
                 >
-                  $
-                  {cartItems
-                    .reduce((acc, item) => acc + item.qty * item.price, 0)
-                    .toFixed(2)}
+                  ₦{total}
                 </Card.Subtitle>
               </div>
               <Form>

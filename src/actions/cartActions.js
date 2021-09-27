@@ -43,14 +43,19 @@ export const updateCartItemQty =
     // );
   };
 
-export const removeFromCart = (id) => (dispatch, getState) => {
-  dispatch({
-    type: CART_REMOVE_ITEM,
-    payload: id,
-  });
+export const removeFromCart =
+  ({ ref }) =>
+  (dispatch, getState) => {
+    dispatch({
+      type: CART_REMOVE_ITEM,
+      payload: { ref },
+    });
 
-  localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
-};
+    localStorage.setItem(
+      "cartItems",
+      JSON.stringify(getState().cart.cartItems)
+    );
+  };
 
 export const cartShippingAddress = (data) => (dispatch) => {
   dispatch({

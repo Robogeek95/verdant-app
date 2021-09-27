@@ -12,7 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import Loader from "./Loader";
 
-import { addToCart, removeFromCart } from "../../../actions/cartActions";
+import { addToCart } from "../../../actions/cartActions";
 import { connect } from "react-redux";
 
 const Groceries = ({ match, addToCart }) => {
@@ -81,6 +81,7 @@ const Groceries = ({ match, addToCart }) => {
   }
 
   function handleAddToCart(payload) {
+    toast(`${payload.name} added to cart`)
     addToCart(payload);
   }
 
@@ -318,11 +319,11 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   addToCart,
-  removeFromCart,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Groceries);
 
 Groceries.propTypes = {
   match: PropTypes.object,
+  addToCart: PropTypes.object,
 };
