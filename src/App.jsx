@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
@@ -22,32 +22,35 @@ import Profile from "./components/Profile";
 import Orders from "./components/Orders";
 import SavedItems from "./components/SavedItems";
 
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => (
   <Router>
     <Header />
     <Route path="/" component={Slider} exact />
     <main>
-      <Route path="/login" component={Login} />
-      <Route path="/signup" component={Signup} />
-      <Route path="/" component={Section} exact />
-      <Route path="/products/groceries" component={Groceries} />
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/" component={Section} exact />
 
-      <Route path="/groceries/:id" component={GroceryDetail} />
-      <Route path="/cart/:id?" component={Cart} />
+        <Route path="/groceries/:id" component={GroceryDetail} />
+        <Route path="/cart/:id?" component={Cart} />
 
-      <Route path="/products/billPayment" component={BillPayments} />
-      <Route path="/products/billPayment/crypto" component={CryptoPayment} />
-      <Route path="/products/invoiceUpload" component={InvoiceUpload} />
-      <Route path="/products/checkout" component={Checkout} />
-      <Route path="/help/faq" component={FAQ} />
-      <Route path="/help/contact" component={Contact} />
-      <Route path="/profile" component={Profile} />
-      <Route path="/orders" component={Orders} />
-      <Route path="/saved-items" component={SavedItems} />
+        <Route path="/products/billPayment" component={BillPayments} />
+        <Route path="/products/billPayment/crypto" component={CryptoPayment} />
+        <Route path="/products/invoiceUpload" component={InvoiceUpload} />
+        <Route path="/products/checkout" component={Checkout} />
+        <Route path="/products/:category" component={Groceries} />
 
-      <Route path="/about" component={About} />
+        <Route path="/help/faq" component={FAQ} />
+        <Route path="/help/contact" component={Contact} />
+        <Route path="/profile" component={Profile} />
+        <Route path="/orders" component={Orders} />
+        <Route path="/saved-items" component={SavedItems} />
+
+        <Route path="/about" component={About} />
+      </Switch>
     </main>
     <Footer />
 

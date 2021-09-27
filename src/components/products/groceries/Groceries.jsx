@@ -1,108 +1,111 @@
 import React, { useState, useEffect } from "react";
-import { Col, Row, DropdownButton, Dropdown, Card, Nav } from "react-bootstrap";
-import { ChevronRight } from "react-bootstrap-icons";
 import axios from "../../../utilities/axios";
+import PropTypes from "prop-types";
+import handleApiError from "../../../utilities/handleApiError";
+import GroceryProduct from "./GroceryProduct";
+
+import formatApiError from "../../../utilities/formatAPIError";
+
+import { Col, Row, Card, Nav, DropdownButton, Dropdown } from "react-bootstrap";
+import { ChevronRight } from "react-bootstrap-icons";
 import image2 from "../../images/groceries-image/grocery-banner.png";
 // import image3 from "../../images/groceries-image/item3.png";
 import Accordion from "./Accordion";
-import GroceryProduct from "./GroceryProduct";
-import Loader from "./Loader";
+// import GroceryProduct from "./GroceryProduct";
+// import Loader from "./Loader";
+
 import { ToastContainer, toast } from "react-toastify";
-import handleApiError from "../../../utilities/handleApiError";
-import formatApiError from "../../../utilities/formatAPIError";
+// import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
+import Loader from "./Loader";
 
-const Groceries = () => {
-  const [productCategories, setProductCategories] = useState({
-    data: [],
-    loading: false,
-    error: "",
-  });
-
-  const [products, setProducts] = useState({
-    data: [],
-    loading: false,
-    error: "",
-  });
-
+const Groceries = (props) => {
+  const [products, setProducts] = useState([]);
+  const [, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
   const [newProducts, setNewProducts] = useState([]);
+  const [, setFetchingCategories] = useState(true);
+  const [fetchingProducts, setFetchingProducts] = useState(true);
+  // const [categoriesError, setCategoriesError] = useState("");
+  // const [productsError, setProductsError] = useState("");
 
-  const [category, setCategory] = useState({ name: "all categories", ref: "" });
+  const category = "household";
+  const subcategory = props.match.params.category;
 
-  // fetch categories
+  // fetch all data
   useEffect(() => {
-    setProductCategories({ ...productCategories, loading: false });
+    fetchSnapshot(category, subcategory);
+  }, [subcategory, category]);
 
-    axios
-      .get("/product/categories")
+  async function fetchCategories() {
+    return await axios.get("/product/categories");
+  }
+
+  async function fetchSubProducts(catRef, subCatRef) {
+    return axios.get(`/product/catalog/subcategory/${catRef}/${subCatRef}`);
+  }
+
+  async function fetchSnapshot(category, subcategory) {
+    // fetch all categories
+    setFetchingCategories(true);
+    fetchCategories()
       .then((res) => {
-        setProductCategories({
-          ...productCategories,
-          data: res.data.categories,
-          loading: false,
-        });
+        const categories = res.data?.categories;
+        setCategories(categories);
+        setFetchingCategories(false);
+
+        // activeCategory
+        // get the active category
+        const activeCategory = categories.find(
+          (cat) => cat?.category?.toLowerCase() === category
+        );
+        setSubCategories(activeCategory.sub_categories);
+
+        // subcategory
+        // grocery is a subcategory to household category
+        const activeSubCategory = activeCategory?.sub_categories?.find(
+          (subCat) => subCat?.name?.toLowerCase() === subcategory
+        );
+
+        // fetch grocery subcategory using the category ref and subcategory ref
+        setFetchingProducts(true);
+        return fetchSubProducts(activeCategory.ref, activeSubCategory.ref);
+      })
+      .then((res) => {
+        // now we have the grocery products
+        // set grocery to state
+        setProducts(res.data.products);
+        setFetchingProducts(false);
       })
       .catch((error) => {
         handleApiError(error);
         let message = formatApiError(error);
-
-        setProductCategories({
-          ...productCategories,
-          loading: false,
-          error: message,
-        });
-
-        toast(message);
-      });
-  }, []);
-
-  // fetch all products
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  function fetchProducts() {
-    setProducts({ ...products, loading: true });
-    axios
-      .get("/product/catalog")
-      .then((res) => {
-        setProducts({ ...products, data: res.data?.products, loading: false });
-      })
-      .catch((error) => {
-        handleApiError(error);
-        let message = formatApiError(error);
-
-        setProducts({ ...products, loading: false, error: message });
         toast(message);
       });
   }
 
-  // fetch products by category
-  useEffect(() => {
-    if (category.ref) {
-      setProducts({ ...products, loading: true });
-      axios
-        .get(`/product/catalog/category/${category.ref}`)
-        .then((res) => {
-          setProducts({
-            ...products,
-            data: res.data?.products,
-            loading: false,
-          });
-        })
-        .catch((error) => {
-          handleApiError(error);
-          let message = formatApiError(error);
-
-          setProducts({ ...products, loading: false, error: message });
-          toast(message);
-        });
-    }
-  }, [category]);
-
   // set new products
   useEffect(() => {
-    setNewProducts(products.data.slice(0, 3));
+    setNewProducts(products.slice(0, 3));
   }, [products]);
+
+  function renderProducts() {
+    return !products.length >= 1 ? (
+      <div className="p-5 text-center">
+        <p className="h4">
+          No products found {subcategory && `for ${subcategory} subcategory`}
+        </p>
+      </div>
+    ) : (
+      <Row>
+        {products.map((product) => (
+          <Col sm={12} md={4} key={product.id} className="mb-3 mx-auto">
+            <GroceryProduct product={product} key={product.id} />
+          </Col>
+        ))}
+      </Row>
+    );
+  }
 
   return (
     <div className="container py-4">
@@ -113,10 +116,10 @@ const Groceries = () => {
             Products
             <ChevronRight />
             <span
-              className="text-primary"
+              className="text-primary text-capitalize"
               style={{ fontSize: "18px", fontWeight: "500" }}
             >
-              Groceries
+              {subcategory}
             </span>
           </h6>
         </Col>
@@ -143,47 +146,34 @@ const Groceries = () => {
                 style={{ fontSize: "20px", fontWeight: "500" }}
               >
                 <Card.Body>
-                  {productCategories?.loading ? (
+                  {/* Todo: fix reload on change */}
+                  {/* {fetchingCategories ? (
                     <div className="py-5">
                       <Loader />
                     </div>
-                  ) : (
-                    <>
-                      <button
-                        onClick={() => {
-                          setCategory({
-                            ...category,
-                            name: "all categories",
-                          });
-                          fetchProducts();
-                        }}
-                        className="btn text-dark text-left mb-2"
-                      >
-                        All
-                      </button>
-                      {productCategories.data.map((cat) => (
-                        <div key={cat.ref}>
-                          <Nav
-                            defaultActiveKey="/"
-                            className="flex-column footer-nav"
-                          >
+                  ) : ( */}
+                  <>
+                    {subCategories.map((cat) => (
+                      <div key={cat.ref}>
+                        <Nav
+                          defaultActiveKey="/"
+                          className="flex-column footer-nav"
+                        >
+                          <Link to={`/products/${cat.name.toLowerCase()}`}>
                             <button
-                              onClick={() =>
-                                setCategory({
-                                  ...category,
-                                  ref: cat.ref,
-                                  name: cat.category,
-                                })
-                              }
+                              // onClick={() =>
+
+                              // }
                               className="btn text-dark text-left mb-2"
                             >
-                              {cat.category}
+                              {cat.name}
                             </button>
-                          </Nav>
-                        </div>
-                      ))}
-                    </>
-                  )}
+                          </Link>
+                        </Nav>
+                      </div>
+                    ))}
+                  </>
+                  {/* )} */}
                 </Card.Body>
               </Accordion>
             </Card>
@@ -249,7 +239,7 @@ const Groceries = () => {
                           textTransform: "capitalize",
                         }}
                       >
-                        {category.name}
+                        {subcategory}
                       </h5>
                     </div>
                   </Col>
@@ -302,30 +292,12 @@ const Groceries = () => {
 
                 <hr />
 
-                {products.loading ? (
+                {fetchingProducts ? (
                   <div className="py-5">
                     <Loader />
                   </div>
-                ) : !products.data.length >= 1 ? (
-                  <div className="p-5 text-center">
-                    <p className="h4">
-                      No products found{" "}
-                      {category && `for ${category.name} category`}
-                    </p>
-                  </div>
                 ) : (
-                  <Row>
-                    {products.data.map((product) => (
-                      <Col
-                        sm={12}
-                        md={4}
-                        key={product.id}
-                        className="mb-3 mx-auto"
-                      >
-                        <GroceryProduct product={product} key={product.id} />
-                      </Col>
-                    ))}
-                  </Row>
+                  renderProducts()
                 )}
               </Card>
             </div>
@@ -338,4 +310,6 @@ const Groceries = () => {
 
 export default Groceries;
 
-Groceries.propTypes = {};
+Groceries.propTypes = {
+  match: PropTypes.object,
+};
