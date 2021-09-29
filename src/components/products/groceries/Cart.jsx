@@ -15,6 +15,7 @@ import { toast, ToastContainer } from "react-toastify";
 import handleApiError from "../../../utilities/handleApiError";
 import formatApiError from "../../../utilities/formatAPIError";
 import {
+  deleteFromCart,
   fetchCartItems,
   fetchProduct,
 } from "../../../utilities/services";
@@ -27,6 +28,7 @@ const Cart = ({
   updateCartItemQty,
   removeFromCart,
   setCart,
+  userDetails,
 }) => {
   const productId = match.params.id;
 
@@ -52,6 +54,20 @@ const Cart = ({
 
   // delete cart item
   function handleRemoveItem(item) {
+    if (userDetails) {
+      let payload = {
+        product_ref: item.ref,
+      };
+
+      // add item to cart using api
+      deleteFromCart(payload).then(() => {
+        // store in global state
+        toast(`Removed ${item.name} from cart`);
+        removeFromCart({ ref: item.ref });
+      });
+      return;
+    }
+
     toast(`Removed ${item.name} from cart`);
     removeFromCart({ ref: item.ref });
   }
@@ -363,7 +379,7 @@ const Cart = ({
 };
 
 function mapStateToProps(state) {
-  return { cart: state.cart };
+  return { cart: state.cart, userDetails: state.userDetails };
 }
 
 const mapDispatchToProps = {
@@ -383,4 +399,5 @@ Cart.propTypes = {
   updateCartItemQty: PropTypes.func,
   removeFromCart: PropTypes.func,
   setCart: PropTypes.func,
+  userDetails: PropTypes.object,
 };

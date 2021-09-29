@@ -18,7 +18,6 @@ import {
   fetchSubProducts,
   postToCart,
 } from "../../../utilities/services";
-import { propTypes } from "react-bootstrap/esm/Image";
 
 const Groceries = ({ match, addToCart, userDetails }) => {
   const [products, setProducts] = useState([]);
@@ -76,25 +75,25 @@ const Groceries = ({ match, addToCart, userDetails }) => {
   }
 
   function handleAddToCart(item) {
-    let payload = {
-      product_ref: item.ref,
-      quantity: 1,
-      amount: item.amount,
-    };
-
-    console.log(payload);
-
     // if logged in
     if (userDetails) {
+      let payload = {
+        product_ref: item.ref,
+        quantity: 1,
+        amount: item.amount,
+      };
+
+      // add item to cart using api
       postToCart(payload).then(() => {
+        // store in global state
         addToCart(item);
-        toast(`${item} added to cart`);
+        toast(`${item.name} added to cart`);
       });
       return;
     }
 
-    addToCart(payload);
-    toast(`${payload.name} added to cart`);
+    addToCart(item);
+    toast(`${item.name} added to cart`);
   }
 
   // set new products
@@ -338,5 +337,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(Groceries);
 Groceries.propTypes = {
   match: PropTypes.object,
   addToCart: PropTypes.function,
-  userDetails: propTypes.object,
+  userDetails: PropTypes.object,
 };
