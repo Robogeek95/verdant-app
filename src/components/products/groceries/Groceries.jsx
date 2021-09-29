@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../../utilities/axios";
 import PropTypes from "prop-types";
 import handleApiError from "../../../utilities/handleApiError";
 import GroceryProduct from "./GroceryProduct";
@@ -14,16 +13,19 @@ import Loader from "./Loader";
 
 import { addToCart } from "../../../actions/cartActions";
 import { connect } from "react-redux";
+import {
+  fetchProductCategories,
+  fetchSubProducts,
+  postToCart,
+} from "../../../utilities/services";
 
-const Groceries = ({ match, addToCart }) => {
+const Groceries = ({ match, addToCart, userDetails }) => {
   const [products, setProducts] = useState([]);
   const [, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [newProducts, setNewProducts] = useState([]);
-  const [, setFetchingCategories] = useState(true);
+  const [fetchingCategories, setFetchingCategories] = useState(true);
   const [fetchingProducts, setFetchingProducts] = useState(true);
-  // const [categoriesError, setCategoriesError] = useState("");
-  // const [productsError, setProductsError] = useState("");
 
   const category = "household";
   const subcategory = match.params.category;
@@ -33,18 +35,10 @@ const Groceries = ({ match, addToCart }) => {
     fetchSnapshot(category, subcategory);
   }, [subcategory, category]);
 
-  async function fetchCategories() {
-    return await axios.get("/product/categories");
-  }
-
-  async function fetchSubProducts(catRef, subCatRef) {
-    return axios.get(`/product/catalog/subcategory/${catRef}/${subCatRef}`);
-  }
-
   async function fetchSnapshot(category, subcategory) {
     // fetch all categories
     setFetchingCategories(true);
-    fetchCategories()
+    fetchProductCategories()
       .then((res) => {
         const categories = res.data?.categories;
         setCategories(categories);
@@ -80,9 +74,26 @@ const Groceries = ({ match, addToCart }) => {
       });
   }
 
-  function handleAddToCart(payload) {
-    toast(`${payload.name} added to cart`)
-    addToCart(payload);
+  function handleAddToCart(item) {
+    // if logged in
+    if (userDetails) {
+      let payload = {
+        product_ref: item.ref,
+        quantity: 1,
+        amount: item.amount,
+      };
+
+      // add item to cart using api
+      postToCart(payload).then(() => {
+        // store in global state
+        addToCart(item);
+        toast(`${item.name} added to cart`);
+      });
+      return;
+    }
+
+    addToCart(item);
+    toast(`${item.name} added to cart`);
   }
 
   // set new products
@@ -152,33 +163,33 @@ const Groceries = ({ match, addToCart }) => {
               >
                 <Card.Body>
                   {/* Todo: fix reload on change */}
-                  {/* {fetchingCategories ? (
+                  {fetchingCategories ? (
                     <div className="py-5">
                       <Loader />
                     </div>
-                  ) : ( */}
-                  <>
-                    {subCategories.map((cat) => (
-                      <div key={cat.ref}>
-                        <Nav
-                          defaultActiveKey="/"
-                          className="flex-column footer-nav"
-                        >
-                          <Link to={`/products/${cat.name.toLowerCase()}`}>
-                            <button
-                              // onClick={() =>
+                  ) : (
+                    <>
+                      {subCategories.map((cat) => (
+                        <div key={cat.ref}>
+                          <Nav
+                            defaultActiveKey="/"
+                            className="flex-column footer-nav"
+                          >
+                            <Link to={`/products/${cat.name.toLowerCase()}`}>
+                              <button
+                                // onClick={() =>
 
-                              // }
-                              className="btn text-dark text-left mb-2"
-                            >
-                              {cat.name}
-                            </button>
-                          </Link>
-                        </Nav>
-                      </div>
-                    ))}
-                  </>
-                  {/* )} */}
+                                // }
+                                className="btn text-dark text-left mb-2"
+                              >
+                                {cat.name}
+                              </button>
+                            </Link>
+                          </Nav>
+                        </div>
+                      ))}
+                    </>
+                  )}
                 </Card.Body>
               </Accordion>
             </Card>
@@ -193,7 +204,7 @@ const Groceries = ({ match, addToCart }) => {
                     {newProducts.map((product) => (
                       <Nav.Link
                         key={product.ref}
-                        href="/home"
+                        href={`/products/groceries/${product.ref}`}
                         className="text-dark"
                       >
                         <div className="d-flex">
@@ -314,7 +325,7 @@ const Groceries = ({ match, addToCart }) => {
 };
 
 function mapStateToProps(state) {
-  return { cart: state.cart };
+  return { cart: state.cart, userDetails: state.userDetails };
 }
 
 const mapDispatchToProps = {
@@ -325,5 +336,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Groceries);
 
 Groceries.propTypes = {
   match: PropTypes.object,
-  addToCart: PropTypes.object,
+  addToCart: PropTypes.function,
+  userDetails: PropTypes.object,
 };

@@ -34,13 +34,13 @@ const App = () => (
         <Route path="/signup" component={Signup} />
         <Route path="/" component={Section} exact />
 
-        <Route path="/groceries/:id" component={GroceryDetail} />
         <Route path="/cart/:id?" component={Cart} />
 
         <Route path="/products/billPayment" component={BillPayments} />
         <Route path="/products/billPayment/crypto" component={CryptoPayment} />
         <Route path="/products/invoiceUpload" component={InvoiceUpload} />
         <Route path="/products/checkout" component={Checkout} />
+        <Route path="/products/groceries/:ref" component={GroceryDetail} />
         <Route path="/products/:category" component={Groceries} />
 
         <Route path="/help/faq" component={FAQ} />

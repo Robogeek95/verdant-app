@@ -3,8 +3,20 @@ import {
   CART_ADD_ITEM,
   CART_ITEM_UPDATE_QTY,
   CART_REMOVE_ITEM,
+  CART_SET,
   CART_SAVE_SHIPPING_ADDRESS,
 } from "../constants/cartConstant";
+
+export const setCart =
+  ({ items }) =>
+  async (dispatch) => {
+    dispatch({
+      type: CART_SET,
+      payload: {
+        items,
+      },
+    });
+  };
 
 export const addToCart =
   ({ ref, qty = 1, name, image, cost }) =>
@@ -19,11 +31,6 @@ export const addToCart =
         qty,
       },
     });
-
-    // localStorage.setItem(
-    //   "cartItems",
-    //   JSON.stringify(getState().cart.cartItems)
-    // );
   };
 
 export const updateCartItemQty =
@@ -36,11 +43,6 @@ export const updateCartItemQty =
         ref,
       },
     });
-
-    // localStorage.setItem(
-    //   "cartItems",
-    //   JSON.stringify(getState().cart.cartItems)
-    // );
   };
 
 export const removeFromCart =
