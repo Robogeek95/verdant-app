@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect, useSelector } from "react-redux";
 import { Row, Col, Card, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -8,9 +8,16 @@ import {
   addToCart,
   removeFromCart,
   updateCartItemQty,
+  setCart,
 } from "../../../actions/cartActions";
 import PropTypes from "prop-types";
 import { toast, ToastContainer } from "react-toastify";
+import handleApiError from "../../../utilities/handleApiError";
+import formatApiError from "../../../utilities/formatAPIError";
+import {
+  fetchCartItems,
+  fetchProduct,
+} from "../../../utilities/services";
 
 const Cart = ({
   match,
@@ -19,13 +26,14 @@ const Cart = ({
   cart,
   updateCartItemQty,
   removeFromCart,
+  setCart,
 }) => {
   const productId = match.params.id;
 
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
   const { cartItems, subTotal, total, deliveryFee } = cart;
-
+  const [fetchingCart, setFetchingCart] = useState(false);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -37,13 +45,49 @@ const Cart = ({
     }
   };
 
+  // update cart item
   function handleIncrementItem(ref, type) {
     updateCartItemQty({ ref, type });
   }
 
+  // delete cart item
   function handleRemoveItem(item) {
     toast(`Removed ${item.name} from cart`);
     removeFromCart({ ref: item.ref });
+  }
+
+  useEffect(() => {
+    fetchCartItems()
+      .then(async (res) => {
+        let items = res.data.cart;
+
+        // update items cost
+        let updatedProducts = Promise.all(
+          items.map(async (item) => {
+            const res = await fetchProduct(item.product_ref);
+            item = { ...item, cost: res.data.product.cost };
+
+            return item;
+          })
+        );
+
+        console.log(updatedProducts);
+
+        let payload = {
+          items: await updatedProducts,
+        };
+        setCart(payload);
+        setFetchingCart(false);
+      })
+      .catch((error) => {
+        handleApiError(error);
+        let message = formatApiError(error);
+        toast(message);
+      });
+  }, []);
+
+  if (fetchingCart) {
+    return "fetching cart data ";
   }
 
   return (
@@ -138,7 +182,7 @@ const Cart = ({
                         >
                           &#8722;
                         </button>
-                        <span className="item-number">{item.qty}</span>
+                        <span className="item-number">{item.quantity}</span>
                         <button
                           className="plus-btn"
                           type="button"
@@ -157,7 +201,7 @@ const Cart = ({
                         ₦{item.cost}
                       </p>
                       <p style={{ fontSize: "18px", fontWeight: "500" }}>
-                        ₦{item.cost * item.qty}
+                        ₦{item.cost * item.quantity}
                       </p>
                     </div>
                   </Col>
@@ -326,6 +370,7 @@ const mapDispatchToProps = {
   addToCart,
   removeFromCart,
   updateCartItemQty,
+  setCart,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
@@ -335,6 +380,7 @@ Cart.propTypes = {
   location: PropTypes.object,
   history: PropTypes.object,
   cart: PropTypes.object,
-  updateCartItemQty: PropTypes.object,
-  removeFromCart: PropTypes.object,
+  updateCartItemQty: PropTypes.func,
+  removeFromCart: PropTypes.func,
+  setCart: PropTypes.func,
 };
