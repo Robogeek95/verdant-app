@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { Col, Row, Card } from "react-bootstrap";
 import {
   ChevronRight,
@@ -9,7 +9,7 @@ import {
   Cursor,
 } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
-import { listProductDetails } from "../../../actions/productActions";
+// import { listProductDetails } from "../../../actions/productActions";
 import Loader from "./Loader";
 import Message from "./Message";
 import "owl.carousel/dist/assets/owl.carousel.css";
@@ -18,22 +18,59 @@ import LatestProducts from "../../layouts/section/LatestProducts";
 
 import PropTypes from "prop-types";
 import { addToCart, removeFromCart } from "../../../actions/cartActions";
+import { fetchProduct, postToCart } from "../../../utilities/services";
+import { toast, ToastContainer } from "react-toastify";
+import formatApiError from "../../../utilities/formatAPIError";
+import handleApiError from "../../../utilities/handleApiError";
 
-const GroceryDetail = ({ history, match }) => {
-  const [setQty, qty] = useState(1);
+const GroceryDetail = ({ match, userDetails }) => {
+  // let { ref } = match.params.ref;
 
-  const dispatch = useDispatch();
-
-  const productDetails = useSelector((state) => state.productDetails);
-  const { loading, error, product } = productDetails;
+  console.log({ ref: match.params.ref });
+  const [product, setProduct] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    dispatch(listProductDetails(match.params.id));
-  }, [dispatch, match]);
+    if (match.params.ref) {
+      fetchProduct(match.params.ref)
+        .then((res) => {
+          setLoading(false);
+          console.log(res.data);
 
-  const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?quantity=${qty}`);
-  };
+          setProduct(res.data.product);
+        })
+        .catch((error) => {
+          handleApiError(error);
+          let message = formatApiError(error);
+          toast(message);
+          setError(error.message);
+        });
+    }
+  }, [match.params.ref]);
+
+  function handleAddToCart() {
+    // if logged in
+    if (userDetails) {
+      let payload = {
+        product_ref: product.ref,
+        quantity: quantity,
+        amount: product.amount,
+      };
+
+      // add product to cart using api
+      postToCart(payload).then(() => {
+        // store in global state
+        addToCart({ ...product, quantity });
+        toast(`${product.name} added to cart`);
+      });
+      return;
+    }
+
+    addToCart({ ...product, quantity });
+    toast(`${product.name} added to cart`);
+  }
 
   if (loading) {
     return <Loader />;
@@ -41,10 +78,11 @@ const GroceryDetail = ({ history, match }) => {
 
   return (
     <div className="py-4">
+      <ToastContainer />
       {error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <div>
+        <div className="container">
           <Row>
             <Col sm={12} md={12} lg={12} className="py-3">
               <h6 style={{ fontSize: "16px", fontWeight: "400" }}>
@@ -54,7 +92,7 @@ const GroceryDetail = ({ history, match }) => {
                   className="text-primary"
                   style={{ fontSize: "18px", fontWeight: "500" }}
                 >
-                  {product.title}
+                  {product?.name}
                 </span>
               </h6>
             </Col>
@@ -81,18 +119,18 @@ const GroceryDetail = ({ history, match }) => {
                           className="mt-3"
                           style={{ fontSize: "30px", fontWeight: "500" }}
                         >
-                          {product.title}
+                          {product?.name}
                         </h4>
-                        <p style={{ fontSize: "20px", fontWeight: "500" }}>
+                        {/* <p style={{ fontSize: "20px", fontWeight: "500" }}>
                           Product Code:
                           <strong>12345</strong>
-                        </p>
+                        </p> */}
                         <hr />
                         <h5
                           className="text-primary"
                           style={{ fontSize: "26px", fontWeight: "500" }}
                         >
-                          ${product.price}
+                          ₦{product.cost}
                         </h5>
                         <hr />
 
@@ -108,15 +146,17 @@ const GroceryDetail = ({ history, match }) => {
                             <button
                               type="button"
                               className="minus-btn"
-                              onClick={() => setQty(qty > 1 ? qty + 1 : 1)}
+                              onClick={() =>
+                                setQuantity(quantity <= 1 ? 1 : quantity - 1)
+                              }
                             >
                               &#8722;
                             </button>
-                            <span className="item-number">{qty}</span>
+                            <span className="item-number">{quantity}</span>
                             <button
                               type="button"
                               className="plus-btn"
-                              onClick={() => setQty(qty + 1)}
+                              onClick={() => setQuantity(quantity + 1)}
                             >
                               &#43;
                             </button>
@@ -126,7 +166,7 @@ const GroceryDetail = ({ history, match }) => {
                           <button
                             className="btn btn-block btn-primary"
                             style={{ fontSize: "18px", fontWeight: "500" }}
-                            onClick={addToCartHandler}
+                            onClick={handleAddToCart}
                           >
                             Add To Cart
                           </button>
@@ -185,6 +225,7 @@ const GroceryDetail = ({ history, match }) => {
               </Card>
             </Col>
           </Row>
+
           <Row>
             <Col md={12}>
               <div className="mt-5 mb-4">
@@ -205,7 +246,7 @@ const GroceryDetail = ({ history, match }) => {
 };
 
 function mapStateToProps(state) {
-  return { cart: state.cart };
+  return { cart: state.cart, userDetails: state.userDetails };
 }
 
 const mapDispatchToProps = {
@@ -218,4 +259,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(GroceryDetail);
 GroceryDetail.propTypes = {
   history: PropTypes.object,
   match: PropTypes.object,
+  userDetails: PropTypes.object,
 };

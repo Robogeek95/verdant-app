@@ -204,7 +204,7 @@ const Groceries = ({ match, addToCart, userDetails }) => {
                     {newProducts.map((product) => (
                       <Nav.Link
                         key={product.ref}
-                        href="/home"
+                        href={`/products/groceries/${product.ref}`}
                         className="text-dark"
                       >
                         <div className="d-flex">
