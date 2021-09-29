@@ -20,6 +20,11 @@ export async function fetchProduct(ref) {
   return await axios.get(`/product/catalog/${ref}`);
 }
 
+// fetch products
+export async function fetchProducts() {
+  return await axios.get(`/product/catalog/`);
+}
+
 //fetch product categories
 export async function fetchProductCategories() {
   return await axios.get("/product/categories");

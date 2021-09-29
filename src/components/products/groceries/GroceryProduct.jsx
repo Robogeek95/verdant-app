@@ -42,7 +42,7 @@ const GroceryProduct = ({ product, addToCart }) => {
             </div>
             <div className="card-text text-dark">
               <h5 style={{ fontSize: "18px", fontWeight: "500" }}>
-                ${product.cost}
+                ₦{product.cost}
               </h5>
             </div>
             <button

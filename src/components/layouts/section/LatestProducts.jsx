@@ -1,29 +1,40 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import OwlCarousel from "react-owl-carousel";
 import Loader from "../../products/groceries/Loader";
-import Message from "../../products/groceries/Message";
 import GroceryProduct from "../../products/groceries/GroceryProduct";
-import { listProducts } from "../../../actions/productActions";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
+import handleApiError from "../../../utilities/handleApiError";
+import formatApiError from "../../../utilities/formatAPIError";
+import { toast } from "react-toastify";
+import { fetchProducts } from "../../../utilities/services";
 
 const LatestProducts = () => {
   const dispatch = useDispatch();
-
-  const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [setError] = useState("");
 
   useEffect(() => {
-    dispatch(listProducts());
+    setLoading(true);
+    return fetchProducts()
+      .then((res) => {
+        // now we have the grocery products
+        // set grocery to state
+        setProducts(res.data.products);
+        setLoading(false);
+      })
+      .catch((error) => {
+        handleApiError(error);
+        let message = formatApiError(error);
+        toast(message);
+        setError(error);
+      });
   }, [dispatch]);
 
   if (loading) {
     return <Loader />;
-  }
-
-  if (error) {
-    return <Message variant="danger">{error}</Message>;
   }
 
   return (

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 import {
   PRODUCT_LIST_REQUEST,
@@ -7,13 +7,16 @@ import {
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
-} from '../constants/productContants';
+} from "../constants/productContants";
+import { fetchProduct } from "../utilities/services";
 
 export const listProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
-    const { data } = await axios.get('https://fakestoreapi.com/products?limit=6');
+    const { data } = await axios.get(
+      "https://fakestoreapi.com/products?limit=6"
+    );
     // const { data } = await axios.get('https://verdant-store.herokuapp.com/product/catalog')
 
     dispatch({
@@ -23,17 +26,20 @@ export const listProducts = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_LIST_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
 
-export const listProductDetails = (id) => async (dispatch) => {
+export const listProductDetails = (ref) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
     // const { data } = await axios.get(`https://verdant-store.herokuapp.com/product/catalog/${ref}`)
-    const { data } = await axios.get(`https://fakestoreapi.com/products/${id}`);
+    const { data } = await fetchProduct(`${ref}`);
 
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
@@ -42,7 +48,10 @@ export const listProductDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_DETAILS_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
