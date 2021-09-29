@@ -31,11 +31,12 @@ const Cart = ({
   const { userInfo } = userLogin;
 
   const checkoutHandler = () => {
-    if (!userInfo) {
-      history.push("/login?redirect=shipping");
-    } else {
+    // Todo: check userInfo
+    // if (!userInfo) {
+    //   history.push("/login?redirect=shipping");
+    // } else {
       history.push(`/products/checkout?shipping/${productId}/${qty}`);
-    }
+    // }
   };
 
   // update cart item
