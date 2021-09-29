@@ -30,9 +30,12 @@ import handleApiError from "./utilities/handleApiError";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-const App = ({ setCart, userDetails }) => {
+const App = ({ setCart, userLogin }) => {
+  const { userInfo } = userLogin;
+
   useEffect(() => {
-    if (userDetails) {
+    // Todo: check if userInfo
+    if (!userInfo) {
       fetchCartItems()
         .then(async (res) => {
           let items = res.data.cart;
@@ -59,7 +62,7 @@ const App = ({ setCart, userDetails }) => {
           // let message = formatApiError(error);
         });
     }
-  }, []);
+  }, [userInfo]);
 
   return (
     <Router>
@@ -101,7 +104,7 @@ const App = ({ setCart, userDetails }) => {
 };
 
 function mapStateToProps(state) {
-  return { cart: state.cart, userDetails: state.userDetails };
+  return { cart: state.cart, userLogin: state.userLogin };
 }
 
 const mapDispatchToProps = {
@@ -112,5 +115,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 App.propTypes = {
   setCart: PropTypes.func,
-  userDetails: PropTypes.object,
+  userLogin: PropTypes.object,
 };

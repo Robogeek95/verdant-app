@@ -1,5 +1,5 @@
 import React from "react";
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { Row, Col, Card, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Heart, TrashFill } from "react-bootstrap-icons";
@@ -21,14 +21,13 @@ const Cart = ({
   cart,
   updateCartItemQty,
   removeFromCart,
-  userDetails,
+  userLogin
 }) => {
   const productId = match.params.id;
 
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
   const { cartItems, subTotal, total, deliveryFee } = cart;
-  const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const checkoutHandler = () => {
@@ -46,7 +45,8 @@ const Cart = ({
 
   // delete cart item
   function handleRemoveItem(item) {
-    if (userDetails) {
+    // Todo: check userInfo
+    if (!userInfo) {
       let payload = {
         product_ref: item.ref,
       };
@@ -337,7 +337,7 @@ const Cart = ({
 };
 
 function mapStateToProps(state) {
-  return { cart: state.cart, userDetails: state.userDetails };
+  return { cart: state.cart, userLogin: state.userLogin };
 }
 
 const mapDispatchToProps = {
@@ -357,5 +357,5 @@ Cart.propTypes = {
   updateCartItemQty: PropTypes.func,
   removeFromCart: PropTypes.func,
   setCart: PropTypes.func,
-  userDetails: PropTypes.object,
+  userLogin: PropTypes.object,
 };

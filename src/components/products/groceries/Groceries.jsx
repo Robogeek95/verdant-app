@@ -19,13 +19,14 @@ import {
   postToCart,
 } from "../../../utilities/services";
 
-const Groceries = ({ match, addToCart, userDetails }) => {
+const Groceries = ({ match, addToCart, userLogin }) => {
   const [products, setProducts] = useState([]);
   const [, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [newProducts, setNewProducts] = useState([]);
   const [fetchingCategories, setFetchingCategories] = useState(true);
   const [fetchingProducts, setFetchingProducts] = useState(true);
+  const { userInfo } = userLogin;
 
   const category = "household";
   const subcategory = match.params.category;
@@ -37,6 +38,7 @@ const Groceries = ({ match, addToCart, userDetails }) => {
 
   async function fetchSnapshot(category, subcategory) {
     // fetch all categories
+
     setFetchingCategories(true);
     fetchProductCategories()
       .then((res) => {
@@ -76,7 +78,7 @@ const Groceries = ({ match, addToCart, userDetails }) => {
 
   function handleAddToCart(item) {
     // if logged in
-    if (userDetails) {
+    if (userInfo) {
       let payload = {
         product_ref: item.ref,
         quantity: 1,
@@ -325,7 +327,7 @@ const Groceries = ({ match, addToCart, userDetails }) => {
 };
 
 function mapStateToProps(state) {
-  return { cart: state.cart, userDetails: state.userDetails };
+  return { cart: state.cart, userLogin: state.userLogin };
 }
 
 const mapDispatchToProps = {
@@ -337,5 +339,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(Groceries);
 Groceries.propTypes = {
   match: PropTypes.object,
   addToCart: PropTypes.function,
-  userDetails: PropTypes.object,
+  userLogin: PropTypes.object,
 };
