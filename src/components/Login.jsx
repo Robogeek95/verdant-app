@@ -69,6 +69,7 @@ const Login = ({ location, history }) => {
                   placeholder="Email Address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -80,6 +81,7 @@ const Login = ({ location, history }) => {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
                 <img src={eye} alt="eye" className="eye" />
               </div>

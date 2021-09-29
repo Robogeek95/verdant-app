@@ -80,6 +80,7 @@ const Signup = ({ history, location }) => {
                   placeholder="First Name"
                   value={firstname}
                   onChange={(e) => setFirstName(e.target.value)}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -91,6 +92,7 @@ const Signup = ({ history, location }) => {
                   placeholder="Last Name"
                   value={lastname}
                   onChange={(e) => setLastName(e.target.value)}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -102,6 +104,7 @@ const Signup = ({ history, location }) => {
                   placeholder="Email Address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -124,6 +127,7 @@ const Signup = ({ history, location }) => {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
                 <img src={eye} alt="eye" className="eye" />
               </div>
@@ -136,6 +140,7 @@ const Signup = ({ history, location }) => {
                   placeholder="Confirm Password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
                 />
                 <img src={eye} alt="eye" className="eye" />
               </div>
