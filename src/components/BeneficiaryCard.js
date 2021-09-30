@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { deleteBeneficiary } from "../actions/beneficiaryActions";
 import { useDispatch } from "react-redux";
 
-export default function BeneficiaryCard({ data }) {
+export default function BeneficiaryCard({ data, selected }) {
   const { name, phone, address, country } = data;
 
   const dispatch = useDispatch();
@@ -13,8 +13,12 @@ export default function BeneficiaryCard({ data }) {
   }
 
   return (
-    <div className="card">
-      <div className="card-body bg-muted">
+    <div className="card cursor-pointer">
+      <div
+        className={`card-body bg-light border rounded ${
+          selected?.ref === data?.ref && "border-info"
+        }`}
+      >
         <div className="mb-3 d-flex justify-content-between align-items-center">
           <h5 className="m-0">{name}</h5>
 
@@ -26,8 +30,8 @@ export default function BeneficiaryCard({ data }) {
           </button>
         </div>
 
-        <ul className="list-group list-group-flush">
-          <li className="list-group-item">
+        <ul className="list-group list-group-flush bg-transparent">
+          <li className="list-group-item bg-transparent">
             <div className="row">
               <div className="col-5">
                 <p>Phone</p>
@@ -37,7 +41,7 @@ export default function BeneficiaryCard({ data }) {
               </div>
             </div>
           </li>
-          <li className="list-group-item">
+          <li className="list-group-item bg-transparent">
             <div className="row">
               <div className="col-5">
                 <p>Address</p>
@@ -47,7 +51,7 @@ export default function BeneficiaryCard({ data }) {
               </div>
             </div>
           </li>
-          <li className="list-group-item">
+          <li className="list-group-item bg-transparent">
             <div className="row">
               <div className="col-5">
                 <p>Country</p>
@@ -65,4 +69,5 @@ export default function BeneficiaryCard({ data }) {
 
 BeneficiaryCard.propTypes = {
   data: PropTypes.object,
+  selected: PropTypes.object,
 };

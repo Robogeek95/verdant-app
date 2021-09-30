@@ -21,6 +21,7 @@ const Checkout = () => {
     address: "",
     country: "",
   });
+  const [selectedBeneficiary, setSelectedBeneficiary] = useState({});
 
   const dispatch = useDispatch();
 
@@ -52,19 +53,23 @@ const Checkout = () => {
   function renderCreateBeneficiary() {
     return (
       <>
-        <button
-          type="submit"
-          className="btn btn-primary btn-block"
-          style={{
-            fontSize: "18px",
-            fontWeight: "500",
-            lineHeight: "26.44px",
-          }}
-          data-toggle="modal"
-          data-target="#beneficiaryModal"
-        >
-          Create a Beneficiary
-        </button>
+        <div className="row justify-content-center">
+          <div className="col col-4">
+            <button
+              type="submit"
+              className="btn btn-primary btn-block"
+              style={{
+                fontSize: "18px",
+                fontWeight: "500",
+                lineHeight: "26.44px",
+              }}
+              data-toggle="modal"
+              data-target="#beneficiaryModal"
+            >
+              Create a Beneficiary
+            </button>
+          </div>
+        </div>
 
         <div
           className="modal fade"
@@ -149,8 +154,17 @@ const Checkout = () => {
           <div className="">
             <div className="row">
               {beneficiaries.map((beneficiary) => (
-                <div key={beneficiary.ref} className="col-6 mb-4">
-                  <BeneficiaryCard data={beneficiary} />
+                <div
+                  key={beneficiary.ref}
+                  className="col-6 mb-4"
+                  onClick={() => setSelectedBeneficiary(beneficiary)}
+                  onKeyPress={() => null}
+                  role="treeitem"
+                >
+                  <BeneficiaryCard
+                    data={beneficiary}
+                    selected={selectedBeneficiary}
+                  />
                 </div>
               ))}
             </div>
