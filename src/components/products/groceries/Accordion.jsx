@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Accordion = ({ title, children }) => {
-  const [isOpen, setOpen] = React.useState(false);
+const Accordion = ({ title, children, expanded = false }) => {
+  const [isOpen, setOpen] = React.useState(expanded);
   return (
     <div className="accordion-wrapper">
       <div
@@ -22,6 +22,7 @@ const Accordion = ({ title, children }) => {
 Accordion.propTypes = {
   title: PropTypes.string,
   children: PropTypes.element,
+  expanded: PropTypes.bool,
 };
 
 export default Accordion;

@@ -162,6 +162,7 @@ const Groceries = ({ match, addToCart, userLogin }) => {
               <Accordion
                 title="Categories"
                 style={{ fontSize: "20px", fontWeight: "500" }}
+                expanded={true}
               >
                 <Card.Body>
                   {/* Todo: fix reload on change */}
@@ -200,6 +201,7 @@ const Groceries = ({ match, addToCart, userLogin }) => {
               <Accordion
                 title="New Products"
                 style={{ fontSize: "20px", fontWeight: "500" }}
+                expanded={true}
               >
                 <Card.Body>
                   <Nav defaultActiveKey="/" className="flex-column footer-nav">
