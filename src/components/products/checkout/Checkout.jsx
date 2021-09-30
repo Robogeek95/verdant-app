@@ -156,7 +156,7 @@ const Checkout = () => {
               {beneficiaries.map((beneficiary) => (
                 <div
                   key={beneficiary.ref}
-                  className="col-6 mb-4"
+                  className="col-4 mb-4"
                   onClick={() => setSelectedBeneficiary(beneficiary)}
                   onKeyPress={() => null}
                   role="treeitem"
