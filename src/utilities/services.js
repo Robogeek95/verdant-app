@@ -33,3 +33,18 @@ export async function fetchProductCategories() {
 export async function fetchSubProducts(catRef, subCatRef) {
   return axios.get(`/product/catalog/subcategory/${catRef}/${subCatRef}`);
 }
+
+// Add Beneficiary
+export async function AddBeneficiaryService(payload) {
+  return axios.post(`/user/beneficiary`, payload);
+}
+
+// list Beneficiaries
+export async function ListBeneficiariesService() {
+  return axios.get(`/user/beneficiary`);
+}
+
+// delete Beneficiary
+export async function deleteBeneficiaryService(ref) {
+  return axios.delete(`/user/beneficiary/${ref}`);
+}

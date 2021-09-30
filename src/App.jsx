@@ -16,7 +16,6 @@ import Section from "./components/layouts/section/Section";
 import About from "./components/layouts/About";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import ForgetPassword from "./components/ForgetPassword";
 import FAQ from "./components/FAQ";
 import Contact from "./components/Contact";
 import Profile from "./components/Profile";

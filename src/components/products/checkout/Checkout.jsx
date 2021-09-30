@@ -1,65 +1,170 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, Col, Row, Form, Image } from "react-bootstrap";
-import Crypto from "../../images/bill-image/cryto.png";
-import CardMaster from "../../images/bill-image/card-master.png";
-import CryptoCheckout from "./CryptoCheckout";
-import { cartShippingAddress } from "../../../actions/cartActions";
+import { Card, Col, Row, Form } from "react-bootstrap";
+import BeneficiaryForm from "../../BeneficiaryForm";
+import {
+  addBeneficiary,
+  getBeneficiaries,
+} from "../../../actions/beneficiaryActions";
+import Loader from "../../products/groceries/Loader";
+import { toast, ToastContainer } from "react-toastify";
+import BeneficiaryCard from "../../BeneficiaryCard";
 
 const Checkout = () => {
   const cart = useSelector((state) => state.cart);
-  const { cartItems, subTotal, total, deliveryFee, shippingAddress } = cart;
+  const { cartItems, subTotal, total, deliveryFee } = cart;
+  const [, setDeliveryMethod] = useState("");
 
-  const [receiversName, setReceiversName] = useState(
-    shippingAddress.receiversName
-  );
-  const [receiversAddress, setReceiversAddress] = useState(
-    shippingAddress.receiversAddress
-  );
-  const [receiversPhone, setReceiversPhone] = useState(
-    shippingAddress.receiversPhone
-  );
-  const [receiversCity, setReceiversCity] = useState(
-    shippingAddress.setReceiversCity
-  );
-  const [receiversState, setReceiversState] = useState(
-    shippingAddress.setReceiversState
-  );
-  const [deliveryMethod, setDeliveryMethod] = useState(
-    shippingAddress.deliveryMethod
-  );
-  const [paymentMethod] = useState(shippingAddress.paymentMethod);
+  const [beneficiaryData, setBeneficiaryData] = useState({
+    name: "",
+    phone: "",
+    address: "",
+    country: "",
+  });
 
-  const [, setCardNumber] = useState();
-  const [, setCardExpiry] = useState();
-  const [, setCardCVC] = useState();
-  const [country] = useState(shippingAddress.country);
-  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
-  const [exchangeRate] = useState(shippingAddress.exchangeRate);
-  const [crypto] = useState(shippingAddress.crypto);
   const dispatch = useDispatch();
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(
-      cartShippingAddress({
-        receiversName,
-        receiversAddress,
-        receiversPhone,
-        receiversCity,
-        receiversState,
-        deliveryMethod,
-        paymentMethod,
-        country,
-        postalCode,
-        exchangeRate,
-        crypto,
-      })
+  const beneficiariesData = useSelector((state) => state.beneficiaries);
+  const {
+    loading: loadingBeneficiaries,
+
+    adding: addingBeneficiary,
+    error: loadBeneficiariesError,
+    addError: addBeneficiaryError,
+    beneficiaries,
+  } = beneficiariesData;
+
+  console.log({ beneficiaries });
+  useEffect(() => {
+    dispatch(getBeneficiaries());
+  }, []);
+
+  useEffect(() => {
+    if (addBeneficiaryError) {
+      toast(addBeneficiaryError);
+    }
+  }, [addBeneficiaryError]);
+
+  function handleCreateBeneficiary() {
+    dispatch(addBeneficiary(beneficiaryData));
+  }
+
+  function renderCreateBeneficiary() {
+    return (
+      <>
+        <button
+          type="submit"
+          className="btn btn-primary btn-block"
+          style={{
+            fontSize: "18px",
+            fontWeight: "500",
+            lineHeight: "26.44px",
+          }}
+          data-toggle="modal"
+          data-target="#beneficiaryModal"
+        >
+          Create a Beneficiary
+        </button>
+
+        <div
+          className="modal fade"
+          id="beneficiaryModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="beneficiaryModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">
+                  Add Beneficiary
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                {addingBeneficiary ? (
+                  <Loader />
+                ) : (
+                  <BeneficiaryForm
+                    data={beneficiaryData}
+                    setData={setBeneficiaryData}
+                  />
+                )}
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  cancel
+                </button>
+                <button
+                  onClick={handleCreateBeneficiary}
+                  type="button"
+                  className="btn btn-primary"
+                >
+                  Add Beneficiary
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
     );
-  };
+  }
+
+  function renderBeneficiaries() {
+    if (loadingBeneficiaries) {
+      return <p>loading...</p>;
+    }
+
+    if (loadBeneficiariesError) {
+      return <p>Error...</p>;
+    }
+
+    return (
+      <>
+        {!beneficiaries ? (
+          <>
+            <Col sm={12} md={12} className="mx-auto">
+              <div className="my-5 d-flex  justify-content-center align-items-center flex-column">
+                <h4 className="text-center">You have no beneficiaries yet!</h4>
+
+                <Col sm={12} md={4} className="mx-auto mt-3">
+                  {renderCreateBeneficiary()}
+                </Col>
+              </div>
+            </Col>
+          </>
+        ) : (
+          <div className="">
+            <div className="row">
+              {beneficiaries.map((beneficiary) => (
+                <div key={beneficiary.ref} className="col-6 mb-4">
+                  <BeneficiaryCard data={beneficiary} />
+                </div>
+              ))}
+            </div>
+
+            {renderCreateBeneficiary()}
+          </div>
+        )}
+      </>
+    );
+  }
 
   return (
     <section className="container py-5">
+      <ToastContainer />
       <Row className="py-3">
         <Col sm={12} md={12} lg={12}>
           <h5 style={{ fontSize: "18px", fontWeight: "500" }}>CHECKOUT</h5>
@@ -67,326 +172,117 @@ const Checkout = () => {
       </Row>
       <Row>
         <Col sm={12} md={8} lg={8}>
+          {/* step 1 */}
           <Card className="p-3">
-            <h5
-              className="card-header bg-white px-0"
-              style={{ fontSize: "24px", fontWeight: "500" }}
-            >
-              Step 1: Enter Reciever’s Details
-            </h5>
-            <Form onSubmit={submitHandler}>
-              <Row className=" py-2">
-                <Col sm={12} md={6} lg={6}>
-                  <Form.Group
-                    className="mb-3 formControl"
-                    controlId="formBasicEmail"
-                  >
-                    <Form.Label style={{ fontSize: "18px", fontWeight: "400" }}>
-                      Full name
-                      <span className="text-danger">*</span>
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter Full Name"
-                      value={receiversName}
-                      onChange={(e) => setReceiversName(e.target.value)}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-                <Col sm={12} md={6} lg={6}>
-                  <Form.Group className="mb-3 formControl">
-                    <Form.Label style={{ fontSize: "18px", fontWeight: "400" }}>
-                      Phone Number
-                      <span className="text-danger">*</span>
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter Phone Number"
-                      bg="secondary"
-                      value={receiversPhone}
-                      onChange={(e) => setReceiversPhone(e.target.value)}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={12} md={12} lg={12}>
-                  <Form.Group
-                    className="mb-3 formControl"
-                    controlId="formBasicEmail"
-                  >
-                    <Form.Label style={{ fontSize: "18px", fontWeight: "400" }}>
-                      Address
-                      <span className="text-danger">*</span>
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter Address"
-                      value={receiversAddress}
-                      onChange={(e) => setReceiversAddress(e.target.value)}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={12} md={6} lg={6}>
-                  <Form.Group
-                    className="mb-3 formControl"
-                    controlId="formBasicEmail"
-                  >
-                    <Form.Label style={{ fontSize: "18px", fontWeight: "400" }}>
-                      Town / City
-                      <span className="text-danger">*</span>
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter Town / City"
-                      value={receiversCity}
-                      onChange={(e) => setReceiversCity(e.target.value)}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-                <Col sm={12} md={6} lg={6}>
-                  <Form.Group
-                    className="mb-3 formControl"
-                    controlId="formBasicEmail"
-                  >
-                    <Form.Label style={{ fontSize: "18px", fontWeight: "400" }}>
-                      State
-                      <span className="text-danger">*</span>
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter State"
-                      value={receiversState}
-                      onChange={(e) => setReceiversState(e.target.value)}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={12} className="mt-5">
-                  <h5
-                    className="card-header bg-white px-0"
-                    style={{ fontSize: "24px", fontWeight: "500" }}
-                  >
-                    Step 2: Choose Delivery Method
-                  </h5>
-                  <div>
-                    {/* <Form.Group className="mb-3 formControl" controlId="formBasicEmail"> */}
-                    <Form.Check
-                      type="radio"
-                      value="door delivery"
-                      name="deliveryMethod"
-                      label="Door Delivery"
-                      id="doorDelivery"
-                      checked
-                      onChange={(e) => setDeliveryMethod(e.target.value)}
-                    />
-                    {/* <Form.Label style={{ fontSize: '18px', fontWeight: '400' }}><span style={{ fontSize: '18px', fontWeight: '400' }}>Door Delivery</span></Form.Label> */}
-                    {/* </Form.Group> */}
-                    {/* <h6 className="pt-3">
+            <div>
+              <h5
+                className="card-header bg-white px-0"
+                style={{ fontSize: "24px", fontWeight: "500" }}
+              >
+                Step 1: Choose Beneficiary
+              </h5>
+              <div className="m-4">{renderBeneficiaries()}</div>
+            </div>
+
+            <div className="mt-4">
+              {/* step 2 */}
+              <h5
+                className="card-header bg-white px-0"
+                style={{ fontSize: "24px", fontWeight: "500" }}
+              >
+                Step 2: Choose Delivery Method
+              </h5>
+              <div>
+                <Row>
+                  <Col sm={12} className="mt-5">
+                    <div>
+                      {/* <Form.Group className="mb-3 formControl" controlId="formBasicEmail"> */}
+                      <Form.Check
+                        type="radio"
+                        value="door delivery"
+                        name="deliveryMethod"
+                        label="Door Delivery"
+                        id="doorDelivery"
+                        checked
+                        onChange={(e) => setDeliveryMethod(e.target.value)}
+                      />
+                      {/* <Form.Label style={{ fontSize: '18px', fontWeight: '400' }}><span style={{ fontSize: '18px', fontWeight: '400' }}>Door Delivery</span></Form.Label> */}
+                      {/* </Form.Group> */}
+                      {/* <h6 className="pt-3">
                       <Record2 size={23} className="text-primary" />
                       <span style={{ fontSize: '18px', fontWeight: '400' }}>Door Delivery</span>
                     </h6> */}
-                    <p
-                      style={{
-                        fontSize: "16px",
-                        fontWeight: "700",
-                        color: "#181818",
-                        lineHeight: "21.52px",
-                        marginLeft: "3.5px",
-                      }}
-                    >
-                      Delivered between Monday 13 Sep and Wednesday 15 Sep for ₦
-                      1,000
-                    </p>
-                  </div>
-                  <div>
-                    {/* <Form.Group className="mb-3 formControl" controlId="formBasicEmail"> */}
-                    <Form.Check
-                      type="radio"
-                      value="pickup"
-                      name="deliveryMethod"
-                      label="Pick Up"
-                      id="pickup"
-                      onChange={(e) => setDeliveryMethod(e.target.value)}
-                    />
-                    {/* </Form.Group> */}
-                    {/* <h6 className="pt-3">
+                      <p
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: "700",
+                          color: "#181818",
+                          lineHeight: "21.52px",
+                          marginLeft: "3.5px",
+                        }}
+                      >
+                        Delivered between Monday 13 Sep and Wednesday 15 Sep for
+                        ₦ 1,000
+                      </p>
+                    </div>
+                    <div>
+                      {/* <Form.Group className="mb-3 formControl" controlId="formBasicEmail"> */}
+                      <Form.Check
+                        type="radio"
+                        value="pickup"
+                        name="deliveryMethod"
+                        label="Pick Up"
+                        id="pickup"
+                        onChange={(e) => setDeliveryMethod(e.target.value)}
+                      />
+                      {/* </Form.Group> */}
+                      {/* <h6 className="pt-3">
                       <Record2 size={23} />
                       <span style={{ fontSize: '18px', fontWeight: '400' }}>Pickup Centre</span>
                     </h6> */}
-                    <p
+                      <p
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: "400",
+                          color: "#181818",
+                          lineHeight: "21.52px",
+                          marginLeft: "3.5px",
+                        }}
+                      >
+                        Ready for pickup between Wednesday 8 Sep to Thursday 9
+                        Sep with cheaper shipping fees
+                      </p>
+                    </div>
+                    <h6
+                      className="text-warning"
                       style={{
                         fontSize: "16px",
-                        fontWeight: "400",
-                        color: "#181818",
+                        fontWeight: "700",
+                        color: "#F6C54C",
                         lineHeight: "21.52px",
-                        marginLeft: "3.5px",
                       }}
                     >
-                      Ready for pickup between Wednesday 8 Sep to Thursday 9 Sep
-                      with cheaper shipping fees
-                    </p>
-                  </div>
-                  <h6
-                    className="text-warning"
-                    style={{
-                      fontSize: "16px",
-                      fontWeight: "700",
-                      color: "#F6C54C",
-                      lineHeight: "21.52px",
-                    }}
-                  >
-                    SELECT MERCHENT CENTRE
-                  </h6>
-                  <div className="mt-5">
-                    <h5 className="card-header bg-white px-0">
-                      Step 3: Select Payment Type
-                    </h5>
-                    <p
-                      className="pt-3"
+                      SELECT MERCHENT CENTRE
+                    </h6>
+                  </Col>
+                </Row>
+                <Row className="my-4">
+                  <Col sm={12} md={4} lg={4} className="mx-auto">
+                    <button
+                      type="submit"
+                      className="btn btn-primary btn-block"
                       style={{
                         fontSize: "18px",
-                        fontWeight: "400",
-                        color: "#181818",
-                        lineHeight: "24.21px",
+                        fontWeight: "500",
+                        lineHeight: "26.44px",
                       }}
                     >
-                      How do you want to pay for this order?
-                    </p>
-                    <div className="image-payment">
-                      <Image src={CardMaster} id={paymentMethod} />
-                      <Image src={Crypto} />
-                    </div>
-                    {/* Payment Type Component */}
-
-                    <Row className="mt-4">
-                      <Col sm={12} md={12} lg={12}>
-                        <Form.Group
-                          className="mb-3 formControl"
-                          controlId="formBasicEmail"
-                        >
-                          <Form.Label
-                            style={{ fontSize: "18px", fontWeight: "400" }}
-                          >
-                            Card Number
-                            <span className="text-danger">*</span>
-                          </Form.Label>
-                          <Form.Control
-                            type="text"
-                            placeholder="Enter Card Number"
-                            onChange={(e) => setCardNumber(e.target.value)}
-                          />
-                        </Form.Group>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col sm={12} md={6} lg={6}>
-                        <Form.Group
-                          className="mb-3 formControl"
-                          controlId="formBasicEmail"
-                        >
-                          <Form.Label
-                            style={{ fontSize: "18px", fontWeight: "400" }}
-                          >
-                            Expiry Date
-                            <span className="text-danger">*</span>
-                          </Form.Label>
-                          <Form.Control
-                            type="text"
-                            placeholder="MM/YY"
-                            onChange={(e) => setCardExpiry(e.target.value)}
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col sm={12} md={6} lg={6}>
-                        <Form.Group
-                          className="mb-3 formControl"
-                          controlId="formBasicEmail"
-                        >
-                          <Form.Label
-                            style={{ fontSize: "18px", fontWeight: "400" }}
-                          >
-                            CVC
-                            <span className="text-danger">*</span>
-                          </Form.Label>
-                          <Form.Control
-                            type="text"
-                            placeholder="CVC"
-                            onChange={(e) => setCardCVC(e.target.value)}
-                          />
-                        </Form.Group>
-                      </Col>
-                      <Col sm={12} md={6} lg={6}>
-                        <Form.Group
-                          className="mb-3 formControl"
-                          controlId="formBasicEmail"
-                        >
-                          <Form.Label
-                            style={{ fontSize: "18px", fontWeight: "400" }}
-                          >
-                            Country
-                            <span className="text-danger">*</span>
-                          </Form.Label>
-                          <select
-                            className="form-control"
-                            name="country"
-                            id="country"
-                          >
-                            <option selected>Select Country</option>
-                            <option value={country}>USA</option>
-                          </select>
-                        </Form.Group>
-                      </Col>
-                      <Col sm={12} md={6} lg={6}>
-                        <Form.Group
-                          className="mb-3 formControl"
-                          controlId="formBasicEmail"
-                        >
-                          <Form.Label
-                            style={{ fontSize: "18px", fontWeight: "400" }}
-                          >
-                            Postal Code
-                            <span className="text-danger">*</span>
-                          </Form.Label>
-                          <Form.Control
-                            type="text"
-                            placeholder="0012110"
-                            value={postalCode}
-                            onChange={(e) => setPostalCode(e.target.value)}
-                          />
-                        </Form.Group>
-                      </Col>
-                    </Row>
-
-                    {/* <CardCheckout /> */}
-                    <CryptoCheckout />
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={12} md={4} lg={4} className="mx-auto">
-                  <button
-                    type="submit"
-                    className="btn btn-primary btn-block"
-                    style={{
-                      fontSize: "18px",
-                      fontWeight: "500",
-                      lineHeight: "26.44px",
-                    }}
-                  >
-                    Pay Now
-                  </button>
-                </Col>
-              </Row>
-            </Form>
+                      Pay Now
+                    </button>
+                  </Col>
+                </Row>
+              </div>
+            </div>
           </Card>
         </Col>
         <Col sm={12} md={4} lg={4}>

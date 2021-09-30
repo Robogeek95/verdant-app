@@ -25,7 +25,7 @@ const GroceryProduct = ({ product, addToCart }) => {
             </div>
           </Link>
           <div className="card-body">
-            <div className="d-flex justify-between">
+            <div div className="d-flex justify-between">
               <p
                 className="card-title text-dark"
                 style={{ fontSize: "16px", fontWeight: "400" }}

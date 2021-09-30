@@ -13,6 +13,7 @@ import {
   userUpdateProfileReducer,
 } from "./reducers/userReducers";
 import { categoriesReducer } from "./reducers/categoriesReducers";
+import { beneficiariesDataReducer } from "./reducers/beneficiariesReducer";
 // import axios from "./utilities/axios";
 // import handleApiError from "./utilities/handleApiError";
 
@@ -25,6 +26,7 @@ const reducer = combineReducers({
   userDetails: userDetailsReducer,
   updateUser: userUpdateProfileReducer,
   categories: categoriesReducer,
+  beneficiaries: beneficiariesDataReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")
