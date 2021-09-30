@@ -2,18 +2,16 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
-import Logo from "./images/logo.PNG";
-import loginBarner from "./images/login-barner.png";
-import eye from "./images/eye.png";
-import googleIcon from "./images/google-icon.png";
-
+// import Logo from "./images/logo.PNG";
+// import loginBarner from "./images/login-barner.png";
+import Forgetlogo from "./images/forgetlogo.png"
 import Message from "./products/groceries/Message";
 import Loader from "./products/groceries/Loader";
 import { login } from "../actions/userActions";
 
-const Login = ({ location, history }) => {
+const ForgetPassword = ({ location, history }) => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
@@ -31,7 +29,7 @@ const Login = ({ location, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    dispatch(login(email));
   };
 
   return (
@@ -41,18 +39,20 @@ const Login = ({ location, history }) => {
           <div className=" p-5 ">
             <div className="d-flex  justify-content-center">
               <div>
-                <img src={Logo} alt="Brand Logo" />
+                <img src={Forgetlogo} alt="Brand Logo" />
               </div>
-              <h2
+              {/* <h2
                 className="text-primary ml-3"
                 style={{ fontSize: "32.35", fontWeight: "700" }}
               >
                 Verdant Digital
-              </h2>
+              </h2> */}
             </div>
             <div className="text-center text-dark my-5">
               <p style={{ fontSize: "20px", fontWeight: "500" }}>
-                Login To Verdant
+              Enter the email associated with your account
+and we’ll send an email with instructions to
+reset your password.
               </p>
             </div>
 
@@ -72,81 +72,44 @@ const Login = ({ location, history }) => {
                   required
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input
-                  className="password"
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-                <img src={eye} alt="eye" className="eye" />
-              </div>
-              <div className="form-group">
-                <input className="checkbox" type="checkbox" id="checkbox" />
-                <label htmlFor="checkbox" id="checkbox-label">
-                  Remember Me
-                </label>
-                <p><LinkContainer to="/forgetpassword">
-                <a>Fogot Password?</a>
-              </LinkContainer></p>
-               
-              </div>
+              
+             
               <div className="mb-5">
                 <input
                   className="btn btn-primary btn-block btn-lg"
                   type="submit"
-                  value="Login"
+                  value="Send"
                 />
                 {/* <button type="submit" className="btn btn-primary btn-block btn-lg">Submit</button> */}
               </div>
 
-              <div className="or-container">
-                <div className="left-line" />
-                <span>or</span>
-                <div className="right-line" />
-              </div>
+             
             </form>
 
             <div className="mt-5" />
             <div className="mt-5" />
 
-            <button
-              type="button"
-              className="btn btn-outline-primary btn-lg btn-block"
-            >
-              <div>
-                <img
-                  src={googleIcon}
-                  alt="Google Icon"
-                  className="mr-1 img-fluid"
-                />
-                Google
-              </div>
-            </button>
+          
 
             <p className="no-account text-center">
-              Don&apos;t have an account?
+              Remember Password?
               {/* <LinkContainer to={redirect ? `/register?redirect=${redirect}` : "/signup"}>  */}
-              <LinkContainer to="/signup">
-                <a>Create an account</a>
+              <LinkContainer to="/login">
+                <a>Login</a>
               </LinkContainer>
               {/* <a href="#">Create an account</a> */}
             </p>
           </div>
         </div>
 
-        <div className="col">
+        {/* <div className="col">
           <div>
             <img src={loginBarner} alt="Login Barner" />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
 };
 
-export default Login;
+export default ForgetPassword;
