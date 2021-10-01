@@ -51,7 +51,7 @@ export async function deleteBeneficiaryService(ref) {
 
 // upload invoice
 export async function addInvoiceService(ref) {
-  return axios.post(`/product/invoice_upload/${ref}`);
+  return axios.post(`/product/invoice_upload/`, ref);
 }
 
 // get all invoice

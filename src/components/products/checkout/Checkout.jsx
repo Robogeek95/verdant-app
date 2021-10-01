@@ -28,7 +28,6 @@ const Checkout = () => {
   const beneficiariesData = useSelector((state) => state.beneficiaries);
   const {
     loading: loadingBeneficiaries,
-
     adding: addingBeneficiary,
     error: loadBeneficiariesError,
     addError: addBeneficiaryError,
