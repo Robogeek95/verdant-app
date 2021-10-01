@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 // import Logo from "./images/logo.PNG";
 // import loginBarner from "./images/login-barner.png";
-import Forgetlogo from "./images/forgetlogo.png"
+import Forgetlogo from "./images/forgetlogo.png";
 import Message from "./products/groceries/Message";
 import Loader from "./products/groceries/Loader";
 import { login } from "../actions/userActions";
