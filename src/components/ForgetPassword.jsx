@@ -33,7 +33,7 @@ const ForgetPassword = ({ location, history }) => {
   };
 
   return (
-    <div>
+    <div className="d-flex justify-content-center" >
       <div className="row">
         <div className="col">
           <div className=" p-5 ">
@@ -41,12 +41,7 @@ const ForgetPassword = ({ location, history }) => {
               <div>
                 <img src={Forgetlogo} alt="Brand Logo" />
               </div>
-              {/* <h2
-                className="text-primary ml-3"
-                style={{ fontSize: "32.35", fontWeight: "700" }}
-              >
-                Verdant Digital
-              </h2> */}
+             
             </div>
             <div className="text-center text-dark my-5">
               <p style={{ fontSize: "20px", fontWeight: "500" }}>

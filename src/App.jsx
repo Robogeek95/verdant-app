@@ -17,6 +17,7 @@ import About from "./components/layouts/About";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import ForgetPassword from "./components/ForgetPassword";
+import ForgetSuccess from "./components/ForgetSuccess";
 import FAQ from "./components/FAQ";
 import Contact from "./components/Contact";
 import Profile from "./components/Profile";
@@ -75,6 +76,7 @@ const App = ({ setCart, userLogin }) => {
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/forgetpassword" component={ForgetPassword}/>
+          <Route path="/forgetsuccess" component={ForgetSuccess}/>
           <Route path="/" component={Section} exact />
 
           <Route path="/cart/:id?" component={Cart} />
