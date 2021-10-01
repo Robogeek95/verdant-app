@@ -48,3 +48,18 @@ export async function ListBeneficiariesService() {
 export async function deleteBeneficiaryService(ref) {
   return axios.delete(`/user/beneficiary/${ref}`);
 }
+
+// upload invoice
+export async function addInvoiceService(ref) {
+  return axios.post(`/product/invoice_upload/${ref}`);
+}
+
+// get all invoice
+export async function listInvoiceService() {
+  return null;
+}
+
+// get all invoice
+export async function deleteInvoiceService() {
+  return null;
+}
