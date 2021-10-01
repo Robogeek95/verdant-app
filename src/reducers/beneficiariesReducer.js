@@ -11,17 +11,29 @@ import {
 } from "../constants/beneficiaryConstants";
 
 export const beneficiariesDataReducer = (
-  state = { beneficiaries: [] },
+  state = {
+    beneficiaries: [],
+    loading: false,
+    error: "",
+    adding: false,
+    addError: "",
+    deleting: false,
+    deleteError: "",
+  },
   action
 ) => {
   switch (action.type) {
     // list
     case LIST_BENEFICIARIES_REQUEST:
-      return { loading: true };
+      return { loading: true, beneficiaries: [...state.beneficiaries] };
     case LIST_BENEFICIARIES_SUCCESS:
       return { loading: false, beneficiaries: action.payload };
     case LIST_BENEFICIARIES_FAIL:
-      return { loading: false, error: action.payload };
+      return {
+        loading: false,
+        error: action.payload,
+        beneficiaries: [...state.beneficiaries],
+      };
 
     // add
     case ADD_BENEFICIARY_REQUEST:
@@ -63,7 +75,11 @@ export const beneficiariesDataReducer = (
         beneficiaries,
       };
     case DELETE_BENEFICIARY_FAIL:
-      return { deleting: false, deleteError: action.payload };
+      return {
+        deleting: false,
+        deleteError: action.payload,
+        beneficiaries: [...state.beneficiaries],
+      };
 
     default:
       return state;

@@ -129,26 +129,32 @@ const Checkout = () => {
 
   function renderBeneficiaries() {
     if (loadingBeneficiaries) {
-      return <p>loading...</p>;
+      return (
+        <div className="d-flex m-5 justify-content-center align-items-center">
+          <Loader />
+        </div>
+      );
     }
 
     if (loadBeneficiariesError) {
-      return <p>Error...</p>;
+      return (
+        <div className="bg-danger text-white d-flex m-5 justify-content-center align-items-center">
+          <p>{loadBeneficiariesError}</p>
+        </div>
+      );
     }
 
     return (
       <>
-        {!beneficiaries ? (
+        {beneficiaries.length <= 0 ? (
           <>
-            <Col sm={12} md={12} className="mx-auto">
-              <div className="my-5 d-flex  justify-content-center align-items-center flex-column">
-                <h4 className="text-center">You have no beneficiaries yet!</h4>
+            <div className="my-5">
+              <h4 className="text-center">You have no beneficiaries yet!</h4>
 
-                <Col sm={12} md={4} className="mx-auto mt-3">
-                  {renderCreateBeneficiary()}
-                </Col>
+              <div className="mt-3">
+                {renderCreateBeneficiary()}
               </div>
-            </Col>
+            </div>
           </>
         ) : (
           <div className="">

@@ -14,8 +14,7 @@ import {
 } from "./reducers/userReducers";
 import { categoriesReducer } from "./reducers/categoriesReducers";
 import { beneficiariesDataReducer } from "./reducers/beneficiariesReducer";
-// import axios from "./utilities/axios";
-// import handleApiError from "./utilities/handleApiError";
+import { invoiceReducer } from "./reducers/invoiceReducer";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -27,6 +26,7 @@ const reducer = combineReducers({
   updateUser: userUpdateProfileReducer,
   categories: categoriesReducer,
   beneficiaries: beneficiariesDataReducer,
+  invoices: invoiceReducer
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")
@@ -40,15 +40,6 @@ const userInfoFromStorage = localStorage.getItem("userInfo")
 const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
   ? JSON.parse(localStorage.getItem("shippingAddress"))
   : {};
-
-// const getCartItemsFromDB = async () =>
-//   await axios
-//     .get("/product/cart")
-//     .then((res) => {
-//       console.log(res.data);
-//       return res.data?.products || [];
-//     })
-//     .catch((error) => handleApiError(error));
 
 const initialState = {
   cart: {
