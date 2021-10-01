@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
-import Logo from "./images/logo.PNG";
+import Logo from "./images/forgetlogo.png";
 import loginBarner from "./images/login-barner.png";
 import eye from "./images/eye.png";
 import googleIcon from "./images/google-icon.png";
@@ -43,16 +43,16 @@ const Login = ({ location, history }) => {
               <div>
                 <img src={Logo} alt="Brand Logo" />
               </div>
-              <h2
+              {/* <h2
                 className="text-primary ml-3"
                 style={{ fontSize: "32.35", fontWeight: "700" }}
               >
                 Verdant Digital
-              </h2>
+              </h2> */}
             </div>
             <div className="text-center text-dark my-5">
               <p style={{ fontSize: "20px", fontWeight: "500" }}>
-                Login To Verdant
+                Login To your Account
               </p>
             </div>
 
