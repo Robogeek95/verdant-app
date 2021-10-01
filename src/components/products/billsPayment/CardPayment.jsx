@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 import { ChevronRight } from 'react-bootstrap-icons';
 import { LinkContainer } from 'react-router-bootstrap';
-import Banner from '../../images/bill-image/bill-banner.png';
+// import Banner from '../../images/bill-image/bill-banner.png';
 import Destv from '../../images/bill-image/dstv.png';
 import Ekedc from '../../images/bill-image/ekedc.png';
 import Gotv from '../../images/bill-image/gotv.png';
@@ -29,7 +29,7 @@ const CardPayment = () => (
     <Row className="px-0">
       <Col sm={12} md={12} lg={12}>
         <div className="banner-image">
-          <Image src={Banner} className="img-fluid" alt="Bill Payment Banner" />
+          <Image src="/images/Tech banner.png" className="img-fluid" alt="Bill Payment Banner" />
         </div>
       </Col>
     </Row>
