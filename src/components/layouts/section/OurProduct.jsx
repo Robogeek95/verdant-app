@@ -88,7 +88,9 @@ const OurProduct = () => (
               <h6 style={itemText}>
                 Bill Payment
                 <br />{" "}
-                <small className="text-info">(Utilities & Telecom)</small>
+                <small style={{ color: "#f6c54c" }}>
+                  (Utilities & Telecom)
+                </small>
               </h6>
             </div>
           </Link>
@@ -97,7 +99,9 @@ const OurProduct = () => (
               <h6 style={itemText}>
                 Household
                 <br />{" "}
-                <small className="text-info">(Groceries & Clothing)</small>
+                <small style={{ color: "#f6c54c" }}>
+                  (Groceries & Clothing)
+                </small>
               </h6>
             </div>
           </Link>
@@ -106,7 +110,7 @@ const OurProduct = () => (
               <h6 style={itemText}>
                 Medical
                 <br />
-                <small className="text-info">(Clinic & Pharmacy)</small>
+                <small style={{ color: "#f6c54c" }}>(Clinic & Pharmacy)</small>
               </h6>
             </div>
           </Link>
@@ -116,7 +120,7 @@ const OurProduct = () => (
               <h6 style={itemText}>
                 Invoice Settlement
                 <br />
-                <small className="text-info">
+                <small style={{ color: "#f6c54c" }}>
                   (School fees, house rents, bills)
                 </small>
               </h6>
