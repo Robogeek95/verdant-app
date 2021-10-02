@@ -9,6 +9,9 @@ import {
 import Loader from "../../products/groceries/Loader";
 import { toast, ToastContainer } from "react-toastify";
 import BeneficiaryCard from "../../BeneficiaryCard";
+import { checkoutCart } from "../../../utilities/services";
+import handleApiError from "../../../utilities/handleApiError";
+import formatApiError from "../../../utilities/formatAPIError";
 
 const Checkout = () => {
   const cart = useSelector((state) => state.cart);
@@ -150,9 +153,7 @@ const Checkout = () => {
             <div className="my-5">
               <h4 className="text-center">You have no beneficiaries yet!</h4>
 
-              <div className="mt-3">
-                {renderCreateBeneficiary()}
-              </div>
+              <div className="mt-3">{renderCreateBeneficiary()}</div>
             </div>
           </>
         ) : (
@@ -179,6 +180,20 @@ const Checkout = () => {
         )}
       </>
     );
+  }
+
+  function handleCheckout() {
+    console.log(selectedBeneficiary);
+    checkoutCart(selectedBeneficiary.ref)
+      .then((res) => {
+        let data = res.data;
+        window.location.replace(data?.payment_link)
+      })
+      .catch((error) => {
+        handleApiError(error);
+        let message = formatApiError(error);
+        toast(message);
+      });
   }
 
   return (
@@ -288,7 +303,7 @@ const Checkout = () => {
                 <Row className="my-4">
                   <Col sm={12} md={4} lg={4} className="mx-auto">
                     <button
-                      type="submit"
+                      onClick={handleCheckout}
                       className="btn btn-primary btn-block"
                       style={{
                         fontSize: "18px",
