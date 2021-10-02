@@ -12,7 +12,9 @@ import {
 } from "../../../actions/cartActions";
 import PropTypes from "prop-types";
 import { toast, ToastContainer } from "react-toastify";
-import { deleteFromCart } from "../../../utilities/services";
+import { deleteFromCart, updateCart } from "../../../utilities/services";
+import handleApiError from "../../../utilities/handleApiError";
+import formatApiError from "../../../utilities/formatAPIError";
 
 const Cart = ({
   match,
@@ -21,7 +23,7 @@ const Cart = ({
   cart,
   updateCartItemQty,
   removeFromCart,
-  userLogin
+  userLogin,
 }) => {
   const productId = match.params.id;
 
@@ -35,13 +37,44 @@ const Cart = ({
     // if (!userInfo) {
     //   history.push("/login?redirect=shipping");
     // } else {
-      history.push(`/products/checkout?shipping/${productId}/${qty}`);
-    // }
+    history.push(`/products/checkout?shipping/${productId}/${qty}`);
+    // } 
   };
 
   // update cart item
-  function handleIncrementItem(ref, type) {
-    updateCartItemQty({ ref, type });
+  function handleIncrementItem(item, type) {
+    try {
+      let temp_element = {
+        ref: item.ref,
+        quantity: item.quantity,
+        amount: item.amount,
+      };
+
+      if (type === "increment") {
+        temp_element.quantity = temp_element.quantity + 1;
+      } else {
+        temp_element.quantity =
+          temp_element.quantity > 0 ? temp_element.quantity - 1 : 0;
+      }
+
+      // Todo: check userInfo
+      if (!userInfo) {
+        updateCart(temp_element).then(() => {
+          // store in global state
+          // toast(`Removed ${item.name} from cart`);
+          updateCartItemQty({ ref: item.ref, updatedItem: temp_element });
+        });
+        return;
+      }
+      // updateCartItemQty({ ref, type });
+
+      updateCartItemQty({ ref: item.ref, updatedItem: temp_element });
+      toast(`Removed ${item.name} from cart`);
+    } catch (error) {
+      handleApiError(error);
+      let message = formatApiError(error);
+      toast(message);
+    }
   }
 
   // delete cart item

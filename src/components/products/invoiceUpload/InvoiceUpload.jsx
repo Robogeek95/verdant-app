@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Image, Form } from "react-bootstrap";
 import { ChevronRight } from "react-bootstrap-icons";
 import Banner from "../../images/bill-image/invoicUpload-banner.png";
@@ -10,11 +10,15 @@ import { addInvoice } from "../../../actions/invoiceActions";
 
 const InvoiceUpload = () => {
   const dispatch = useDispatch();
+
+  const [amount, setAmount] = useState(0);
+
   const [
     openFileSelector,
-    { filesContent: selectedImages, loading: selectingImage, clear },
+    { filesContent: imageContent, plainFiles: imageFile, clear },
   ] = useFilePicker({
     accept: "image/*",
+    readAs: "DataURL",
   });
 
   const invoices = useSelector((state) => state.invoices);
@@ -22,17 +26,34 @@ const InvoiceUpload = () => {
     adding: addingInvoice,
     addError: addInvoiceError,
     added: addedInvoice,
-    // invoices,
   } = invoices;
 
   function handleUpload() {
-    console.log(selectedImages);
-    const payload = {
-      image: selectedImages[0]?.content,
-    };
+    if (amount > 0) {
+      if (imageFile[0]) {
+        let image_as_file = imageFile[0];
+        let formData = new FormData();
+        formData.append("image", image_as_file);
+        formData.append("amount", amount);
 
-    console.log(payload);
-    dispatch(addInvoice(payload));
+        dispatch(addInvoice(formData));
+        return;
+      }
+      toast("please select an invoice image to upload");
+      return;
+    }
+    toast("please enter an amount");
+    return;
+  }
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+
+    switch (name) {
+      case "amount":
+        setAmount(value);
+        break;
+    }
   }
 
   useEffect(() => {
@@ -44,7 +65,7 @@ const InvoiceUpload = () => {
 
   useEffect(() => {
     if (addedInvoice) {
-      toast("Invoice was successfully added");
+      toast("Invoice was successfully uploaded");
     }
     clear();
   }, [addedInvoice]);
@@ -81,7 +102,7 @@ const InvoiceUpload = () => {
               <span className="text-danger">*</span>
             </h6>
             <h5 style={{ fontSize: "24px", fontWeight: "500" }}>
-              Step 1: Enter Recievers Details
+              Step 1: Enter invoice details
               <span className="text-danger">*</span>
             </h5>
           </Col>
@@ -89,41 +110,25 @@ const InvoiceUpload = () => {
         <Form>
           <Row className="mx-auto py-2">
             <Col sm={12} md={4} lg={4}>
-              <Form.Group
-                className="mb-3 formControl"
-                controlId="formBasicEmail"
-              >
-                <Form.Label style={{ fontSize: "18px", fontWeight: "400" }}>
-                  Fullname
-                  <span className="text-danger">*</span>
-                </Form.Label>
-                <Form.Control type="text" placeholder="Enter Full Name" />
-              </Form.Group>
-            </Col>
-            <Col sm={12} md={4} lg={4}>
-              <Form.Group
-                className="mb-3 formControl"
-                controlId="formBasicEmail"
-              >
-                <Form.Label style={{ fontSize: "18px", fontWeight: "400" }}>
-                  Email
-                  <span className="text-danger">*</span>
-                </Form.Label>
-                <Form.Control type="text" placeholder="Enter Email" />
-              </Form.Group>
-            </Col>
-            <Col sm={12} md={4} lg={4}>
-              <Form.Group className="mb-3 formControl">
-                <Form.Label style={{ fontSize: "18px", fontWeight: "400" }}>
-                  Phone Number
-                  <span className="text-danger">*</span>
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Phone Number"
-                  bg="secondary"
+              <div className="input-group">
+                <label className="sr-only" htmlFor="exampleInputAmount">
+                  Amount (in Naira)
+                </label>
+                <div className="input-group-prepend">
+                  <span className="input-group-text">₦</span>
+                </div>
+                <input
+                  type="number"
+                  min="0.00"
+                  step="0.05"
+                  value={amount}
+                  onChange={handleChange}
+                  id="amount"
+                  name="amount"
+                  className="form-control"
+                  placeholder="Amount"
                 />
-              </Form.Group>
+              </div>
             </Col>
           </Row>
         </Form>
@@ -140,46 +145,50 @@ const InvoiceUpload = () => {
             </div>
 
             <div className="row p-5">
-              <div className="col col-12">
-                {addingInvoice ? (
-                  <div>
-                    <Loader />
-                  </div>
-                ) : (
-                  <div
-                    className="w-100 p-5 d-flex flex-column justify-content-center align-items-center"
-                    style={{
-                      minHeight: 386,
-                      border: "2px dashed #BED8FF",
-                      ":hover": { backgroundColor: "red" },
-                    }}
-                    onClick={() => openFileSelector()}
-                    onKeyPress={() => null}
-                    role="form"
-                  >
-                    {selectingImage && <Loader />}
-                    <Image src="/images/select.png" />
-                    <p className="text-center mt-4">
-                      Click to drop invoice or Browse
-                    </p>
-                    {selectedImages.map((file, index) => (
-                      <div
-                        key={index}
-                        className="d-flex flex-column justify-content-center align-items-center"
-                      >
-                        <h4>{file.name}</h4>
-                        <Image
-                          alt={file.name}
-                          src={file.content}
-                          width="300"
-                          height="300"
-                          className="img-fluid mx-auto"
-                        ></Image>
-                        <br />
-                      </div>
-                    ))}
-                  </div>
-                )}
+              <div className="col col-12" style={{ minHeight: 386 }}>
+                <div
+                  className="w-100 h-100 p-5 d-flex flex-column justify-content-center align-items-center"
+                  style={{
+                    border: "2px dashed #BED8FF",
+                    ":hover": { backgroundColor: "red" },
+                  }}
+                  onClick={() => openFileSelector()}
+                  onKeyPress={() => null}
+                  role="form"
+                >
+                  {addingInvoice ? (
+                    <div>
+                      <Loader />
+                      <h4 className="text-center text-info mt-3">
+                        Uploading Invoice...
+                      </h4>
+                    </div>
+                  ) : (
+                    <>
+                      <Image src="/images/select.png" />
+                      <p className="text-center mt-4">
+                        Click to drop invoice or Browse
+                      </p>
+                      {imageContent.map((file, index) => (
+                        <div
+                          key={index}
+                          className="d-flex flex-column justify-content-center align-items-center"
+                        >
+                          <h4>{file.name}</h4>
+                          <Image
+                            alt={file.name}
+                            src={file.content}
+                            width="300"
+                            height="300"
+                            className="img-fluid mx-auto"
+                          ></Image>
+
+                          <br />
+                        </div>
+                      ))}
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </Col>

@@ -107,15 +107,7 @@ export const cartReducer = (
 
       if (existItemIndex >= 0) {
         let temp_cart_state = [...state.cartItems];
-        let temp_element = { ...temp_cart_state[existItemIndex] };
-
-        if (payload.type === "increment") {
-          temp_element.quantity = temp_element.quantity + 1;
-        } else {
-          temp_element.quantity =
-            temp_element.quantity > 0 ? temp_element.quantity - 1 : 0;
-        }
-        temp_cart_state[existItemIndex] = temp_element;
+        temp_cart_state[existItemIndex] = payload?.updatedItem;
 
         const totalQty = temp_cart_state.reduce(
           (acc, item) => acc + item.quantity,

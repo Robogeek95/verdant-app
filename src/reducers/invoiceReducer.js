@@ -17,8 +17,10 @@ export const invoiceReducer = (
     error: "",
     adding: false,
     addError: "",
+    added: false,
     deleting: false,
     deleteError: "",
+    deleted: false,
   },
   action
 ) => {
@@ -44,6 +46,7 @@ export const invoiceReducer = (
     case ADD_INVOICE_SUCCESS:
       return {
         adding: false,
+        added: true,
         invoices: [...state.invoices, action.payload],
       };
     case ADD_INVOICE_FAIL:
@@ -57,6 +60,7 @@ export const invoiceReducer = (
     case DELETE_INVOICE_REQUEST: {
       return {
         deleting: true,
+        deleted: true,
         invoices: [...state.invoices],
       };
     }

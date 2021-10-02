@@ -29,17 +29,12 @@ export const addToCart =
     });
   };
 
-export const updateCartItemQty =
-  ({ ref, type }) =>
-  async (dispatch) => {
-    dispatch({
-      type: CART_ITEM_UPDATE_QTY,
-      payload: {
-        type,
-        ref,
-      },
-    });
-  };
+export const updateCartItemQty = (payload) => async (dispatch) => {
+  dispatch({
+    type: CART_ITEM_UPDATE_QTY,
+    payload,
+  });
+};
 
 export const removeFromCart =
   ({ ref }) =>

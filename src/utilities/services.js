@@ -10,9 +10,17 @@ export async function deleteFromCart({ product_ref }) {
   return axios.delete(`/product/cart/${product_ref}`);
 }
 
+export async function updateCart(product_ref, payload) {
+  return axios.put(`/product/cart/${product_ref}`, payload);
+}
+
 // fetch cart
 export async function fetchCartItems() {
   return await axios.get("/product/cart");
+}
+
+export async function checkoutCart(beneficiary_ref) {
+  return axios.get(`/product/checkout/${beneficiary_ref}`);
 }
 
 // fetch a product
@@ -51,7 +59,12 @@ export async function deleteBeneficiaryService(ref) {
 
 // upload invoice
 export async function addInvoiceService(ref) {
-  return axios.post(`/product/invoice_upload/`, ref);
+  return axios.post(`/product/invoice_upload/`, ref, {
+    headers: {
+      "Content-type": "multipart/form-data",
+    },
+  });
+  // "Content-type": "multipart/form-data",
 }
 
 // get all invoice
