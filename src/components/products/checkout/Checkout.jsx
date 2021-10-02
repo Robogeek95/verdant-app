@@ -183,7 +183,7 @@ const Checkout = () => {
   }
 
   function handleCheckout() {
-    if (Object.keys(selectedBeneficiary).length >= 1) {
+    if (selectedBeneficiary.ref) {
       checkoutCart(selectedBeneficiary.ref)
         .then((res) => {
           let data = res.data;
