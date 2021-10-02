@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   text-decoration: none;
+  overflow-x: hidden;
 }
 
 body {
@@ -967,3 +968,4 @@ text-align: center;
   font-size: 15px !important;
   font-weight: 400 !important;
 }
+

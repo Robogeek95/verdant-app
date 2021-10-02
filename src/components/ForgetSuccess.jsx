@@ -1,20 +1,20 @@
 /* eslint-disable react/prop-types */
 import React from "react";
+import {ImCross} from 'react-icons/im'
 import { LinkContainer } from "react-router-bootstrap";
 import Forgetlogo from "./images/forgetlogo.png";
 import Logo from "./images/confirmforgot.png";
 
 
 
-const ForgetSuccess = () => {
+const ForgetSuccess = ({showModal, setShowModal}) => {
   
-
-  
-
-  
-
-  return (
-    <div className="d-flex justify-content-center" >
+  return ( 
+    <>
+    {showModal ? 
+    <div className = 'jjj'>
+    
+    <div  className="d-flex justify-content-center modal" >
       <div className="row">
         <div className="col">
           <div className=" p-5 ">
@@ -22,7 +22,10 @@ const ForgetSuccess = () => {
               <div>
                 <img src={Forgetlogo} alt="Brand Logo" />
               </div>
-             
+
+             <div className = 'cancel'>
+                <ImCross  onClick = { () => setShowModal(prev => !prev)}/>
+             </div>
             </div>
             <div className="d-flex pt-5  justify-content-center">
               <div>
@@ -60,6 +63,9 @@ const ForgetSuccess = () => {
         </div>
       </div>
     </div>
+    </div>
+    : null}
+    </>
   );
 };
 

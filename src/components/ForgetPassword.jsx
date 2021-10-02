@@ -7,10 +7,16 @@ import { LinkContainer } from "react-router-bootstrap";
 import Forgetlogo from "./images/forgetlogo.png";
 import Message from "./products/groceries/Message";
 import Loader from "./products/groceries/Loader";
-import { login } from "../actions/userActions";
+import { forgetPassword } from "../actions/userActions";
+import ForgetSuccess from "./ForgetSuccess";
 
 const ForgetPassword = ({ location, history }) => {
   const [email, setEmail] = useState("");
+  const [showModal, setShowModal] = useState(false)
+
+  const openModal = () => {
+    setShowModal(prev => !prev)
+  }
   
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
@@ -29,7 +35,7 @@ const ForgetPassword = ({ location, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email));
+    dispatch(forgetPassword(email));
   };
 
   return (
@@ -74,6 +80,7 @@ reset your password.
                   className="btn btn-primary btn-block btn-lg"
                   type="submit"
                   value="Send"
+                  onClick = {openModal}
                 />
                 {/* <button type="submit" className="btn btn-primary btn-block btn-lg">Submit</button> */}
               </div>
@@ -103,6 +110,7 @@ reset your password.
           </div>
         </div> */}
       </div>
+      <ForgetSuccess showModal = {showModal} setShowModal = {setShowModal}/>
     </div>
   );
 };
