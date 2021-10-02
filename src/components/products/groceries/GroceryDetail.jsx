@@ -17,16 +17,13 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 import LatestProducts from "../../layouts/section/LatestProducts";
 
 import PropTypes from "prop-types";
-import { addToCart, removeFromCart } from "../../../actions/cartActions";
 import { fetchProduct, postToCart } from "../../../utilities/services";
 import { toast, ToastContainer } from "react-toastify";
 import formatApiError from "../../../utilities/formatAPIError";
 import handleApiError from "../../../utilities/handleApiError";
+import { addToCart } from "../../../actions/cartActions";
 
-const GroceryDetail = ({ match, userDetails }) => {
-  // let { ref } = match.params.ref;
-
-  console.log({ ref: match.params.ref });
+const GroceryDetail = ({ match, userDetails, addToCart }) => {
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -37,7 +34,6 @@ const GroceryDetail = ({ match, userDetails }) => {
       fetchProduct(match.params.ref)
         .then((res) => {
           setLoading(false);
-          console.log(res.data);
 
           setProduct(res.data.product);
         })
@@ -251,7 +247,6 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   addToCart,
-  removeFromCart,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroceryDetail);
@@ -260,4 +255,5 @@ GroceryDetail.propTypes = {
   history: PropTypes.object,
   match: PropTypes.object,
   userDetails: PropTypes.object,
+  addToCart: PropTypes.function,
 };

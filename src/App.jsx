@@ -41,12 +41,14 @@ const App = ({ setCart, userLogin }) => {
       fetchCartItems()
         .then(async (res) => {
           let items = res.data.cart;
-
           // update items cost
           let updatedProducts = Promise.all(
             items.map(async (item) => {
               const res = await fetchProduct(item.product_ref);
-              item = { ...item, cost: res.data.product.cost };
+              item = {
+                ...item,
+                cost: res.data?.product?.cost ? res.data?.product?.cost : 0,
+              };
 
               return item;
             })
@@ -54,17 +56,15 @@ const App = ({ setCart, userLogin }) => {
 
           console.log(updatedProducts);
 
-          let payload = {
-            items: await updatedProducts,
-          };
+          let payload = await updatedProducts;
+
           setCart(payload);
         })
         .catch((error) => {
           handleApiError(error);
           // let message = formatApiError(error);
         });
-      }
-  
+    }
   }, [userInfo]);
 
   return (
@@ -75,8 +75,8 @@ const App = ({ setCart, userLogin }) => {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          <Route path="/forgetpassword" component={ForgetPassword}/>
-          <Route path="/forgetsuccess" component={ForgetSuccess}/>
+          <Route path="/forgetpassword" component={ForgetPassword} />
+          <Route path="/forgetsuccess" component={ForgetSuccess} />
           <Route path="/" component={Section} exact />
 
           <Route path="/cart/:id?" component={Cart} />

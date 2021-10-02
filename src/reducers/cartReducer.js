@@ -21,7 +21,7 @@ export const cartReducer = (
 
   switch (action.type) {
     case CART_SET: {
-      let temp_cart_state = [...payload.items];
+      let temp_cart_state = [...payload];
 
       const totalQty = temp_cart_state.reduce(
         (acc, item) => acc + item.quantity,
@@ -53,7 +53,7 @@ export const cartReducer = (
         let temp_cart_state = [...state.cartItems];
         let temp_element = { ...temp_cart_state[existItemIndex] };
 
-        temp_element.quantity = temp_element.quantity + 1;
+        temp_element.quantity = temp_element.quantity + action.payload.quantity;
         temp_cart_state[existItemIndex] = temp_element;
 
         const totalQty = temp_cart_state.reduce(

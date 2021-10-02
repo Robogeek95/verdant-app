@@ -1,10 +1,38 @@
 /* eslint-disable react/prop-types */
 import React from "react";
+import PropTypes from "prop-types";
 import { Card } from "react-bootstrap";
 import { Heart } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 
-const GroceryProduct = ({ product, addToCart }) => {
+import { addToCart } from "../../../actions/cartActions";
+import { connect } from "react-redux";
+import { postToCart } from "../../../utilities/services";
+import { toast } from "react-toastify";
+
+const GroceryProduct = ({ product, addToCart, userInfo }) => {
+  function handleAddToCart() {
+    // if logged in
+    if (userInfo) {
+      let payload = {
+        product_ref: product.ref,
+        quantity: 1,
+        amount: product.amount,
+      };
+
+      // add product to cart using api
+      postToCart(payload).then(() => {
+        // store in global state
+        addToCart(product);
+        toast(`${product.name} added to cart`);
+      });
+      return;
+    }
+
+    addToCart(product);
+    toast(`${product.name} added to cart`);
+  }
+
   return (
     <>
       <Card className="bg-white" style={{ borderRadius: "3px" }}>
@@ -49,7 +77,7 @@ const GroceryProduct = ({ product, addToCart }) => {
               type="button"
               className="btn btn-block btn-outline-primary"
               style={{ fontSize: "14px", fontWeight: "500" }}
-              onClick={() => addToCart(product)}
+              onClick={() => handleAddToCart()}
             >
               Add To Cart
             </button>
@@ -60,4 +88,18 @@ const GroceryProduct = ({ product, addToCart }) => {
   );
 };
 
-export default GroceryProduct;
+const mapDispatchToProps = {
+  addToCart,
+};
+
+function mapStateToProps(state) {
+  return { userLogin: state.userLogin };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroceryProduct);
+
+GroceryProduct.propTypes = {
+  addToCart: PropTypes.function,
+  product: PropTypes.object,
+  userLogin: PropTypes.object,
+};

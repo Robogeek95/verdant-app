@@ -7,19 +7,15 @@ import {
   CART_SAVE_SHIPPING_ADDRESS,
 } from "../constants/cartConstant";
 
-export const setCart =
-  ({ items }) =>
-  async (dispatch) => {
-    dispatch({
-      type: CART_SET,
-      payload: {
-        items,
-      },
-    });
-  };
+export const setCart = (payload) => async (dispatch) => {
+  dispatch({
+    type: CART_SET,
+    payload,
+  });
+};
 
 export const addToCart =
-  ({ ref, qty = 1, name, image, cost }) =>
+  ({ ref, quantity = 1, name, image, cost }) =>
   async (dispatch) => {
     dispatch({
       type: CART_ADD_ITEM,
@@ -28,7 +24,7 @@ export const addToCart =
         name,
         image,
         cost,
-        qty,
+        quantity,
       },
     });
   };

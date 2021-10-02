@@ -76,26 +76,26 @@ const Groceries = ({ match, addToCart, userLogin }) => {
       });
   }
 
-  function handleAddToCart(item) {
+  function handleAddToCart(product) {
     // if logged in
     if (userInfo) {
       let payload = {
-        product_ref: item.ref,
+        product_ref: product.ref,
         quantity: 1,
-        amount: item.amount,
+        amount: product.amount,
       };
 
-      // add item to cart using api
+      // add product to cart using api
       postToCart(payload).then(() => {
         // store in global state
-        addToCart(item);
-        toast(`${item.name} added to cart`);
+        addToCart(product);
+        toast(`${product.name} added to cart`);
       });
       return;
     }
 
-    addToCart(item);
-    toast(`${item.name} added to cart`);
+    addToCart(product);
+    toast(`${product.name} added to cart`);
   }
 
   // set new products
