@@ -183,17 +183,20 @@ const Checkout = () => {
   }
 
   function handleCheckout() {
-    console.log(selectedBeneficiary);
-    checkoutCart(selectedBeneficiary.ref)
-      .then((res) => {
-        let data = res.data;
-        window.location.replace(data?.payment_link)
-      })
-      .catch((error) => {
-        handleApiError(error);
-        let message = formatApiError(error);
-        toast(message);
-      });
+    if (Object.keys(selectedBeneficiary).length >= 1) {
+      checkoutCart(selectedBeneficiary.ref)
+        .then((res) => {
+          let data = res.data;
+          window.location.replace(data?.payment_link);
+        })
+        .catch((error) => {
+          handleApiError(error);
+          let message = formatApiError(error);
+          toast(message);
+        });
+      return;
+    }
+    toast("please select a beneficiary");
   }
 
   return (
