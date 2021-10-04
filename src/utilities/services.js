@@ -10,6 +10,7 @@ export async function deleteFromCart({ product_ref }) {
   return axios.delete(`/product/cart/${product_ref}`);
 }
 
+// update cart item
 export async function updateCart(product_ref, payload) {
   return axios.put(`/product/cart/${product_ref}`, payload);
 }
@@ -75,4 +76,9 @@ export async function listInvoiceService() {
 // get all invoice
 export async function deleteInvoiceService() {
   return null;
+}
+
+// update user
+export async function updateUserService(payload) {
+  return axios.post(`/user/updateme`, payload);
 }
