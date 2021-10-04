@@ -12,12 +12,11 @@ import ForgetSuccess from "./ForgetSuccess";
 
 const ForgetPassword = ({ location, history }) => {
   const [email, setEmail] = useState("");
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
-    setShowModal(prev => !prev)
-  }
-  
+    setShowModal((prev) => !prev);
+  };
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
@@ -39,21 +38,19 @@ const ForgetPassword = ({ location, history }) => {
   };
 
   return (
-    <div className="d-flex justify-content-center" >
-      <div className="row">
-        <div className="col">
+    <div className="">
+      <div className="row justify-content-center">
+        <div className="col-4">
           <div className=" p-5 ">
             <div className="d-flex  justify-content-center">
               <div>
                 <img src={Forgetlogo} alt="Brand Logo" />
               </div>
-             
             </div>
             <div className="text-center text-dark my-5">
               <p style={{ fontSize: "20px", fontWeight: "500" }}>
-              Enter the email associated with your account
-and we’ll send an email with instructions to
-reset your password.
+                Enter the email associated with your account and we’ll send an
+                email with instructions to reset your password.
               </p>
             </div>
 
@@ -73,25 +70,20 @@ reset your password.
                   required
                 />
               </div>
-              
-             
+
               <div className="mb-5">
                 <input
                   className="btn btn-primary btn-block btn-lg"
                   type="submit"
                   value="Send"
-                  onClick ={openModal}
+                  onClick={openModal}
                 />
                 {/* <button type="submit" className="btn btn-primary btn-block btn-lg">Submit</button> */}
               </div>
-
-             
             </form>
 
             <div className="mt-5" />
             <div className="mt-5" />
-
-          
 
             <p className="no-account text-center">
               Remember Password?
@@ -110,8 +102,7 @@ reset your password.
           </div>
         </div> */}
       </div>
-      <ForgetSuccess showModal = {showModal} setShowModal = {setShowModal}/>
-
+      <ForgetSuccess showModal={showModal} setShowModal={setShowModal} />
     </div>
   );
 };
