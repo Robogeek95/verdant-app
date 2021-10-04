@@ -47,8 +47,9 @@ const GroceryDetail = ({ match, userDetails, addToCart }) => {
   }, [match.params.ref]);
 
   function handleAddToCart() {
+    // Todo: Fix auth check
     // if logged in
-    if (userDetails) {
+    if (!userDetails) {
       let payload = {
         product_ref: product.ref,
         quantity: quantity,

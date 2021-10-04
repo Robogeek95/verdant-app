@@ -64,7 +64,6 @@ export async function addInvoiceService(ref) {
       "Content-type": "multipart/form-data",
     },
   });
-  // "Content-type": "multipart/form-data",
 }
 
 // get all invoice
