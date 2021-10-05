@@ -18,10 +18,11 @@ const Slider = () => (
           className="active"
         />
         <li data-target="#carouselExampleIndicators" data-slide-to="1" />
+        <li data-target="#carouselExampleIndicators" data-slide-to="2" />
       </ol>
       <div className="carousel-inner">
-        <div className="container">
-          <div className="carousel-item active" style={{ height: "450px" }}>
+        <div className="carousel-item active" style={{ height: "450px" }}>
+          <div className="container">
             <div className="row">
               <div className="col-md-6">
                 <h3 className="carousel-text">
@@ -29,11 +30,7 @@ const Slider = () => (
                   <span className="text-primary">Goods & Services</span>
                   <div className="line" />
                   <div className="py-5">
-                    <Link
-                      to="/about"
-                      smooth
-                      className="btn btn-primary p-2"
-                    >
+                    <Link to="/about" smooth className="btn btn-primary p-2">
                       Read More
                     </Link>
                   </div>
@@ -44,7 +41,9 @@ const Slider = () => (
               </div>
             </div>
           </div>
-          <div className="carousel-item" style={{ height: "450px" }}>
+        </div>
+        <div className="carousel-item" style={{ height: "450px" }}>
+          <div className="container">
             <div className="row">
               <div className="col-md-6">
                 <h3 className="carousel-text">
@@ -65,6 +64,20 @@ const Slider = () => (
               <div className="col-md-6 d-none d-md-block">
                 <img src={Image2} className="d-block w-100" alt="Slider2" />
               </div>
+            </div>
+          </div>
+        </div>
+        <div className="carousel-item" style={{ height: "450px" }}>
+          <div className="row h-100">
+            <div className="col-12 h-100">
+              <div
+                className="w-100 h-100"
+                style={{
+                  background: "url('/images/slide3.png')",
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                }}
+              ></div>
             </div>
           </div>
         </div>

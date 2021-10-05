@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Row, Col, Card, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Heart, TrashFill } from "react-bootstrap-icons";
+import { TrashFill } from "react-bootstrap-icons";
 import Message from "./Message";
 import {
   addToCart,
@@ -175,27 +175,14 @@ const Cart = ({
                       <p style={{ fontSize: "18px", fontWeight: "500" }}>
                         ₦{item.cost}
                       </p>
-                      <p style={{ fontSize: "18px", fontWeight: "500" }}>
+                      {/* <p style={{ fontSize: "18px", fontWeight: "500" }}>
                         ₦{item.cost * item.quantity}
-                      </p>
+                      </p> */}
                     </div>
                   </Col>
 
                   <Row className="bg-white pb-3 ml-3">
                     <Col md={12}>
-                      <Heart className="mr-2 text-warning" size={20} />
-                      <span
-                        style={{
-                          fontSize: "12px",
-                          fontWeight: "500",
-                          lineHeight: "16.14px",
-                          marginRight: "15px",
-                          color: "#F6C54C",
-                          cursor: "pointer",
-                        }}
-                      >
-                        MOVE TO SAVED ITEMS
-                      </span>
                       <Button
                         onClick={() => handleRemoveItem(item)}
                         type="button"
