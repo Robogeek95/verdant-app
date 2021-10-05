@@ -31,6 +31,7 @@ import handleApiError from "./utilities/handleApiError";
 // import formatApiError from "./utilities/formatAPIError";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import Beneficiaries from "./components/Beneficiaries";
 
 const App = ({ setCart, userLogin }) => {
   const { userInfo } = userLogin;
@@ -96,6 +97,7 @@ const App = ({ setCart, userLogin }) => {
           <Route path="/profile" component={Profile} />
           <Route path="/orders" component={Orders} />
           <Route path="/saved-items" component={SavedItems} />
+          <Route path="/beneficiaries" component={Beneficiaries} />
 
           <Route path="/about" component={About} />
         </Switch>

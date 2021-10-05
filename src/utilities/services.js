@@ -65,7 +65,6 @@ export async function addInvoiceService(ref) {
       "Content-type": "multipart/form-data",
     },
   });
-  // "Content-type": "multipart/form-data",
 }
 
 // get all invoice
@@ -81,4 +80,14 @@ export async function deleteInvoiceService() {
 // update user
 export async function updateUserService(payload) {
   return axios.post(`/user/updateme`, payload);
+}
+
+// get all orders
+export async function listOrderService() {
+  return axios.get(`/user/orders`);
+}
+
+// delete order
+export async function deleteOrderService() {
+  return null;
 }

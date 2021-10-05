@@ -1,29 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Col, Row, Form } from "react-bootstrap";
-import BeneficiaryForm from "../../BeneficiaryForm";
-import {
-  addBeneficiary,
-  getBeneficiaries,
-} from "../../../actions/beneficiaryActions";
+import { getBeneficiaries } from "../../../actions/beneficiaryActions";
 import Loader from "../../products/groceries/Loader";
 import { toast, ToastContainer } from "react-toastify";
 import BeneficiaryCard from "../../BeneficiaryCard";
 import { checkoutCart } from "../../../utilities/services";
 import handleApiError from "../../../utilities/handleApiError";
 import formatApiError from "../../../utilities/formatAPIError";
+import CreateBeneficiary from "../../CreateBeneficiary";
 
 const Checkout = () => {
   const cart = useSelector((state) => state.cart);
   const { cartItems, subTotal, total, deliveryFee } = cart;
   const [, setDeliveryMethod] = useState("");
 
-  const [beneficiaryData, setBeneficiaryData] = useState({
-    name: "",
-    phone: "",
-    address: "",
-    country: "",
-  });
   const [selectedBeneficiary, setSelectedBeneficiary] = useState({});
 
   const dispatch = useDispatch();
@@ -31,13 +22,11 @@ const Checkout = () => {
   const beneficiariesData = useSelector((state) => state.beneficiaries);
   const {
     loading: loadingBeneficiaries,
-    adding: addingBeneficiary,
     error: loadBeneficiariesError,
     addError: addBeneficiaryError,
     beneficiaries,
   } = beneficiariesData;
 
-  console.log({ beneficiaries });
   useEffect(() => {
     dispatch(getBeneficiaries());
   }, []);
@@ -47,87 +36,6 @@ const Checkout = () => {
       toast(addBeneficiaryError);
     }
   }, [addBeneficiaryError]);
-
-  function handleCreateBeneficiary() {
-    dispatch(addBeneficiary(beneficiaryData));
-  }
-
-  function renderCreateBeneficiary() {
-    return (
-      <>
-        <div className="row justify-content-center">
-          <div className="col col-4">
-            <button
-              type="submit"
-              className="btn btn-primary btn-block"
-              style={{
-                fontSize: "18px",
-                fontWeight: "500",
-                lineHeight: "26.44px",
-              }}
-              data-toggle="modal"
-              data-target="#beneficiaryModal"
-            >
-              Create a Beneficiary
-            </button>
-          </div>
-        </div>
-
-        <div
-          className="modal fade"
-          id="beneficiaryModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="beneficiaryModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">
-                  Add Beneficiary
-                </h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                {addingBeneficiary ? (
-                  <Loader />
-                ) : (
-                  <BeneficiaryForm
-                    data={beneficiaryData}
-                    setData={setBeneficiaryData}
-                  />
-                )}
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  cancel
-                </button>
-                <button
-                  onClick={handleCreateBeneficiary}
-                  type="button"
-                  className="btn btn-primary"
-                >
-                  Add Beneficiary
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  }
 
   function renderBeneficiaries() {
     if (loadingBeneficiaries) {
@@ -153,7 +61,9 @@ const Checkout = () => {
             <div className="my-5">
               <h4 className="text-center">You have no beneficiaries yet!</h4>
 
-              <div className="mt-3">{renderCreateBeneficiary()}</div>
+              <div className="mt-3">
+                <CreateBeneficiary />
+              </div>
             </div>
           </>
         ) : (
@@ -175,7 +85,8 @@ const Checkout = () => {
               ))}
             </div>
 
-            {renderCreateBeneficiary()}
+            <CreateBeneficiary />
+
           </div>
         )}
       </>

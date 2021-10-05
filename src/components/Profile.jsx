@@ -11,6 +11,7 @@ import Loader from "./products/groceries/Loader";
 // import { userUpdateProfile } from '../actions/userActions'
 import { getUserDetails, updateUserP } from "../actions/userActions";
 import { toast, ToastContainer } from "react-toastify";
+import ProfileNav from "./ProfileNav";
 // import { userUpdateProfile } from '../actions/userActions'
 // import { userUpdateProfile } from '../actions/userActions'
 
@@ -52,7 +53,11 @@ const Profile = ({ history, location }) => {
   useEffect(() => {
     if (userInfo) {
       const user = userInfo.user;
-      const firstName = user.name?.spassword1234
+      const firstName = user.name?.split(" ")[0];
+      const lastName = user.name?.split(" ")[1];
+
+      setFirstName(firstName);
+      setFirstName(lastName);
       setEmail(user.email);
       setPhone(user.phone?.toString());
     }
@@ -109,97 +114,7 @@ const Profile = ({ history, location }) => {
 
       <Row>
         <Col md={3} lg={4}>
-          <div
-            style={{
-              backgroundColor: "#F9F9F9",
-              padding: "40px 0",
-              borderRadius: "5px",
-              boxShadow: "0px 4px 28px rgba(55, 133, 247, 0.03)",
-              height: "100%",
-            }}
-          >
-            <ul>
-              <Link to="/profile" className="text-decoration-none text-dark">
-                <li
-                  className="bg-white d-flex align-items-center justify-items-center py-3 px-3"
-                  style={{ borderLeft: "3px solid #F6C54C" }}
-                >
-                  <img
-                    src={userIcon}
-                    alt="User Icon"
-                    style={{
-                      width: "14.09px",
-                      height: "21px",
-                      marginRight: "15px",
-                    }}
-                  />
-                  <p
-                    className="mb-0"
-                    style={{
-                      fontSize: "20px",
-                      fontWeight: "500",
-                      lineHeight: "29.38px",
-                    }}
-                  >
-                    Profile Details
-                  </p>
-                </li>
-              </Link>
-              <Link to="/orders" className="text-decoration-none text-dark">
-                <li className="d-flex align-items-center justify-items-center py-3 px-3">
-                  <Cart size={20} style={{ marginRight: "15px" }} />
-                  <p
-                    className="mb-0"
-                    style={{
-                      fontSize: "20px",
-                      fontWeight: "400",
-                      lineHeight: "29.38px",
-                    }}
-                  >
-                    My Orders
-                  </p>
-                </li>
-              </Link>
-              <Link
-                to="/saved-items"
-                className="text-decoration-none text-dark"
-              >
-                <li className="d-flex align-items-center justify-items-center py-3 px-3">
-                  <Heart size={20} style={{ marginRight: "15px" }} />
-                  <p
-                    className="mb-0"
-                    style={{
-                      fontSize: "20px",
-                      fontWeight: "400",
-                      lineHeight: "29.38px",
-                    }}
-                  >
-                    Saved Items
-                  </p>
-                </li>
-              </Link>
-              <ul style={{ marginLeft: "80px", listStyle: "none" }}>
-                <li
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: "400",
-                    lineHeight: "26.44px",
-                  }}
-                >
-                  Products
-                </li>
-                <li
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: "400",
-                    lineHeight: "26.44px",
-                  }}
-                >
-                  Invoices
-                </li>
-              </ul>
-            </ul>
-          </div>
+          <ProfileNav active="profile" />
         </Col>
 
         <Col md={9} lg={8}>
