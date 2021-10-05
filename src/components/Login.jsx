@@ -164,7 +164,10 @@ const Login = ({ location, history }) => {
               <div className="my-5">
                 <p className="text-center">
                   Don&apos;t have an account?
-                  <Link className="btn btn-outline-light ml-2 text-primary" to="/signup">
+                  <Link
+                    className="btn btn-outline-light ml-2 text-primary"
+                    to="/signup"
+                  >
                     Create an account
                   </Link>
                 </p>
@@ -185,7 +188,12 @@ const Login = ({ location, history }) => {
             height: "100vh",
           }}
         >
-          <div className="h-100 w-100"></div>
+          <div className="mt-5 ml-4 d-flex align-items-end  ">
+            <p className="h2 text-white">
+              Send Goods and Services <br /> with ease
+              <span style={{ color: "#F6C54C" }}>.</span>{" "}
+            </p>
+          </div>
         </div>
       </div>
     </div>
