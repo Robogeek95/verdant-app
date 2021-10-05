@@ -100,11 +100,7 @@ const App = ({ setCart, userLogin }) => {
 
           <Route path="/about" component={About} />
 
-          <Route
-            path="*"
-            exact={true}
-            component={() => <p>OOops! page not found</p>}
-          />
+          <Route path='*' exact={true} component={() => (<p>OOops! page not found</p>)} />
         </Switch>
       </main>
       <Footer />
