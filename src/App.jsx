@@ -75,8 +75,7 @@ const App = ({ setCart, userLogin }) => {
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    // Todo: check if userInfo
-    if (!userInfo) {
+    if (userInfo) {
       fetchCartItems()
         .then(async (res) => {
           let items = res.data.cart;

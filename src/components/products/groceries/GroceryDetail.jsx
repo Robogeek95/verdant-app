@@ -23,11 +23,13 @@ import formatApiError from "../../../utilities/formatAPIError";
 import handleApiError from "../../../utilities/handleApiError";
 import { addToCart } from "../../../actions/cartActions";
 
-const GroceryDetail = ({ match, userDetails, addToCart }) => {
+const GroceryDetail = ({ match, userLogin, addToCart }) => {
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [quantity, setQuantity] = useState(1);
+
+  const { userInfo } = userLogin;
 
   useEffect(() => {
     if (match.params.ref) {
@@ -47,9 +49,8 @@ const GroceryDetail = ({ match, userDetails, addToCart }) => {
   }, [match.params.ref]);
 
   function handleAddToCart() {
-    // Todo: Fix auth check
     // if logged in
-    if (!userDetails) {
+    if (userInfo) {
       let payload = {
         product_ref: product.ref,
         quantity: quantity,

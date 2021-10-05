@@ -31,12 +31,11 @@ const Cart = ({
   const { userInfo } = userLogin;
 
   const checkoutHandler = () => {
-    // Todo: check userInfo
-    // if (!userInfo) {
-    //   history.push("/login?redirect=/checkout");
-    // } else {
-    history.push(`/products/checkout`);
-    // }
+    if (!userInfo) {
+      history.push("/login?redirect=/checkout");
+    } else {
+      history.push(`/products/checkout`);
+    }
   };
 
   // update cart item
@@ -46,8 +45,7 @@ const Cart = ({
 
   // delete cart item
   function handleRemoveItem(item) {
-    // Todo: check userInfo
-    if (!userInfo) {
+    if (userInfo) {
       let payload = {
         product_ref: item.ref,
       };
