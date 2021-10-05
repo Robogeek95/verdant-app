@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types";
 import Logo from "./images/forgetlogo.png";
 import eye from "./images/eye.png";
 
@@ -72,7 +73,7 @@ const Signup = ({ location, history }) => {
               <div className="mt-4">
                 <Link to="/">
                   <img src={Logo} alt="Brand Logo" />
-                </Link> 
+                </Link>
                 {/* <h2
                 className="text-primary ml-3"
                 style={{ fontSize: "32.35", fontWeight: "700" }}
@@ -232,3 +233,8 @@ const Signup = ({ location, history }) => {
 };
 
 export default Signup;
+
+Signup.propTypes = {
+  location: PropTypes.object,
+  history: PropTypes.object,
+};

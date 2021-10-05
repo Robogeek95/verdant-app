@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types";
 import { LinkContainer } from "react-router-bootstrap";
 import Logo from "./images/forgetlogo.png";
 import loginBarner from "./images/login-barner.png";
@@ -201,3 +202,8 @@ const Login = ({ location, history }) => {
 };
 
 export default Login;
+
+Login.propTypes = {
+  location: PropTypes.object,
+  history: PropTypes.object,
+};
