@@ -195,12 +195,6 @@ const InvoiceUpload = () => {
         </Row>
 
         <Row className="justify-content-center">
-          <Col sm={6} md={4} lg={3} className="">
-            <button className="btn btn-outline-primary btn-block">
-              Save For Later
-            </button>
-          </Col>
-
           <Col sm={6} md={4} lg={3} className="" onClick={handleUpload}>
             <button className="btn btn-primary btn-block">Send</button>
           </Col>
