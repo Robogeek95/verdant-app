@@ -37,7 +37,7 @@ const Login = ({ location, history }) => {
   return (
     <div>
       <div className="row">
-        <div className="col">
+        <div className="col-lg-6 main_cap">
           <div className=" p-5 ">
             <div className="d-flex  justify-content-center">
               <div>
@@ -85,11 +85,13 @@ const Login = ({ location, history }) => {
                 />
                 <img src={eye} alt="eye" className="eye" />
               </div>
-              <div className="form-group">
+              <div className="form-group drop">
+                <div>
                 <input className="checkbox" type="checkbox" id="checkbox" />
                 <label htmlFor="checkbox" id="checkbox-label">
                   Remember Me
                 </label>
+                </div>
                 <p><LinkContainer to="/forgetpassword">
                 <a>Fogot Password?</a>
               </LinkContainer></p>
@@ -139,11 +141,8 @@ const Login = ({ location, history }) => {
           </div>
         </div>
 
-        <div className="col">
-          <div>
-            <img src={loginBarner} alt="Login Barner" />
-          </div>
-        </div>
+         
+            <img src={loginBarner} className="col-lg-6"  alt="Login Barner" />
       </div>
     </div>
   );
