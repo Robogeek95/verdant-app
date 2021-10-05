@@ -81,7 +81,7 @@ const About = () => (
         </Col>
       </Row>
 
-      <div className="row py-5 my-5 align-items-center">
+      <div className="row py-5 my-5">
         <div className="col-6">
           <div className="mb-4">
             <p className="h2 font-weight-400 text-primary">
@@ -107,10 +107,7 @@ const About = () => (
 
             <div className="row mt-5">
               <div className="col-auto">
-                <CashStack
-                  size={60}
-                  className="text-primary"
-                />
+                <CashStack size={60} className="text-primary" />
               </div>
 
               <div className="col">
@@ -124,10 +121,7 @@ const About = () => (
 
             <div className="row mt-4">
               <div className="col-auto">
-                <People
-                  size={60}
-                  className="text-primary"
-                />
+                <People size={60} className="text-primary" />
               </div>
 
               <div className="col">
@@ -140,11 +134,13 @@ const About = () => (
           </div>
         </div>
         <div className="col-6">
-          <img
-            alt="map of Nigeria"
-            src="./images/naija-map.png"
-            className="img-fluid"
-          />
+          <div style={{ marginTop: "135px" }}>
+            <img
+              alt="map of Nigeria"
+              src="./images/naija-map.png"
+              className="img-fluid"
+            />
+          </div>
         </div>
       </div>
 
