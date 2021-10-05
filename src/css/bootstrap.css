@@ -4285,6 +4285,20 @@ a.close.disabled {
   top: 10%;
   right: 10%;
 }
+.drop{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.main_cap{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+.maincap2 img{
+  width: 100% !important;
+}
 .modal-dialog {
   position: relative;
   width: auto;
