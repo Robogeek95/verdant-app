@@ -60,11 +60,7 @@ function MainApp() {
 
         <Route path="/about" component={About} />
 
-        <Route
-          path="*"
-          exact={true}
-          component={() => <p>OOops! page not found</p>}
-        />
+        <Route component={() => <p>OOops! page not found</p>} />
       </main>
       <Footer />
     </>
