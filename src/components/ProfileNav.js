@@ -160,6 +160,6 @@ export default function ProfileNav({ active }) {
   );
 }
 
-ProfileNav.PropTypes = {
+ProfileNav.propTypes = {
   active: PropTypes.string,
 };
