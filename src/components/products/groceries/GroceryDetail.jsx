@@ -258,4 +258,5 @@ GroceryDetail.propTypes = {
   match: PropTypes.object,
   userDetails: PropTypes.object,
   addToCart: PropTypes.function,
+  userLogin: PropTypes.object,
 };
