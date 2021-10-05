@@ -126,8 +126,8 @@ const Cart = ({
           ) : (
             <div>
               {cartItems.map((item) => (
-                <Row className="bg-white py-4" key={item.product}>
-                  <Col md={6} className="py-4">
+                <Row className="bg-white mb-2 py-2" key={item.product}>
+                  <Col md={6}>
                     <div className="d-flex justify-space-between">
                       <img
                         src={item.image}
@@ -181,7 +181,7 @@ const Cart = ({
                     </div>
                   </Col>
 
-                  <Row className="bg-white pb-3 ml-3">
+                  <Row className="ml-3">
                     <Col md={12}>
                       <Button
                         onClick={() => handleRemoveItem(item)}

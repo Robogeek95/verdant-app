@@ -76,7 +76,7 @@ const Contact = () => (
             </div>
 
             <p style={{ fontSize: "16ox", lineHeight: "23.5px" }}>
-              For further enquiries, you can contact us at,
+              For further enquiries, you can contact us at: <br />
               <strong>7b Ondo Street, Osborne Foreshore Estate Ikoyi</strong>.
               Or call
               <strong> 07017808188</strong>
