@@ -77,8 +77,10 @@ const Groceries = ({ match, addToCart, userLogin }) => {
   }
 
   function handleAddToCart(product) {
+    // Todo: Fix auth check
     // if logged in
-    if (userInfo) {
+    console.log("user", !userInfo);
+    if (!userInfo) {
       let payload = {
         product_ref: product.ref,
         quantity: 1,

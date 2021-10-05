@@ -82,26 +82,32 @@ const ForgetPassword = ({ location, history }) => {
               </div>
             </form>
 
-            <div className="mt-5" />
-            <div className="mt-5" />
-
-            <p className="no-account text-center">
-              Remember Password?
-              {/* <LinkContainer to={redirect ? `/register?redirect=${redirect}` : "/signup"}>  */}
-              <LinkContainer to="/login">
-                <a>Login</a>
-              </LinkContainer>
-              {/* <a href="#">Create an account</a> */}
-            </p>
+            <div className="mb-5">
+              <input
+                className="btn btn-primary btn-block btn-lg"
+                type="submit"
+                value="Send"
+              />
+              {/* <button type="submit" className="btn btn-primary btn-block btn-lg">Submit</button> */}
+            </div>
           </div>
-        </div>
 
-        {/* <div className="col">
+          <p className="no-account text-center">
+            Remember Password?
+            {/* <LinkContainer to={redirect ? `/register?redirect=${redirect}` : "/signup"}>  */}
+            <LinkContainer to="/login">
+              <a>Login</a>
+            </LinkContainer>
+            {/* <a href="#">Create an account</a> */}
+          </p>
+        </div>
+      </div>
+
+      {/* <div className="col">
           <div>
             <img src={loginBarner} alt="Login Barner" />
           </div>
         </div> */}
-      </div>
       <ForgetSuccess showModal={showModal} setShowModal={setShowModal} />
     </div>
   );
