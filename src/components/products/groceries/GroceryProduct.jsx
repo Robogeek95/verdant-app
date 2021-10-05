@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Card } from "react-bootstrap";
-import { Heart } from "react-bootstrap-icons";
+// import { Heart } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 
 // import { postToCart } from "../../../utilities/services";
@@ -36,13 +36,13 @@ const GroceryProduct = ({ product, addToCart }) => {
               >
                 {product.name}
               </p>
-              <span className="ml-auto">
+              {/* <span className="ml-auto">
                 <Heart
                   size={25}
                   className="text-warning"
                   style={{ cursor: "pointer" }}
                 />
-              </span>
+              </span> */}
             </div>
             <div className="card-text text-dark">
               <h5 style={{ fontSize: "18px", fontWeight: "500" }}>
