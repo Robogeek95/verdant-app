@@ -39,9 +39,9 @@ const ForgetPassword = ({ location, history }) => {
 
   return (
     <div className="">
-      <div className="row justify-content-center">
-        <div className="col-4">
-          <div className=" p-5 ">
+      <div className="row col jsjs">
+        <div className="col-lg-5 col-md-10 col-sm-12">
+          <div className=" pt-5 ">
             <div className="d-flex  justify-content-center">
               <div>
                 <img src={Forgetlogo} alt="Brand Logo" />
@@ -82,14 +82,7 @@ const ForgetPassword = ({ location, history }) => {
               </div>
             </form>
 
-            <div className="mb-5">
-              <input
-                className="btn btn-primary btn-block btn-lg"
-                type="submit"
-                value="Send"
-              />
-              {/* <button type="submit" className="btn btn-primary btn-block btn-lg">Submit</button> */}
-            </div>
+            
           </div>
 
           <p className="no-account text-center">

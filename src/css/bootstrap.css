@@ -4274,6 +4274,12 @@ a.close.disabled {
   font-size: 30px;
   font-weight: 900;
 }
+.jsjs{
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
 .cancel{
   position: absolute;
   top: 10%;
