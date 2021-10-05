@@ -42,9 +42,9 @@ const Login = ({ location, history }) => {
           <div className="row justify-content-end">
             <div className="col-8">
               <div className="mt-4">
-                <div>
+                <Link to="/">
                   <img src={Logo} alt="Brand Logo" />
-                </div>
+                </Link>
                 {/* <h2
                 className="text-primary ml-3"
                 style={{ fontSize: "32.35", fontWeight: "700" }}
