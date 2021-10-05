@@ -99,6 +99,12 @@ const App = ({ setCart, userLogin }) => {
           <Route path="/beneficiaries" component={Beneficiaries} />
 
           <Route path="/about" component={About} />
+
+          <Route
+            path="*"
+            exact={true}
+            component={() => <p>OOops! page not found</p>}
+          />
         </Switch>
       </main>
       <Footer />
