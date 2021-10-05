@@ -14,8 +14,8 @@ const ForgetSuccess = ({showModal, setShowModal}) => {
     {showModal ? 
     <div className = 'jjj'>
     <div className="d-flex justify-content-center modal" >
-      <div className="row">
-        <div className="col">
+      <div className="">
+        <div className="modal_cap">
           <div className=" p-5 ">
             <div className="d-flex  justify-content-center">
               <div>
