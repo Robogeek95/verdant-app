@@ -15,6 +15,7 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
   USER_PASSWORD_RESET,
   USER_PASSWORD_RESET_FAIL,
+  USER_PASSWORD_RESET_SUCCESS
 } from "../constants/userConstants";
 import { updateUserService } from "../utilities/services";
 
@@ -68,7 +69,7 @@ export const forgotPassword = (email) => async (dispatch) => {
     );
 
     dispatch({
-      type: USER_PASSWORD_RESET,
+      type: USER_PASSWORD_RESET_SUCCESS,
       payload: data,
     });
 
@@ -76,6 +77,10 @@ export const forgotPassword = (email) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_PASSWORD_RESET_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
