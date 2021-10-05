@@ -1,13 +1,15 @@
-import React from 'react';
-import OurProduct from './OurProduct';
-import HowWeSolve from './HowWeSolve';
-import WhoWeAre from './WhoWeAre';
-import HowItWorks from './HowItWorks';
-import LatestProducts from './LatestProducts';
-import { Container } from 'react-bootstrap';
+import React from "react";
+import OurProduct from "./OurProduct";
+import HowWeSolve from "./HowWeSolve";
+import WhoWeAre from "./WhoWeAre";
+import HowItWorks from "./HowItWorks";
+import LatestProducts from "./LatestProducts";
+import { Container } from "react-bootstrap";
+import Slider from "../Slider";
 
 const Section = () => (
   <>
+    <Slider />
     <Container className="py-3" id="whoWeAre">
       <WhoWeAre />
     </Container>

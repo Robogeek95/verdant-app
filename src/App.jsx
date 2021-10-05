@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
-import Slider from "./components/layouts/Slider";
 import "./css/App.css";
 import BillPayments from "./components/products/billsPayment/BillPayments";
 import Groceries from "./components/products/groceries/Groceries";
@@ -71,14 +70,14 @@ const App = ({ setCart, userLogin }) => {
   return (
     <Router>
       <Header />
-      <Route path="/" component={Slider} exact />
       <main>
         <Switch>
+          <Route path="/" component={Section} exact />
+
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/forgetpassword" component={ForgetPassword} />
           <Route path="/forgetsuccess" component={ForgetSuccess} />
-          <Route path="/" component={Section} exact />
 
           <Route path="/cart/:id?" component={Cart} />
 
@@ -103,9 +102,6 @@ const App = ({ setCart, userLogin }) => {
         </Switch>
       </main>
       <Footer />
-
-      {/* <Route path="/login" component={Login} exact />
-      <Route path="/signup" component={Signup} exact /> */}
     </Router>
   );
 };
