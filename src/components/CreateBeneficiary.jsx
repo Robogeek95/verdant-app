@@ -39,20 +39,18 @@ export default function CreateBeneficiary() {
   return (
     <div>
       <ToastContainer />
-      <div className="row justify-content-center">
-        <div className="col col-5">
-          <button
-            className="btn btn-primary btn-block"
-            style={{
-              fontSize: "18px",
-              fontWeight: "500",
-              lineHeight: "26.44px",
-            }}
-            onClick={handleShow}
-          >
-            Create new Beneficiary
-          </button>
-        </div>
+      <div>
+        <button
+          className="btn btn-primary btn-block"
+          style={{
+            fontSize: "18px",
+            fontWeight: "500",
+            lineHeight: "26.44px",
+          }}
+          onClick={handleShow}
+        >
+          Create new Beneficiary
+        </button>
       </div>
 
       <Modal show={show} onHide={handleClose}>

@@ -58,11 +58,13 @@ const Checkout = () => {
       <>
         {beneficiaries.length <= 0 ? (
           <>
-            <div className="my-5">
+            <div className="my-5 py-5">
               <h4 className="text-center">You have no beneficiaries yet!</h4>
 
-              <div className="mt-3">
-                <CreateBeneficiary />
+              <div className="mt-3 row justify-content-center">
+                <div className="col-5">
+                  <CreateBeneficiary />
+                </div>
               </div>
             </div>
           </>
@@ -84,9 +86,6 @@ const Checkout = () => {
                 </div>
               ))}
             </div>
-
-            <CreateBeneficiary />
-
           </div>
         )}
       </>
@@ -123,12 +122,21 @@ const Checkout = () => {
           {/* step 1 */}
           <Card className="p-3">
             <div>
-              <h5
-                className="card-header bg-white px-0"
-                style={{ fontSize: "24px", fontWeight: "500" }}
-              >
-                Step 1: Choose Beneficiary
-              </h5>
+              <div className="card-header bg-white row justify-content-between">
+                <div className="col-auto">
+                  <h5
+                    className=" px-0"
+                    style={{ fontSize: "24px", fontWeight: "500" }}
+                  >
+                    Step 1: Choose Beneficiary
+                  </h5>
+                </div>
+
+                <div className="col-auto">
+                  <CreateBeneficiary />
+                </div>
+              </div>
+
               <div className="m-4">{renderBeneficiaries()}</div>
             </div>
 
