@@ -92,7 +92,7 @@ const Orders = () => {
                 </div>
               ) : (
                 <Row>
-                  {orders ? (
+                  {orders.length > 0 ? (
                     <div className="col-12">
                       <div className="row">
                         {orders.map((order) => {

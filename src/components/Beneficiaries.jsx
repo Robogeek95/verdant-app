@@ -73,8 +73,10 @@ const Beneficiaries = ({ history, location }) => {
             <div className="my-5">
               <h4 className="text-center">You have no beneficiaries yet!</h4>
 
-              <div className="mt-3">
-                <CreateBeneficiary />
+              <div className=" row mt-3 justify-content-center">
+                <div className="col-7">
+                  <CreateBeneficiary />
+                </div>
               </div>
             </div>
           </>
