@@ -9,8 +9,9 @@ import { checkoutCart } from "../../../utilities/services";
 import handleApiError from "../../../utilities/handleApiError";
 import formatApiError from "../../../utilities/formatAPIError";
 import CreateBeneficiary from "../../CreateBeneficiary";
+import PropTypes from "prop-types";
 
-const Checkout = () => {
+const Checkout = ({ history }) => {
   const cart = useSelector((state) => state.cart);
   const { cartItems, subTotal, total, deliveryFee } = cart;
   const [, setDeliveryMethod] = useState("");
@@ -26,6 +27,8 @@ const Checkout = () => {
     addError: addBeneficiaryError,
     beneficiaries,
   } = beneficiariesData;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   useEffect(() => {
     dispatch(getBeneficiaries());
@@ -37,19 +40,40 @@ const Checkout = () => {
     }
   }, [addBeneficiaryError]);
 
+  useEffect(() => {
+    if (loadBeneficiariesError) {
+      toast(loadBeneficiariesError);
+    }
+  }, [loadBeneficiariesError]);
+
+  useEffect(() => {
+    if (!userInfo) {
+      history.replaceState("/login");
+    }
+  }, [history, userInfo]);
+
+  function handleCheckout() {
+    if (selectedBeneficiary.ref) {
+      checkoutCart(selectedBeneficiary.ref)
+        .then((res) => {
+          let data = res.data;
+          window.location.replace(data?.payment_link);
+        })
+        .catch((error) => {
+          handleApiError(error);
+          let message = formatApiError(error);
+          toast(message);
+        });
+      return;
+    }
+    toast("please select a beneficiary");
+  }
+
   function renderBeneficiaries() {
     if (loadingBeneficiaries) {
       return (
         <div className="d-flex m-5 justify-content-center align-items-center">
           <Loader />
-        </div>
-      );
-    }
-
-    if (loadBeneficiariesError) {
-      return (
-        <div className="bg-danger text-white d-flex m-5 justify-content-center align-items-center">
-          <p>{loadBeneficiariesError}</p>
         </div>
       );
     }
@@ -90,23 +114,6 @@ const Checkout = () => {
         )}
       </>
     );
-  }
-
-  function handleCheckout() {
-    if (selectedBeneficiary.ref) {
-      checkoutCart(selectedBeneficiary.ref)
-        .then((res) => {
-          let data = res.data;
-          window.location.replace(data?.payment_link);
-        })
-        .catch((error) => {
-          handleApiError(error);
-          let message = formatApiError(error);
-          toast(message);
-        });
-      return;
-    }
-    toast("please select a beneficiary");
   }
 
   return (
@@ -333,21 +340,6 @@ const Checkout = () => {
                   ₦{total}
                 </Card.Subtitle>
               </div>
-              {/* <Form>
-                <Row className="mt-4">
-                  <Col md={12}>
-                    <div className="mx-auto" style={{ width: "257px" }}>
-                      <button
-                        className="btn btn-primary btn-block"
-                        disabled={cartItems.length === 0}
-                        // onClick={checkoutHandler}
-                      >
-                        Proceed To Checkout
-                      </button>
-                    </div>
-                  </Col>
-                </Row>
-              </Form> */}
             </Card.Body>
           </Card>
         </Col>
@@ -357,3 +349,8 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
+Checkout.propTypes = {
+  location: PropTypes.object,
+  history: PropTypes.object,
+};

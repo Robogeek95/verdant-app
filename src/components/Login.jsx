@@ -26,7 +26,6 @@ const Login = ({ location, history }) => {
 
   useEffect(() => {
     if (userInfo) {
-      // history.pushState(redirect)
       history.push("/products/groceries");
     }
   }, [history, userInfo, redirect]);

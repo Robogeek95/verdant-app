@@ -12,12 +12,14 @@ import { fetchProduct } from "../utilities/services";
 
 export const listProducts = () => async (dispatch) => {
   try {
-    dispatch({ 
-      type: PRODUCT_LIST_REQUEST 
+    dispatch({
+      type: PRODUCT_LIST_REQUEST,
     });
 
-    const { data } = await axios.get("https://fakestoreapi.com/products?limit=6");
-    
+    const { data } = await axios.get(
+      "https://fakestoreapi.com/products?limit=6"
+    );
+
     // const { data } = await axios.get('https://verdant-store.herokuapp.com/product/catalog')
 
     dispatch({

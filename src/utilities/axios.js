@@ -12,14 +12,12 @@ function getToken() {
   return token;
 }
 
-let token = getToken();
-
 const instance = axios.create({
   baseURL: base_api_url,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${getToken()}`,
   },
 });
 
