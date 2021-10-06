@@ -43,11 +43,11 @@ const ForgetSuccess = ({showModal, setShowModal}) => {
               </p>
             </div>
 <div className="mb-5">
-              <LinkContainer to="/login">
+              <LinkContainer to="/resetPassword">
                 <input
                   className="btn btn-primary btn-block btn-lg"
                   type="submit"
-                  value="Back to Login"
+                  value="Reset Your Password"
                 />
                 </LinkContainer>
                

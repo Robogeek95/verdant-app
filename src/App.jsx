@@ -31,6 +31,8 @@ import handleApiError from "./utilities/handleApiError";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Beneficiaries from "./components/Beneficiaries";
+import NotFound from "./components/products/NotFound";
+import ResetPass from "./components/ResetPass";
 
 function MainApp() {
   return (
@@ -42,6 +44,7 @@ function MainApp() {
 
           <Route path="/forgetpassword" component={ForgetPassword} />
           <Route path="/forgetsuccess" component={ForgetSuccess} />
+          <Route path="/resetPassword" component={ResetPass} />
 
           <Route path="/cart/:id?" component={Cart} />
 
@@ -64,7 +67,7 @@ function MainApp() {
 
           <Route path="/about" component={About} />
 
-          <Route component={() => <p>OOops! page not found</p>} />
+          <Route path="*" exact={true} component={NotFound} />
         </Switch>
       </main>
       <Footer />
