@@ -145,7 +145,7 @@ const Profile = ({ history, location }) => {
                         <input
                           type="text"
                           id="last-name"
-                          placeholder="last Name"
+                          placeholder="last name"
                           value={lastName}
                           onChange={(e) => setLastName(e.target.value)}
                         />

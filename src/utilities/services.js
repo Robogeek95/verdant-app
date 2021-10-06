@@ -77,6 +77,11 @@ export async function deleteInvoiceService() {
   return null;
 }
 
+// get user details
+export async function getUserService() {
+  return axios.get(`/user/me`);
+}
+
 // update user
 export async function updateUserService(payload) {
   return axios.post(`/user/updateme`, payload);

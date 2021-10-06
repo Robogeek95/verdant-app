@@ -15,9 +15,9 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
   USER_PASSWORD_RESET,
   USER_PASSWORD_RESET_FAIL,
-  USER_PASSWORD_RESET_SUCCESS
+  USER_PASSWORD_RESET_SUCCESS,
 } from "../constants/userConstants";
-import { updateUserService } from "../utilities/services";
+import { getUserService, updateUserService } from "../utilities/services";
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -135,25 +135,13 @@ export const register =
     }
   };
 
-export const getUserDetails = () => async (dispatch, getState) => {
+export const getUserDetails = () => async (dispatch) => {
   try {
     dispatch({
       type: USER_DETAILS_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const config = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userInfo.token}`,
-    };
-
-    const { data } = await axios.get(
-      "https://verdant-store.herokuapp.com/user/me",
-      config
-    );
+    const { data } = await getUserService();
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
