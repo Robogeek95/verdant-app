@@ -37,30 +37,35 @@ function MainApp() {
     <>
       <Header />
       <main>
-        <Route path="/" component={Section} exact />
+        <Switch>
+          <Route path="/" component={Section} exact />
 
-        <Route path="/forgetpassword" component={ForgetPassword} />
-        <Route path="/forgetsuccess" component={ForgetSuccess} />
+          <Route path="/forgetpassword" component={ForgetPassword} />
+          <Route path="/forgetsuccess" component={ForgetSuccess} />
 
-        <Route path="/cart/:id?" component={Cart} />
+          <Route path="/cart/:id?" component={Cart} />
 
-        <Route path="/products/billPayment" component={BillPayments} />
-        <Route path="/products/billPayment/crypto" component={CryptoPayment} />
-        <Route path="/products/invoiceUpload" component={InvoiceUpload} />
-        <Route path="/products/checkout" component={Checkout} />
-        <Route path="/products/groceries/:ref" component={GroceryDetail} />
-        <Route path="/products/:category" component={Groceries} />
+          <Route path="/products/billPayment" component={BillPayments} />
+          <Route
+            path="/products/billPayment/crypto"
+            component={CryptoPayment}
+          />
+          <Route path="/products/invoiceUpload" component={InvoiceUpload} />
+          <Route path="/products/checkout" component={Checkout} />
+          <Route path="/products/groceries/:ref" component={GroceryDetail} />
+          <Route path="/products/:category" component={Groceries} />
 
-        <Route path="/help/faq" component={FAQ} />
-        <Route path="/help/contact" component={Contact} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/orders" component={Orders} />
-        <Route path="/saved-items" component={SavedItems} />
-        <Route path="/beneficiaries" component={Beneficiaries} />
+          <Route path="/help/faq" component={FAQ} />
+          <Route path="/help/contact" component={Contact} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/orders" component={Orders} />
+          <Route path="/saved-items" component={SavedItems} />
+          <Route path="/beneficiaries" component={Beneficiaries} />
 
-        <Route path="/about" component={About} />
+          <Route path="/about" component={About} />
 
-        <Route component={() => <p>OOops! page not found</p>} />
+          <Route component={() => <p>OOops! page not found</p>} />
+        </Switch>
       </main>
       <Footer />
     </>
