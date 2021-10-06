@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Col, Row, Card } from "react-bootstrap";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 import {
   ChevronRight,
   Facebook,
@@ -9,11 +11,8 @@ import {
   Cursor,
 } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
-// import { listProductDetails } from "../../../actions/productActions";
 import Loader from "./Loader";
 import Message from "./Message";
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "owl.carousel/dist/assets/owl.theme.default.css";
 import LatestProducts from "../../layouts/section/LatestProducts";
 
 import PropTypes from "prop-types";
@@ -58,11 +57,17 @@ const GroceryDetail = ({ match, userLogin, addToCart }) => {
       };
 
       // add product to cart using api
-      postToCart(payload).then(() => {
-        // store in global state
-        addToCart({ ...product, quantity });
-        toast(`${product.name} added to cart`);
-      });
+      postToCart(payload)
+        .then(() => {
+          // store in global state
+          addToCart({ ...product, quantity });
+          toast(`${product.name} added to cart`);
+        })
+        .catch((error) => {
+          handleApiError(error);
+          let message = formatApiError(error);
+          toast(message);
+        });
       return;
     }
 
@@ -244,7 +249,7 @@ const GroceryDetail = ({ match, userLogin, addToCart }) => {
 };
 
 function mapStateToProps(state) {
-  return { cart: state.cart, userDetails: state.userDetails };
+  return { cart: state.cart, userLogin: state.userLogin };
 }
 
 const mapDispatchToProps = {

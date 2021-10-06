@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
@@ -9,7 +8,7 @@ import signupBarner from "./images/signup-barner.png";
 import Loader from "./products/groceries/Loader";
 import { Link } from "react-router-dom";
 import { register } from "../actions/userActions";
-// import { Dot } from "react-bootstrap-icons";
+import { toast, ToastContainer } from "react-toastify";
 
 const Signup = ({ location, history }) => {
   const [firstname, setFirstName] = useState("");
@@ -18,11 +17,10 @@ const Signup = ({ location, history }) => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [, setMessage] = useState(null);
   const dispatch = useDispatch({ history });
 
   const userRegister = useSelector((state) => state.userRegister);
-  const { loading, userInfo } = userRegister;
+  const { loading, userInfo, error } = userRegister;
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
@@ -35,15 +33,21 @@ const Signup = ({ location, history }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setMessage("Password do not match");
+      toast("Password do not match");
     } else {
       dispatch(register(firstname, lastname, email, phone, password));
-      history.push("/");
     }
   };
 
+  useEffect(() => {
+    if (error) {
+      toast(error);
+    }
+  }, [error]);
+
   return (
     <div className="container-fluid">
+      <ToastContainer />
       <div className="row" style={{ marginRight: "10rem" }}>
         <div
           className="col-6"
