@@ -4305,6 +4305,44 @@ a.close.disabled {
 .maincap2 img{
   width: 100% !important;
 }
+.notFound{
+  text-align: center;
+}
+.notFound h1{
+  font-size: 50px;
+  padding-top: 10vh;
+}
+.notFound p{
+  margin-top: 30px;
+  font-size: 30px;
+}
+.notFound a{
+  color: #000;
+}
+.inputBox{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: auto;
+  padding-top: 10vh;
+}
+.main_inputCap{
+  display: flex;
+  flex-direction: column;
+  border: 1.5px solid #0963e5;
+  border-radius: 10px;
+  padding: 20px;
+}
+.main_input{
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+
+}
+.main_input label{
+  font-size: 25px;
+  margin: 10px;
+}
 .modal-dialog {
   position: relative;
   width: auto;

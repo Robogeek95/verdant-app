@@ -31,6 +31,8 @@ import handleApiError from "./utilities/handleApiError";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Beneficiaries from "./components/Beneficiaries";
+import NotFound from "./components/products/NotFound";
+import ResetPass from "./components/ResetPass";
 
 const App = ({ setCart, userLogin }) => {
   const { userInfo } = userLogin;
@@ -69,48 +71,42 @@ const App = ({ setCart, userLogin }) => {
 
   return (
     <Router>
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
+      <Header />
+      <main>
+        <Switch>
+          <Route path="/" component={Section} exact />
 
-        <Header />
-        <main>
-          <Switch>
-            <Route path="/" component={Section} exact />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/forgetpassword" component={ForgetPassword} />
+          <Route path="/forgetsuccess" component={ForgetSuccess} />
+          <Route path = '/resetPassword' component = {ResetPass} />
 
-            <Route path="/forgetpassword" component={ForgetPassword} />
-            <Route path="/forgetsuccess" component={ForgetSuccess} />
+          <Route path="/cart/:id?" component={Cart} />
 
-            <Route path="/cart/:id?" component={Cart} />
+          <Route path="/products/billPayment" component={BillPayments} />
+          <Route
+            path="/products/billPayment/crypto"
+            component={CryptoPayment}
+          />
+          <Route path="/products/invoiceUpload" component={InvoiceUpload} />
+          <Route path="/products/checkout" component={Checkout} />
+          <Route path="/products/groceries/:ref" component={GroceryDetail} />
+          <Route path="/products/:category" component={Groceries} />
 
-            <Route path="/products/billPayment" component={BillPayments} />
-            <Route
-              path="/products/billPayment/crypto"
-              component={CryptoPayment}
-            />
-            <Route path="/products/invoiceUpload" component={InvoiceUpload} />
-            <Route path="/products/checkout" component={Checkout} />
-            <Route path="/products/groceries/:ref" component={GroceryDetail} />
-            <Route path="/products/:category" component={Groceries} />
+          <Route path="/help/faq" component={FAQ} />
+          <Route path="/help/contact" component={Contact} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/orders" component={Orders} />
+          <Route path="/saved-items" component={SavedItems} />
+          <Route path="/beneficiaries" component={Beneficiaries} />
 
-            <Route path="/help/faq" component={FAQ} />
-            <Route path="/help/contact" component={Contact} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/orders" component={Orders} />
-            <Route path="/saved-items" component={SavedItems} />
-            <Route path="/beneficiaries" component={Beneficiaries} />
+          <Route path="/about" component={About} />
 
-            <Route path="/about" component={About} />
-
-            <Route
-              path="*"
-              exact={true}
-              component={() => <p>OOops! page not found</p>}
-            />
-          </Switch>
-        </main>
-        <Footer />
-      </Switch> 
+          <Route path='*' exact={true} component={NotFound} />
+        </Switch>
+      </main>
+      <Footer />
     </Router>
   );
 };
